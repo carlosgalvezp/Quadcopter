@@ -6,6 +6,7 @@
 *.vcxproj*
 *.vs*
 Visual Micro/
+*.rc
 
 # User-specific files
 *.suo
