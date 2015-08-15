@@ -16,9 +16,9 @@ void loop()
 	RC::getReadings(&rc_);
 
 	// Print
-	String s = "Throttle: " + String(rc_.elevator) +
-		" Aileron: " + String(rc_.throttle) +
-		" Elevator: " + String(rc_.aileron) +
+	String s = "Throttle: " + String(rc_.throttle) +
+		" Aileron: " + String(rc_.aileron) +
+		" Elevator: " + String(rc_.elevator) +
 		" Rudder: " + String(rc_.rudder) +
 		" AUX1: " + String(rc_.aux1) +
 		" AUX2: " + String(rc_.aux2);

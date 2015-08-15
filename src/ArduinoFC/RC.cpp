@@ -1,8 +1,8 @@
 #include "RC.h"
 
-volatile unsigned long RC_times[NUM_CHANNELS];
-volatile RCReadings_t rc_readings;
-volatile uint8_t prevPortK;
+volatile unsigned long RC_last_t_rise[NUM_CHANNELS];
+volatile uint16_t RC_readings[NUM_CHANNELS];
+uint8_t prevPortK;
 
 void RC::init()
 {
@@ -11,14 +11,14 @@ void RC::init()
 
 void RC::getReadings(RCReadings_t * const readings)
 {
-	readings->throttle = rc_readings.throttle;
-	readings->aileron  = rc_readings.aileron;
-	readings->elevator = rc_readings.elevator;
-	readings->rudder = rc_readings.rudder;
-	readings->aux1 = rc_readings.aux1;
-	readings->aux2 = rc_readings.aux2;
-	readings->aux3 = rc_readings.aux3;
-	readings->aux4 = rc_readings.aux4;
+	readings->throttle = RC_readings[2];
+	readings->aileron  = RC_readings[0];
+	readings->elevator = RC_readings[1];
+	readings->rudder   = RC_readings[3];
+	readings->aux1     = RC_readings[4];
+	readings->aux2     = RC_readings[5];
+	readings->aux3     = RC_readings[6];
+	readings->aux4     = RC_readings[7];
 }
 
 /* Interruption Service Routine for RX channels */
@@ -41,40 +41,12 @@ ISR(PCINT2_vect)
 	// Update timers
 	if (val) // Rising edge
 	{
-		RC_times[bitNo] = micros();
+		RC_last_t_rise[bitNo] = micros();
 	}
 	else	// Falling edge
 	{
-		unsigned long pulseWidth = micros() - RC_times[bitNo];
-		switch (bitNo)
-		{
-			case 0: // Throttle
-				rc_readings.throttle = pulseWidth;
-				break;
-			case 1: // Aileron
-				rc_readings.aileron  = pulseWidth;
-				break;
-			case 2: // Elevator
-				rc_readings.elevator = pulseWidth;
-				break;
-			case 3: // Rudder
-				rc_readings.rudder   = pulseWidth;
-				break;
-			case 4: // AUX1
-				rc_readings.aux1     = pulseWidth;
-				break;
-			case 5: // AUX2
-				rc_readings.aux2	 = pulseWidth;
-				break;
-			case 6: // AUX3
-				rc_readings.aux3	 = pulseWidth;
-				break;
-			case 7: // AUX4
-				rc_readings.aux4	 = pulseWidth;
-				break;
-		}
+		RC_readings[bitNo] = uint16_t(micros() - RC_last_t_rise[bitNo]);
 	}
-
 	// Store current port K for the next iteration
 	prevPortK = pK;
 }
