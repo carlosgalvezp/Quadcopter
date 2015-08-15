@@ -1,0 +1,1 @@
+#define CYCLE_TIME_US	2500	// 2.5 ms = 400 Hz
