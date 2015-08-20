@@ -9,7 +9,7 @@ void RC::init()
 	HAL::initRCInterrupts();
 }
 
-void RC::getReadings(RCReadings_t * const readings)
+void RC::getReadings(RC_data_t * const readings)
 {
 	readings->throttle = RC_readings[2];
 	readings->aileron  = RC_readings[0];

@@ -2,8 +2,11 @@
 #define HAL_H
 
 #include <Arduino.h>
+#include "I2C.h"
+#include "MPU6050.h"
 
 // ** Definitions ** 
+#define CPU_FREQUENCY		16000000L
 // PINs
 #define PIN_BUZZER
 

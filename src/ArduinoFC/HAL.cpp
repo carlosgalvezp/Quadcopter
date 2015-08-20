@@ -7,6 +7,12 @@ void HAL::init()
 
 	// Init GPIO
 	HAL::initGPIO();
+
+	// Init I2C
+	I2C::init();
+
+	// Init IMU
+	if (IMU::init())	Serial.println("Failed to init IMU");
 }
 
 void HAL::initGPIO()
@@ -19,7 +25,7 @@ void HAL::initRCInterrupts()
 {
 	// Enable interrupts PCIE2, since the RC channels are connected
 	// to PCINT 16:23
-	PCICR |= (1 << 2);
+	PCICR |= (1 << PCIE2);
 
 	// Enable all pin interrupts within PCIE2
 	PCMSK2 = 0xFF;

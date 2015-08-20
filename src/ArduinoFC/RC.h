@@ -11,7 +11,7 @@
 namespace RC
 {
 	void init();
-	void getReadings(RCReadings_t * const readings);
+	void getReadings(RC_data_t * const readings);
 }
 #endif
 

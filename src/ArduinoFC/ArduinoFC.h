@@ -9,5 +9,6 @@
 #include "Types.h"
 #include "RC.h"
 #include "HAL.h"
+#include "I2C.h"
 
 #endif

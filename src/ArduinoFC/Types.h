@@ -14,6 +14,26 @@ typedef struct
 	uint16_t aux2;
 	uint16_t aux3;
 	uint16_t aux4;
-}RCReadings_t;
+}RC_data_t;
 
+typedef struct
+{
+	int16_t x;
+	int16_t y;
+	int16_t z;
+}vec_int16_3_t;
+
+typedef struct
+{
+	vec_int16_3_t acc;
+	vec_int16_3_t gyro;
+	int16_t temperature;
+}IMU_data_t;
+
+typedef struct
+{
+	IMU_data_t imu;
+	vec_int16_3_t mag;
+	uint16_t pressure;
+}SensorFusion_data_t;
 #endif
