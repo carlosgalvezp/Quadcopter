@@ -15,6 +15,10 @@
 #define IMU_REG_ACCEL_CONFIG	0X1C
 #define IMU_REG_INT_PIN_CFG		0x37
 #define IMU_REG_WHO_AM_I		0X75
+
+#define ACC_SENSITIVITY			0.000244140625f
+#define GYRO_SENSITIVITY		0.0005f
+
 namespace IMU
 {
 	uint8_t init();

@@ -25,9 +25,16 @@ typedef struct
 
 typedef struct
 {
-	vec_int16_3_t acc;
-	vec_int16_3_t gyro;
-	int16_t temperature;
+	float x;
+	float y;
+	float z;
+}vec_float_3_t;
+
+typedef struct
+{
+	vec_float_3_t acc;
+	vec_float_3_t gyro;
+	float temperature;
 }IMU_data_t;
 
 typedef struct

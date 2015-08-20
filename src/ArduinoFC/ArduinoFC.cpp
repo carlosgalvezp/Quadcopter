@@ -4,7 +4,7 @@ RC_data_t rc_;
 
 void setup() 
 {
-	Serial.begin(9600);
+	Serial.begin(115200);
 
 	HAL::init();
 	//RC::init();
@@ -50,6 +50,11 @@ void loop()
 	{
 		String s = "Acc.x: " + String(data.acc.x) + " Acc.y: " + String(data.acc.y) + String(" Acc.z: ") + String(data.acc.z);
 		Serial.println(s);
+		s = "Gyro.x: " + String(data.gyro.x) + " Gyro.y: " + String(data.gyro.y) + String(" Gyro.z: ") + String(data.acc.z);
+		Serial.println(s);
+		s = "Temperature: " + String(data.temperature) + " C";
+		Serial.println(s);
+		Serial.println("--------------------");
 	}
 	else
 	{
