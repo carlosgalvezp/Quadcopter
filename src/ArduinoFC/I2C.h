@@ -9,7 +9,7 @@
 
 //#define I2C_DEBUG							
 
-#define I2C_FREQUENCY						400000L
+#define I2C_FREQUENCY						100000L
 	
 #define I2C_STATE_START						0x08
 #define I2C_STATE_REPEATED_START			0X10
@@ -36,7 +36,7 @@ namespace I2C
 {
 	void init();
 	uint8_t writeReg(uint8_t dev_address, uint8_t reg, const uint8_t * const data, size_t n_bytes);
-	uint8_t readReg(uint8_t dev_address, uint8_t reg, uint8_t * data, size_t n_bytes);
+	uint8_t readReg(uint8_t dev_address, uint8_t reg, uint8_t * const data, size_t n_bytes);
 
 	uint8_t writeByte(uint8_t data);
 	uint8_t readByte(uint8_t * const data, uint8_t read_ack);

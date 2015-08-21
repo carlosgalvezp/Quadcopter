@@ -13,6 +13,9 @@ void HAL::init()
 
 	// Init IMU
 	if (IMU::init())	Serial.println("Failed to init IMU");
+
+	// Init Magnetometer
+	if (Magnetometer::init())	Serial.println("Failed to init Magnetometer");
 }
 
 void HAL::initGPIO()

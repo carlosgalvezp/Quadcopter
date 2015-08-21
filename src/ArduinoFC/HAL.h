@@ -4,6 +4,7 @@
 #include <Arduino.h>
 #include "I2C.h"
 #include "MPU6050.h"
+#include "HMC5883L.h"
 
 // ** Definitions ** 
 #define CPU_FREQUENCY		16000000L

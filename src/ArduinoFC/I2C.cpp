@@ -192,7 +192,7 @@ uint8_t I2C::writeReg(uint8_t dev_address, uint8_t reg, const uint8_t * const da
 	return 0;
 }
 
-uint8_t I2C::readReg(uint8_t dev_address, uint8_t reg, uint8_t * data, size_t n_bytes)
+uint8_t I2C::readReg(uint8_t dev_address, uint8_t reg, uint8_t * const data, size_t n_bytes)
 {
 	// Start
 	if(I2C::startCondition()) return 1;

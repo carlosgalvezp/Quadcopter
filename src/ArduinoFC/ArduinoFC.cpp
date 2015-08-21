@@ -48,19 +48,31 @@ void loop()
 	IMU_data_t data;
 	if (!IMU::getData(&data))
 	{
-		String s = "Acc.x: " + String(data.acc.x) + " Acc.y: " + String(data.acc.y) + String(" Acc.z: ") + String(data.acc.z);
+		String s = "Acc.x: " + String(data.acc.x) + " Acc.y: " + String(data.acc.y) + String(" Acc.z: ") + String(data.acc.z) + " [g]";
 		Serial.println(s);
-		s = "Gyro.x: " + String(data.gyro.x) + " Gyro.y: " + String(data.gyro.y) + String(" Gyro.z: ") + String(data.acc.z);
+		s = "Gyro.x: " + String(data.gyro.x) + " Gyro.y: " + String(data.gyro.y) + String(" Gyro.z: ") + String(data.acc.z) + " [deg/s]";
 		Serial.println(s);
-		s = "Temperature: " + String(data.temperature) + " C";
+		s = "Temperature: " + String(data.temperature) + " [C]";
 		Serial.println(s);
-		Serial.println("--------------------");
 	}
 	else
 	{
 		Serial.println("Fail to read IMU");
 	}
 
+	// Read magnetometer
+	vec_float_3_t dataMag;
+	if (!Magnetometer::getData(&dataMag))
+	{
+		String s = "Mag.x: " + String(dataMag.x) + " Mag.y: " + String(dataMag.y) + String(" Mag.z: ") + String(dataMag.z) + " [G]";
+		Serial.println(s);
+	}
+	else
+	{
+		Serial.println("Fail to read Magnetometer");
+	}
+
+	Serial.println("--------------------");
 	delay(1000);
 }
 
