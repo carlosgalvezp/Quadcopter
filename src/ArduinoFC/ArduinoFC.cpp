@@ -52,8 +52,6 @@ void loop()
 		Serial.println(s);
 		s = "Gyro.x: " + String(data.gyro.x) + " Gyro.y: " + String(data.gyro.y) + String(" Gyro.z: ") + String(data.acc.z) + " [deg/s]";
 		Serial.println(s);
-		s = "Temperature: " + String(data.temperature) + " [C]";
-		Serial.println(s);
 	}
 	else
 	{
@@ -71,7 +69,19 @@ void loop()
 	{
 		Serial.println("Fail to read Magnetometer");
 	}
-
+	// Read barometer
+	float pressure, temperature;
+	if (!Barometer::getData(&pressure, &temperature))
+	{
+		String s = "Pressure: " + String(pressure) + " [mbar]";
+		Serial.println(s);
+		s = "Temperature: " + String(temperature) + " [C]";
+		Serial.println(s);
+	}
+	else
+	{
+		Serial.println("Fail to read Barometer");
+	}
 	Serial.println("--------------------");
 	delay(1000);
 }

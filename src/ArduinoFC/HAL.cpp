@@ -16,6 +16,9 @@ void HAL::init()
 
 	// Init Magnetometer
 	if (Magnetometer::init())	Serial.println("Failed to init Magnetometer");
+
+	// Init Barometer
+	if (Barometer::init())	Serial.println("Failed to init Barometer");
 }
 
 void HAL::initGPIO()

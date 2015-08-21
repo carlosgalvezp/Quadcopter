@@ -5,6 +5,7 @@
 #include "I2C.h"
 #include "MPU6050.h"
 #include "HMC5883L.h"
+#include "MS5611.h"
 
 // ** Definitions ** 
 #define CPU_FREQUENCY		16000000L

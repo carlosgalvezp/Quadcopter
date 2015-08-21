@@ -2,7 +2,7 @@
 
 uint8_t Magnetometer::init()
 {
-	uint8_t data, data_read;
+	uint8_t data;
 
 	// Set output rate to 75 Hz, no sample average, standard measurement
 	data = 0b00011000;
