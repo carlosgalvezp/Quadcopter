@@ -28,9 +28,9 @@ uint8_t Magnetometer::getData(vec_float_3_t * data)
 	if (I2C::readReg(MAGNETOMETER_DEV_ADDR, MAGNETOMETER_REG_DATA, rawData, MAGNETOMETER_N_READ_BYTES)) return 1;
 
 	// Store the received data properly
-	data->x = float(MAGNETOMETER_SENSITIVITY * int16_t((rawData[0] << 8) | rawData[1]));
-	data->y = float(MAGNETOMETER_SENSITIVITY * int16_t((rawData[2] << 8) | rawData[3]));
-	data->z = float(MAGNETOMETER_SENSITIVITY * int16_t((rawData[4] << 8) | rawData[5]));
+	data->x = (float)(MAGNETOMETER_SENSITIVITY * ((int16_t)rawData[0] << 8 | rawData[1]));
+	data->y = (float)(MAGNETOMETER_SENSITIVITY * ((int16_t)rawData[2] << 8 | rawData[3]));
+	data->z = (float)(MAGNETOMETER_SENSITIVITY * ((int16_t)rawData[4] << 8 | rawData[5]));
 
 	return 0;
 }

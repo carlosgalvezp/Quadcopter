@@ -34,7 +34,6 @@ typedef struct
 {
 	vec_float_3_t acc;
 	vec_float_3_t gyro;
-	float temperature;
 }IMU_data_t;
 
 typedef struct

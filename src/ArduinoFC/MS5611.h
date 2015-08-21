@@ -23,11 +23,17 @@
 #define BARO_REG_D2_OSR_256			0x50
 #define BARO_REG_ADC_READ			0x00
 
-#define BARO_CONVERSION_DELAY_US	5000
+#define BARO_CONVERSION_DELAY_US	1000 // To make sure we read correct values
+
+#define BARO_STATE_IDLE							0
+#define BARO_STATE_STARTED_D1_CONVERSION		1
+#define BARO_STATE_STARTED_D2_CONVERSION		2
 
 namespace Barometer
 {
 	uint8_t init();
 	uint8_t getData(float * const pressure, float * const temperature);
+
+	void computeValues(float * const pressure, float * const temperature);
 }
 #endif
