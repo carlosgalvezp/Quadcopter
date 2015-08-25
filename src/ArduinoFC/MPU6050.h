@@ -16,8 +16,8 @@
 #define IMU_REG_INT_PIN_CFG		0x37
 #define IMU_REG_WHO_AM_I		0X75
 
-#define ACC_SENSITIVITY			0.000244140625f
-#define GYRO_SENSITIVITY		0.0005f
+#define ACC_SENSITIVITY			0.00239420166f   // [m/s*s]	   (1/4096) * 9.80665
+#define GYRO_SENSITIVITY		0.00000872664f   // [rad/s]    (1/2000) * pi/180
 
 namespace IMU
 {

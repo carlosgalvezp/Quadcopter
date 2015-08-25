@@ -17,7 +17,7 @@ uint8_t Barometer::init()
 	for (uint8_t i = 0; i < BARO_PROM_N_COEFFS; ++i)
 	{
 		if (I2C::readReg(BARO_DEV_ADDR, BARO_REG_PROM | ((i+1) << 1), data, 2)) return 1;
-		prom_coefficients[i] = uint16_t(data[0] << 8 | data[1]);
+		prom_coefficients[i] = (uint16_t)data[0] << 8 | (uint16_t)data[1];
 	}
 
 	state = 0;

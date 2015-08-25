@@ -9,7 +9,7 @@
 
 //#define I2C_DEBUG							
 
-#define I2C_FREQUENCY						100000L
+#define I2C_FREQUENCY						400000L
 	
 #define I2C_STATE_START						0x08
 #define I2C_STATE_REPEATED_START			0X10

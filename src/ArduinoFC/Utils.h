@@ -1,14 +1,10 @@
 #ifndef UTILS_H
 #define UTILS_H
 
+#include <stdint.h>
+
 namespace Utils
 {
-	class Utils
-	{
-	public:
-		Utils();
-		~Utils();
-	};
-
+	float invSqrt(float x);
 }
 #endif

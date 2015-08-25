@@ -221,15 +221,15 @@ uint8_t I2C::readReg(uint8_t dev_address, uint8_t reg, uint8_t * const data, siz
 }
 
 
-uint8_t I2C::waitUntilReady()
+inline uint8_t I2C::waitUntilReady()
 {
 	uint8_t counter = -1; // Will be the maximum value
-	while (!(TWCR & (1 << TWINT)) && counter -- > 0);
+	while (!(TWCR & (1 << TWINT)) && counter-- > 0);
 
 	return (counter == 0);  // Timeout
 }
 
-uint8_t I2C::checkTWSR()
+inline uint8_t I2C::checkTWSR()
 {
 	return TWSR & I2C_TWSR_READ_MASK;
 }

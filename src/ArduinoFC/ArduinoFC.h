@@ -11,4 +11,8 @@
 #include "HAL.h"
 #include "I2C.h"
 
+#include "Test.h"
+
+#define SERIAL0_BAUDRATE		115200
+
 #endif

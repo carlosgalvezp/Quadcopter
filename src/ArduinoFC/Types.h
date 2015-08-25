@@ -39,7 +39,7 @@ typedef struct
 typedef struct
 {
 	IMU_data_t imu;
-	vec_int16_3_t mag;
+	vec_float_3_t mag;
 	uint16_t pressure;
 }SensorFusion_data_t;
 #endif
