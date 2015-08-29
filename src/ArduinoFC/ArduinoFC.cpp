@@ -17,6 +17,6 @@ void loop()
 	//Test::testSensorRead();
 	//Test::testStateEstimation();
 	Test::testTelemetry();
-	delay(100);
+	delay(20);
 }
 

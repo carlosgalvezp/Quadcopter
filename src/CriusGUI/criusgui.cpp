@@ -8,11 +8,6 @@ CriusGUI::CriusGUI(QWidget *parent) :
     ui(new Ui::CriusGUI),
     active_(false)
 {
-    // Create timer and connect to slot
-    refresh_timer_ = new QTimer(this);
-    refresh_timer_->setInterval(1000/REFRESH_RATE); // ms
-    connect(refresh_timer_, SIGNAL(timeout()), this, SLOT(refresh()));
-
     // Create serialPort and connect to receive slot
     this->serialPort_ = new SerialComm();
     QObject::connect(serialPort_->getQSerialPort(), SIGNAL(readyRead()), this, SLOT(receiveData()));
@@ -20,6 +15,10 @@ CriusGUI::CriusGUI(QWidget *parent) :
 
     // Setup UI
     ui->setupUi(this);
+
+    // Initialize plots
+    this->acc_plot_  = new TimePlot(ui->acc_plot,  ui->acc_plot->geometry().width(), 3);
+    this->gyro_plot_ = new TimePlot(ui->gyro_plot, ui->gyro_plot->geometry().width(), 3);
 }
 
 CriusGUI::~CriusGUI()
@@ -49,6 +48,9 @@ void CriusGUI::receiveData()
         ui->data_in_gyro_x->setText(QString::number(gyro_x));
         ui->data_in_gyro_y->setText(QString::number(gyro_y));
         ui->data_in_gyro_z->setText(QString::number(gyro_z));
+
+        this->acc_plot_->addPoint({acc_x, acc_y, acc_z});
+        this->gyro_plot_->addPoint({gyro_x, gyro_y, gyro_z});
     }
 }
 
@@ -68,4 +70,7 @@ void CriusGUI::on_pushButton_clicked()
     emit toggleSerial();
 }
 
-void CriusGUI::refresh(){repaint();}
+void CriusGUI::refresh()
+{
+//    repaint();
+}

@@ -5,10 +5,16 @@
 #include <QTimer>
 
 #include "serialcomm.h"
+#include "timeplot.h"
+
 #include <time.h>
 #include <unistd.h>
 
+
+
 #define REFRESH_RATE    60      // FPS
+#define N_POINTS_TIME   500
+
 
 namespace Ui {
 class CriusGUI;
@@ -37,8 +43,12 @@ private slots:
 
 private:
     Ui::CriusGUI *ui;
-    QTimer * refresh_timer_;
-    SerialComm * serialPort_;
+    QTimer *refresh_timer_;
+    SerialComm *serialPort_;
+
+    TimePlot *acc_plot_;
+    TimePlot *gyro_plot_;
+    TimePlot *mag_plot_;
 
     bool active_;
 };

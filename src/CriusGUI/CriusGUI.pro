@@ -6,15 +6,21 @@
 
 QT       += core gui serialport
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
+
+CONFIG += c++11
 
 TARGET = CriusGUI
 TEMPLATE = app
 SOURCES += main.cpp\
         criusgui.cpp \
-        serialcomm.cpp
+        serialcomm.cpp \
+    qcustomplot.cpp \
+    timeplot.cpp
 
 HEADERS  += criusgui.h \
-            serialcomm.h
+            serialcomm.h \
+    qcustomplot.h \
+    timeplot.h
 
 FORMS    += criusgui.ui
