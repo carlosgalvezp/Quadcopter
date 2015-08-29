@@ -33,13 +33,21 @@ typedef struct
 typedef struct
 {
 	vec_float_3_t acc;
+	vec_int16_3_t acc_raw;
 	vec_float_3_t gyro;
+	vec_int16_3_t gyro_raw;
 }IMU_data_t;
 
 typedef struct
 {
 	IMU_data_t imu;
 	vec_float_3_t mag;
+	vec_int16_3_t mag_raw;
 	uint16_t pressure;
-}SensorFusion_data_t;
+}Sensor_data_t;
+
+typedef struct
+{
+	IMU_data_t imu;
+}Telemetry_data_t;
 #endif

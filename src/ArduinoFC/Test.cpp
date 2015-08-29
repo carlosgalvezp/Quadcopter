@@ -77,7 +77,11 @@ void Test::testSensorRead()
 
 void Test::testTelemetry()
 {
-	Telemetry::sendData();
+	Telemetry_data_t data_;
+	
+	// Read sensors
+	IMU::getData(&data_.imu);
+	Telemetry::sendData(&data_);
 }
 
 void Test::testStateEstimation()
@@ -92,7 +96,7 @@ void Test::testStateEstimation()
 	s = "Acc read time: " + String(t2 - t1) + " us";
 	Serial.println(s);
 	
-	SensorFusion_data_t sf_data;
+	Sensor_data_t sf_data;
 	sf_data.imu = dataIMU;
 	vec_float_3_t rpy;
 	t1 = micros();
