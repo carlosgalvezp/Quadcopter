@@ -4,12 +4,13 @@
 #include <QMainWindow>
 #include <QTimer>
 
-#include "serialcomm.h"
-#include "timeplot.h"
-
 #include <time.h>
 #include <unistd.h>
 
+#include "serialcomm.h"
+#include "timeplot.h"
+#include "telemetry.h"
+#include "utils.h"
 
 
 #define REFRESH_RATE    60      // FPS
@@ -51,6 +52,13 @@ private:
     TimePlot *mag_plot_;
 
     bool active_;
+
+
+    void telemetryUpdateGUI(const char* const rx_data, int n_read_bytes);
+
+    void telemetryCmdIMU(const char* const rx_data, int n_read_bytes);
+    void telemetryCmdAttitude(const char* const rx_data, int n_read_bytes);
+
 };
 
 #endif // CRIUSGUI_H

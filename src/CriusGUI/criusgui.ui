@@ -213,6 +213,123 @@
      </rect>
     </property>
    </widget>
+   <widget class="QLabel" name="label_7">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>640</y>
+      <width>151</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Quaternion</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="data_in_q0">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>640</y>
+      <width>151</width>
+      <height>33</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>0</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="data_in_q1">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>680</y>
+      <width>151</width>
+      <height>33</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>0</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="data_in_q2">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>720</y>
+      <width>151</width>
+      <height>33</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>0</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="data_in_q3">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>760</y>
+      <width>151</width>
+      <height>33</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>0</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="data_in_pitch">
+    <property name="geometry">
+     <rect>
+      <x>280</x>
+      <y>870</y>
+      <width>151</width>
+      <height>33</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>0</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="data_in_roll">
+    <property name="geometry">
+     <rect>
+      <x>280</x>
+      <y>830</y>
+      <width>151</width>
+      <height>33</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>0</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="data_in_yaw">
+    <property name="geometry">
+     <rect>
+      <x>280</x>
+      <y>910</y>
+      <width>151</width>
+      <height>33</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>0</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_8">
+    <property name="geometry">
+     <rect>
+      <x>130</x>
+      <y>830</y>
+      <width>151</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>RPY</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">

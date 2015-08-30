@@ -8,7 +8,7 @@
 
 namespace StateEstimation
 {
-	uint8_t estimateRPY(const Sensor_data_t * const sensorData, vec_float_3_t * const RPY);
+	uint8_t estimateAttitude(const Sensor_data_t * const sensorData, quaternion_t * const q);
 }
 
 #endif

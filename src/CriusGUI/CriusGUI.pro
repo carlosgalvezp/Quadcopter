@@ -16,11 +16,14 @@ SOURCES += main.cpp\
         criusgui.cpp \
         serialcomm.cpp \
     qcustomplot.cpp \
-    timeplot.cpp
+    timeplot.cpp \
+    utils.cpp
 
 HEADERS  += criusgui.h \
             serialcomm.h \
     qcustomplot.h \
-    timeplot.h
+    timeplot.h \
+    telemetry.h \
+    utils.h
 
 FORMS    += criusgui.ui

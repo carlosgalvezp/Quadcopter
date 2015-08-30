@@ -81,31 +81,26 @@ void Test::testTelemetry()
 	
 	// Read sensors
 	IMU::getData(&data_.imu);
-	Telemetry::sendData(&data_);
+	Telemetry::sendData(&data_);	
 }
 
 void Test::testStateEstimation()
 {
 	// Read sensor data
-	unsigned long t1, t2;
-	String s;
-	t1 = micros();
-	IMU_data_t dataIMU;
-	IMU::getData(&dataIMU);
-	t2 = micros();
-	s = "Acc read time: " + String(t2 - t1) + " us";
-	Serial.println(s);
+	Sensor_data_t sensor_data;
+	quaternion_t q;
+	IMU::getData(&sensor_data.imu);
 	
-	Sensor_data_t sf_data;
-	sf_data.imu = dataIMU;
-	vec_float_3_t rpy;
-	t1 = micros();
-	StateEstimation::estimateRPY(&sf_data, &rpy);
-	t2 = micros();
-	s = "Sensor Fusion time: " + String(t2 - t1) + " us";
-	Serial.println(s);
-	s = "RPY = " + String(rpy.x) + " ; " + String(rpy.y) + " ; " + String(rpy.z);
-	Serial.println(s);
+	// Estimate attitude
+	StateEstimation::estimateAttitude(&sensor_data, &q);
+
+	// Send over telemetry
+	Telemetry::sendAttitude(&q);	
+	//String s = String((int16_t)(10000 * q.q0)) + "," + 
+	//	String((int16_t)(10000 * q.q1)) + ", " +
+	//	String((int16_t)(10000 * q.q2)) + "," +
+	//	String((int16_t)(10000 * q.q3));
+	//Serial.println(s);
 }
 
 void Test::testWholeSystem()

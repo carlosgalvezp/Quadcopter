@@ -15,8 +15,8 @@ void loop()
 {
 	//Test::testCompass();
 	//Test::testSensorRead();
-	//Test::testStateEstimation();
-	Test::testTelemetry();
+	Test::testStateEstimation();
+	//Test::testTelemetry();
 	delay(20);
 }
 

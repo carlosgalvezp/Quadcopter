@@ -32,6 +32,15 @@ typedef struct
 
 typedef struct
 {
+	float q0;
+	float q1;
+	float q2;
+	float q3;
+
+}quaternion_t;
+
+typedef struct
+{
 	vec_float_3_t acc;
 	vec_int16_3_t acc_raw;
 	vec_float_3_t gyro;
