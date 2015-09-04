@@ -9,6 +9,7 @@
 #include "I2C.h"
 #include "StateEstimation.h"
 #include "Telemetry.h"
+#include "Output.h"
 
 namespace Test
 {
@@ -18,6 +19,7 @@ namespace Test
 	void testTelemetry();
 	void testCompass();
 	void testStateEstimation();
+	void testOutput();
 
 	void testWholeSystem();
 

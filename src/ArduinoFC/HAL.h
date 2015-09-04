@@ -42,18 +42,18 @@
 #define PIN_M8				PB0
 
 // Motor control registers
-#define OUT_M1				OCCR3B
-#define OUT_M2				OCCR3C
-#define OUT_M3				OCCR3A
-#define OUT_M4				OCCR4A
-#define OUT_M5				OCCR4B
-#define OUT_M6				OCCR4C
+#define OUT_M1				OCR3B
+#define OUT_M2				OCR3C
+#define OUT_M3				OCR3A
+#define OUT_M4				OCR4A
+#define OUT_M5				OCR4B
+#define OUT_M6				OCR4C
 
 namespace HAL
 {
 	void init();
 	void initGPIO();
-	void initRCInterrupts();
+	void initRC();
 	void initMotors();
 }
 #endif

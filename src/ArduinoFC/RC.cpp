@@ -4,11 +4,6 @@ volatile unsigned long RC_last_t_rise[NUM_CHANNELS];
 volatile uint16_t RC_readings[NUM_CHANNELS];
 uint8_t prevPortK;
 
-void RC::init()
-{
-	HAL::initRCInterrupts();
-}
-
 void RC::getReadings(RC_data_t * const readings)
 {
 	readings->throttle = RC_readings[2];

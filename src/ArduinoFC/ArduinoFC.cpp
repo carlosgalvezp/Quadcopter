@@ -8,15 +8,16 @@ void setup()
 	Serial.begin(SERIAL0_BAUDRATE);
 
 	HAL::init();
-	RC::init();
 }
 
 void loop() 
 {
+	//Test::testRC();
 	//Test::testCompass();
 	//Test::testSensorRead();
-	Test::testStateEstimation();
+	//Test::testStateEstimation();
 	//Test::testTelemetry();
-	delay(10);
+	Test::testOutput();
+	delay(100);
 }
 

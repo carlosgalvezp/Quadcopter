@@ -103,6 +103,37 @@ void Test::testStateEstimation()
 	//Serial.println(s);
 }
 
+/*
+In this test, we read data from RC channel 1 and output that value
+to motor M1. Then, we read the value from RC channel 2 and check if it
+matches
+*/
+void Test::testOutput()
+{
+	
+	RC_data_t rc_;
+	uint16_t pwm_us[4];
+
+	// Get readings
+	RC::getReadings(&rc_);
+
+	// Assign output value for m1
+	pwm_us[0] = rc_.aileron;
+
+	// Output
+	Output::writePWM(&(pwm_us[0]));
+
+	// Print
+	String s = "Throttle: " + String(rc_.throttle) +
+		" Aileron: " + String(rc_.aileron) +
+		" Elevator: " + String(rc_.elevator) +
+		" Rudder: " + String(rc_.rudder) +
+		" AUX1: " + String(rc_.aux1) +
+		" AUX2: " + String(rc_.aux2);
+
+	Serial.println(s);
+}
+
 void Test::testWholeSystem()
 {
 	// Read RC

@@ -20,7 +20,8 @@ void HAL::init()
 	// Init Barometer
 	if (Barometer::init())	Serial.println("Failed to init Barometer");
 
-
+	// Init RC
+	HAL::initRC();
 
 	// Enable interrupts globally
 	SREG |= (1 << 7);
@@ -32,7 +33,7 @@ void HAL::initGPIO()
 	DDRK  = 0x00;	// Port K as input
 	PORTK = 0xFF;   // Pull-up resistors enabled
 }
-void HAL::initRCInterrupts()
+void HAL::initRC()
 {
 	// Enable interrupts PCIE2, since the RC channels are connected
 	// to PCINT 16:23
@@ -59,7 +60,7 @@ void HAL::initMotors()
 
 	DDRB |= (1 << PIN_M8);
 
-	// Configure Timers 3 and 4
+	// --- Configure Timers 3 and 4 ---
 	// Non-inverted output, TOP = ICRn
 	TCCR3A = 0b10101000; 
 	TCCR4A = 0b10101000;

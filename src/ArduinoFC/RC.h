@@ -10,7 +10,6 @@
 
 namespace RC
 {
-	void init();
 	void getReadings(RC_data_t * const readings);
 }
 #endif
