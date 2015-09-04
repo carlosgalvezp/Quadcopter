@@ -8,7 +8,7 @@
 
 #include "Arduino.h"
 
-#define betaDef			0.25f		// 2 * proportional gain
+#define betaDef			1.5f		// 2 * proportional gain
 
 namespace Madgwick
 {

@@ -330,6 +330,16 @@
      <string>RPY</string>
     </property>
    </widget>
+   <widget class="MyGLWidget" name="myGLWidget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>1260</x>
+      <y>200</y>
+      <width>631</width>
+      <height>591</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -347,6 +357,12 @@
    <class>QCustomPlot</class>
    <extends>QWidget</extends>
    <header>qcustomplot.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>MyGLWidget</class>
+   <extends>QWidget</extends>
+   <header>myglwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

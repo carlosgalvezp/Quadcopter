@@ -1,0 +1,5 @@
+TIMER REGISTERS
+
+TCNTn -> time/counter (16 bit)
+OCRn  -> output compare
+ICRn  -> input capture

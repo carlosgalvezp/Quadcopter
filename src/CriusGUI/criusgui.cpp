@@ -122,9 +122,11 @@ void CriusGUI::telemetryCmdAttitude(const char * const rx_data, int n_read_bytes
         double roll, pitch, yaw;
         Utils::quaternionToRPY(q0,q1,q2,q3, &roll, &pitch, &yaw);
 
-        this->ui->data_in_roll->setText(QString::number(roll * RAD_TO_DEG));
-        this->ui->data_in_pitch->setText(QString::number(pitch * RAD_TO_DEG));
-        this->ui->data_in_yaw->setText(QString::number(yaw * RAD_TO_DEG));
+        this->ui->data_in_roll->setText(QString::number(roll));
+        this->ui->data_in_pitch->setText(QString::number(pitch));
+        this->ui->data_in_yaw->setText(QString::number(yaw));
+
+        this->ui->myGLWidget->updateRotation(roll, pitch);
     }
 }
 

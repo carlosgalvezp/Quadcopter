@@ -12,6 +12,8 @@
 #include "telemetry.h"
 #include "utils.h"
 
+#include <GL/glu.h>
+
 
 #define REFRESH_RATE    60      // FPS
 #define N_POINTS_TIME   500

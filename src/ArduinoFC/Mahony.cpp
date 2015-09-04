@@ -202,16 +202,12 @@ namespace Mahony
 		q3 *= recipNorm;
 	}
 
-
-	void getRPY(vec_float_3_t * const rpy)
+	void getQuaternion(quaternion_t * const q)
 	{
-		//rpy->x = RAD_TO_DEG * atan2(2.0f*(q0*q1 + q2*q3), 1.0f - 2.0f*(q1*q1 + q2*q2));
-		//rpy->y = RAD_TO_DEG * asin(2.0f*(q0*q2 - q3*q1));
-		//rpy->z = RAD_TO_DEG * atan2(2.0f*(q0*q3 + q1*q2), 1.0f - 2.0f*(q2*q2 + q3*q3));
-
-		rpy->x = RAD_TO_DEG * atan2(2.0f*(q2*q3 - q0*q1), 2.0f*(q0*q0 + q3*q3) - 1.0f); // Roll (rotation around x axis)
-		rpy->y = RAD_TO_DEG * (-asin(2.0f*(q1*q3 + q0*q2)));								// Pitch (rotation around y axis)
-		rpy->z = RAD_TO_DEG * atan2(2.0f*(q1*q2 - q0*q3), 2.0f*(q0*q0 + q1*q1) - 1.0f); // Yaw (rotation around z axis)
+		q->q0 = q0;
+		q->q1 = q1;
+		q->q2 = q2;
+		q->q3 = q3;
 	}
 
 }
