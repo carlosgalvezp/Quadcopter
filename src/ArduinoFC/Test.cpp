@@ -1,5 +1,7 @@
 #include "Test.h"
 
+bool armed_ = false;
+
 void Test::testRC()
 {
 	RC_data_t rc_;
@@ -77,10 +79,15 @@ void Test::testSensorRead()
 
 void Test::testTelemetry()
 {
-	Telemetry_data_t data_;
+	State_data_t data_;
 	
-	// Read sensors
-	IMU::getData(&data_.imu);
+	data_.timeStamp = micros();
+
+	
+	//// Read sensors
+	//IMU::getData(&data_.imu);
+	
+
 	Telemetry::sendData(&data_);	
 }
 
@@ -95,7 +102,7 @@ void Test::testStateEstimation()
 	StateEstimation::estimateAttitude(&sensor_data, &q);
 
 	// Send over telemetry
-	Telemetry::sendAttitude(&q);	
+	//Telemetry::sendAttitude(&q);	
 	//String s = String((int16_t)(10000 * q.q0)) + "," + 
 	//	String((int16_t)(10000 * q.q1)) + ", " +
 	//	String((int16_t)(10000 * q.q2)) + "," +
@@ -113,16 +120,22 @@ void Test::testOutput()
 	
 	RC_data_t rc_;
 	uint16_t pwm_us[4];
-
+	bool toggled = false;
 	// Get readings
 	RC::getReadings(&rc_);
 
+	if (rc_.rudder < 1200 && rc_.rudder > 0 && rc_.throttle < 1200 && rc_.throttle > 0)
+	{ armed_ = !armed_; 
+	toggled = true; 
+	digitalWrite(PIN_LED_A, armed_);
+	}
+
 	// Assign output value for m1
-	pwm_us[0] = rc_.aileron;
+	pwm_us[0] = armed_?rc_.aileron:500;
 
 	// Output
 	Output::writePWM(&(pwm_us[0]));
-
+	
 	// Print
 	String s = "Throttle: " + String(rc_.throttle) +
 		" Aileron: " + String(rc_.aileron) +
@@ -132,6 +145,8 @@ void Test::testOutput()
 		" AUX2: " + String(rc_.aux2);
 
 	Serial.println(s);
+
+	if (toggled) delay(2000);
 }
 
 void Test::testWholeSystem()

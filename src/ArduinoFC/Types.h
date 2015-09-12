@@ -57,6 +57,13 @@ typedef struct
 
 typedef struct
 {
+	uint32_t timeStamp;
 	IMU_data_t imu;
-}Telemetry_data_t;
+	quaternion_t attitude;
+}State_data_t;
+
+typedef struct
+{
+	float pid; // TO-DO: complete
+}Config_t;
 #endif

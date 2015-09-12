@@ -7,15 +7,16 @@
 #include <time.h>
 #include <unistd.h>
 
-#include "serialcomm.h"
 #include "timeplot.h"
-#include "telemetry.h"
 #include "utils.h"
+#include "serialdecoder.h"
+#include "guidata.h"
+
+#include "../ArduinoFC/Telemetry_Protocol.h"
 
 #include <GL/glu.h>
 
 
-#define REFRESH_RATE    60      // FPS
 #define N_POINTS_TIME   500
 
 
@@ -32,7 +33,7 @@ public:
     ~CriusGUI();
 
 public slots:
-    void receiveData();
+    void getSerialData(const QByteArray &data);
 
 signals:
     void toggleSerial();
@@ -40,14 +41,8 @@ signals:
 private slots:
     void on_pushButton_clicked();
 
-
-
-    void refresh();
-
 private:
     Ui::CriusGUI *ui;
-    QTimer *refresh_timer_;
-    SerialComm *serialPort_;
 
     TimePlot *acc_plot_;
     TimePlot *gyro_plot_;
@@ -55,12 +50,10 @@ private:
 
     bool active_;
 
+    GUIData gui_data_;
+    SerialDecoder serial_decoder_;
 
-    void telemetryUpdateGUI(const char* const rx_data, int n_read_bytes);
-
-    void telemetryCmdIMU(const char* const rx_data, int n_read_bytes);
-    void telemetryCmdAttitude(const char* const rx_data, int n_read_bytes);
-
+    void updateGUI();
 };
 
 #endif // CRIUSGUI_H

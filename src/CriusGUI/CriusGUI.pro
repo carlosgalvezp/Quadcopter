@@ -14,18 +14,22 @@ TARGET = CriusGUI
 TEMPLATE = app
 SOURCES += main.cpp\
         criusgui.cpp \
-        serialcomm.cpp \
     qcustomplot.cpp \
     timeplot.cpp \
     utils.cpp \
-    myglwidget.cpp
+    myglwidget.cpp \
+    serialcommthread.cpp \
+    serialdecoder.cpp \
+    guidata.cpp
 
 HEADERS  += criusgui.h \
-            serialcomm.h \
     qcustomplot.h \
     timeplot.h \
-    telemetry.h \
     utils.h \
-    myglwidget.h
+    myglwidget.h \
+    ../ArduinoFC/Telemetry_Protocol.h \
+    serialcommthread.h \
+    serialdecoder.h \
+    guidata.h
 
 FORMS    += criusgui.ui

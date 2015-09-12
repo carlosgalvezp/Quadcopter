@@ -6,6 +6,8 @@
 
 #include "Arduino.h"
 
+#include "Config.h"
+
 #include "Types.h"
 #include "RC.h"
 #include "HAL.h"
