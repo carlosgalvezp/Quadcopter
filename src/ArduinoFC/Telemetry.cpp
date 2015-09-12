@@ -8,6 +8,7 @@ namespace Telemetry
 	uint8_t n_bytes_available_;
 	uint8_t cmd_;
 	uint8_t ptr_;
+	uint8_t checksum_;
 }
 
 void Telemetry::sendData(const State_data_t * const data)
@@ -15,6 +16,7 @@ void Telemetry::sendData(const State_data_t * const data)
 	// Re-initialize variables
 	cmd_ = 0;
 	ptr_ = 0;
+	checksum_ = 0;
 
 	// Check whether we have a request available
 	if ((n_bytes_available_ = Serial.available()) > 0)
@@ -29,11 +31,11 @@ void Telemetry::sendData(const State_data_t * const data)
 		}
 		
 		// Send Magic Word
-		Serial.write((uint8_t)magic_word_[0]);
-		Serial.write((uint8_t)magic_word_[1]);
+		write8((uint8_t)magic_word_[0]);
+		write8((uint8_t)magic_word_[1]);
 
 		// Send cmd
-		Serial.write(cmd_);
+		write8(cmd_);
 
 		// Perform desired operation
 		switch (cmd_)
@@ -72,6 +74,9 @@ void Telemetry::sendData(const State_data_t * const data)
 				sendControl(data);
 				break;
 		}
+
+		// Send checksum
+		sendCheckSum();
 	}
 }
 
@@ -117,21 +122,21 @@ void Telemetry::sendControl(const State_data_t * const data){}
 
 void Telemetry::receivePID(Config_t * const data){}
 
-void Telemetry::write8(uint8_t data)
+void Telemetry::sendCheckSum()
 {
-	Serial.write(data);
+	Serial.write(checksum_);
 }
 
 void Telemetry::write16(uint16_t data)
 {
-	Serial.write(((data & 0xFF00) >> 8) & 0x00FF);	// MSB
-	Serial.write((data & 0x00FF));					// LSB
+	write8((uint8_t)(((data & 0xFF00) >> 8) & 0x00FF));	// MSB
+	write8((uint8_t)(( data & 0x00FF)));				// LSB
 }
 
 void Telemetry::write32(uint32_t data)
 {
-	Serial.write(((data & 0xFF000000) >> 24) & 0x000000FF);	// MSB
-	Serial.write(((data & 0x00FF0000) >> 16) & 0x000000FF);	
-	Serial.write(((data & 0x0000FF00) >>  8) & 0x000000FF);	 
-	Serial.write(( data & 0x000000FF));						// LSB
+	write8((uint8_t)(((data & 0xFF000000) >> 24) & 0x000000FF));	// MSB
+	write8((uint8_t)(((data & 0x00FF0000) >> 16) & 0x000000FF));	
+	write8((uint8_t)(((data & 0x0000FF00) >>  8) & 0x000000FF));	 
+	write8((uint8_t)(( data & 0x000000FF)));						// LSB
 }

@@ -2,6 +2,10 @@
 
 bool SerialDecoder::decodeData(const QByteArray &data, GUIData &gui_data)
 {
+    // Verify checkSum
+    if(!verifyCheckSum(data)) return false;
+
+
     // Verify magic word
     if (data[0] == this->magic_word_[0] && data[1] == this->magic_word_[1])
     {
@@ -16,6 +20,16 @@ bool SerialDecoder::decodeData(const QByteArray &data, GUIData &gui_data)
         }
     }
     return false; // Failed to detect the magic word
+}
+
+bool SerialDecoder::verifyCheckSum(const QByteArray &data)
+{
+    uint8_t checksum = 0;
+    for(int i = 0; i < data.size(); ++i)
+    {
+        checksum ^= (uint8_t)(data[i]);
+    }
+    return checksum == 0;
 }
 
 

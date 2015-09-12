@@ -7,6 +7,8 @@
 
 #define TELEMETRY_RX_BUFFER_SIZE 50
 
+#define write8(data) Serial.write(data); checksum_ ^= data;
+
 namespace Telemetry
 {
 	void sendData(const State_data_t * const data);
@@ -27,7 +29,8 @@ namespace Telemetry
 
 	void receivePID(Config_t * const data);
 
-	void write8(uint8_t data);
+	void sendCheckSum();
+
 	void write16(uint16_t data);
 	void write32(uint32_t data);
 }

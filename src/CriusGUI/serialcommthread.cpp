@@ -54,7 +54,6 @@ void SerialCommThread::init()
 
 void SerialCommThread::requestStatus()
 {
-    std::cout << "Requesting status..." << std::endl;
     this->dataOut[0] = this->magic_word_[0];
     this->dataOut[1] = this->magic_word_[1];
     this->dataOut[2] = TELEMETRY_CMD_OUT_STATUS;
@@ -64,8 +63,6 @@ void SerialCommThread::requestStatus()
 void SerialCommThread::readData()
 {
     int n_bytes = this->serialPort_->read(this->dataIn, RX_BUFFER_SIZE);
-    std::cout << "I have read " << n_bytes << " bytes" << std::endl;
-
     QByteArray out_array(this->dataIn, n_bytes);
 
     emit sendData(out_array);

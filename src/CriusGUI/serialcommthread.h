@@ -12,7 +12,7 @@
 #define TX_BUFFER_SIZE  10
 #define RX_BUFFER_SIZE  100
 
-#define UPDATE_RATE_STATUS  20      // Hz
+#define UPDATE_RATE_STATUS  25      // Hz
 
 class SerialCommThread : public QObject
 {
