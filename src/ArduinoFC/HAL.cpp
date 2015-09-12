@@ -22,6 +22,9 @@ void HAL::init()
 
 	// Init RC
 	HAL::initRC();
+	
+	// Init Serial
+	Serial.begin(SERIAL0_BAUDRATE);
 
 	// Enable interrupts globally
 	SREG |= (1 << 7);

@@ -83,21 +83,36 @@ void Telemetry::sendData(const State_data_t * const data)
 void Telemetry::sendStatus(const State_data_t * const data)
 {
 	// TimeStamp
-	write32(data->timeStamp);
+	write32(data->status.timeStamp);
+
+	// Cycle time
+	write16(data->status.cycleTime);
+}
+
+void Telemetry::sendRC(const State_data_t * const data)
+{
+	write16(data->rc.throttle);
+	write16(data->rc.rudder);
+	write16(data->rc.elevator);
+	write16(data->rc.aileron);
+	write16(data->rc.aux1);
+	write16(data->rc.aux2);
+	write16(data->rc.aux3);
+	write16(data->rc.aux4);
 }
 
 
 void Telemetry::sendIMU(const State_data_t * const data)
 {
 	// Acc
-	write16(data->imu.acc_raw.x);
-	write16(data->imu.acc_raw.y);
-	write16(data->imu.acc_raw.z);
+	write16(data->sensorData.imu.acc_raw.x);
+	write16(data->sensorData.imu.acc_raw.y);
+	write16(data->sensorData.imu.acc_raw.z);
 
 	// Gyro
-	write16(data->imu.gyro_raw.x);
-	write16(data->imu.gyro_raw.y);
-	write16(data->imu.gyro_raw.z);
+	write16(data->sensorData.imu.gyro_raw.x);
+	write16(data->sensorData.imu.gyro_raw.y);
+	write16(data->sensorData.imu.gyro_raw.z);
 }
 
 void Telemetry::sendAttitude(const State_data_t * const data)
@@ -113,7 +128,6 @@ void Telemetry::sendAttitude(const State_data_t * const data)
 void Telemetry::sendMagnetometer(const State_data_t * const data){}
 void Telemetry::sendBarometer(const State_data_t * const data){}
 void Telemetry::sendTemperature(const State_data_t * const data){}
-void Telemetry::sendRC(const State_data_t * const data){}
 void Telemetry::sendBattery(const State_data_t * const data){}
 void Telemetry::sendGPS(const State_data_t * const data){}
 void Telemetry::sendSonar(const State_data_t * const data){}

@@ -77,18 +77,13 @@ void Test::testSensorRead()
 	Serial.println("--------------------");
 }
 
-void Test::testTelemetry()
+void Test::testTelemetry(State_data_t * const state)
 {
-	State_data_t data_;
-	
-	data_.timeStamp = micros();
+	// Get timeStamp
+	state->status.timeStamp = micros();
 
-	
-	//// Read sensors
-	//IMU::getData(&data_.imu);
-	
-
-	Telemetry::sendData(&data_);	
+	// Send data
+	Telemetry::sendData(state);	
 }
 
 void Test::testStateEstimation()
@@ -149,15 +144,27 @@ void Test::testOutput()
 	if (toggled) delay(2000);
 }
 
-void Test::testWholeSystem()
+void Test::testWholeSystem(State_data_t * const state)
 {
-	// Read RC
+	// Get timeStamp
+	state->status.timeStamp = micros();
 
-	// Read sensors
+	// Get RC
+	RC::getReadings(&state->rc);
+
+	// Get IMU
+	IMU::getData(&state->sensorData.imu);
 
 	// State estimation
+	StateEstimation::estimateAttitude(&state->sensorData, &state->attitude);
 
-	// Control commands
+	// Control
 
 	// Output
+
+	// Cycle time
+	state->status.cycleTime = (uint16_t)(micros() - state->status.timeStamp);
+
+	// Send data
+	Telemetry::sendData(state);
 }

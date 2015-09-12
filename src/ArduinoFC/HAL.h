@@ -11,6 +11,7 @@
 // ** Definitions ** 
 #define CPU_FREQUENCY		16000000L	// Hz
 #define ESC_FREQUENCY		400			// Hz
+#define SERIAL0_BAUDRATE	115200		// baud
 
 // PINs
 #define PIN_BUZZER

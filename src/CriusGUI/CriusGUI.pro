@@ -30,6 +30,7 @@ HEADERS  += criusgui.h \
     ../ArduinoFC/Telemetry_Protocol.h \
     serialcommthread.h \
     serialdecoder.h \
-    guidata.h
+    guidata.h \
+    types.h
 
 FORMS    += criusgui.ui

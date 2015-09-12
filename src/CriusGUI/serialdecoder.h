@@ -20,7 +20,12 @@ private:
 
     bool verifyCheckSum(const QByteArray &data);
 
-    bool decodeStatus(const QByteArray &data, GUIData &gui_data);
+    bool decodeStatus   (const QByteArray &data, GUIData &gui_data);
+    bool decodeRC       (const QByteArray &data, GUIData &gui_data);
+    bool decodeAttitude (const QByteArray &data, GUIData &gui_data);
+
+    uint16_t decode16(const QByteArray &data, int ptr);
+    uint32_t decode32(const QByteArray &data, int ptr);
 
 };
 

@@ -1,12 +1,11 @@
 #include "ArduinoFC.h"
 
 unsigned long t1, t2;
-
+State_data_t state_;
 
 void setup() 
 {
-	Serial.begin(SERIAL0_BAUDRATE);
-
+	// Init hardware
 	HAL::init();
 }
 
@@ -16,8 +15,8 @@ void loop()
 	//Test::testCompass();
 	//Test::testSensorRead();
 	//Test::testStateEstimation();
-	Test::testTelemetry();
+	//Test::testTelemetry(&state_);
 	//Test::testOutput();
+	Test::testWholeSystem(&state_);
 	delayMicroseconds(CYCLE_TIME_US);
 }
-

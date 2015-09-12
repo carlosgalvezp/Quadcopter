@@ -58,8 +58,25 @@ typedef struct
 typedef struct
 {
 	uint32_t timeStamp;
-	IMU_data_t imu;
+	uint16_t cycleTime;
+}Status_t;
+
+typedef struct
+{
+	// Status
+	Status_t status;
+
+	// RC
+	RC_data_t rc;
+
+	// Sensors
+	Sensor_data_t sensorData;
+	
+	// State estimation
 	quaternion_t attitude;
+
+	// Control input
+	
 }State_data_t;
 
 typedef struct

@@ -6,13 +6,23 @@
 #include <QTimer>
 
 #include <iostream>
+#include <chrono>
+#include <thread>
 
 #include "../ArduinoFC/Telemetry_Protocol.h"
 
 #define TX_BUFFER_SIZE  10
 #define RX_BUFFER_SIZE  100
 
-#define UPDATE_RATE_STATUS  25      // Hz
+#define UPDATE_RATE_STATUS          10      // Hz
+#define UPDATE_RATE_IMU             25      // Hz
+#define UPDATE_RATE_RC              20      // Hz
+#define UPDATE_RATE_ATTITUDE        50      // Hz
+
+#define T_REQUEST_WAIT_MS    5
+
+#define my_sleep_ms(t) std::this_thread::sleep_for(std::chrono::milliseconds(t))
+
 
 class SerialCommThread : public QObject
 {
@@ -30,15 +40,18 @@ signals:
 
 private slots:
     void requestStatus();
+    void requestRC();
+    void requestAttitude();
+
     void readData();
 private:
 
     void init();
-
     void updateStatus(const char * const dataIn);
+    void writeHeader(char * const buffer, uint8_t cmd);
 
     QSerialPort* serialPort_;
-    QTimer* timer_Status_;
+    QTimer* timer_Status_, *timer_RC_, *timer_IMU, *timer_Attitude;
 
     char dataOut[TX_BUFFER_SIZE];
     char dataIn[RX_BUFFER_SIZE];

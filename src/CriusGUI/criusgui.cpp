@@ -22,8 +22,8 @@ CriusGUI::CriusGUI(QWidget *parent) :
     ui->setupUi(this);
 
     // Initialize plots
-    this->acc_plot_  = new TimePlot(ui->acc_plot,  ui->acc_plot->geometry().width(), 3);
-    this->gyro_plot_ = new TimePlot(ui->gyro_plot, ui->gyro_plot->geometry().width(), 3);
+//    this->acc_plot_  = new TimePlot(ui->acc_plot,  ui->acc_plot->geometry().width(), 3);
+//    this->gyro_plot_ = new TimePlot(ui->gyro_plot, ui->gyro_plot->geometry().width(), 3);
 }
 
 CriusGUI::~CriusGUI()
@@ -53,7 +53,33 @@ void CriusGUI::on_pushButton_clicked()
 
 void CriusGUI::updateGUI()
 {
-    this->ui->data_in_timeStamp->setText(QString::number(this->gui_data_.timeStamp));
+    // Status
+    this->ui->data_in_timeStamp->setText(QString::number(this->gui_data_.status.timeStamp));
+    this->ui->data_in_cycleTime->setText(QString::number(this->gui_data_.status.cycleTime));
+
+    // RC readings
+    this->ui->data_in_throttle->setText(QString::number(this->gui_data_.rc_data.throttle));
+    this->ui->data_in_rudder->setText(QString::number(this->gui_data_.rc_data.rudder));
+    this->ui->data_in_elevator->setText(QString::number(this->gui_data_.rc_data.elevator));
+    this->ui->data_in_aileron->setText(QString::number(this->gui_data_.rc_data.aileron));
+    this->ui->data_in_aux1->setText(QString::number(this->gui_data_.rc_data.aux1));
+    this->ui->data_in_aux2->setText(QString::number(this->gui_data_.rc_data.aux2));
+    this->ui->data_in_aux3->setText(QString::number(this->gui_data_.rc_data.aux3));
+    this->ui->data_in_aux4->setText(QString::number(this->gui_data_.rc_data.aux4));
+
+    // Attitude
+    double roll, pitch, yaw;
+    Utils::quaternionToRPY(this->gui_data_.attitude.q0,
+                           this->gui_data_.attitude.q1,
+                           this->gui_data_.attitude.q2,
+                           this->gui_data_.attitude.q3,
+                           &roll, &pitch, &yaw);
+
+    this->ui->data_in_roll->setText(QString::number(roll));
+    this->ui->data_in_pitch->setText(QString::number(pitch));
+    this->ui->data_in_yaw->setText(QString::number(yaw));
+
+    this->ui->myGLWidget->updateRotation(-roll, -pitch);
 }
 
 

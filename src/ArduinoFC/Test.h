@@ -16,12 +16,12 @@ namespace Test
 	void testRC();
 	void testI2CScan();
 	void testSensorRead();
-	void testTelemetry();
+	void testTelemetry(State_data_t * const state);
 	void testCompass();
 	void testStateEstimation();
 	void testOutput();
 
-	void testWholeSystem();
+	void testWholeSystem(State_data_t * const state);
 
 }
 

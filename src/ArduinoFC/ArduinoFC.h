@@ -15,6 +15,6 @@
 
 #include "Test.h"
 
-#define SERIAL0_BAUDRATE		115200
+void initState();
 
 #endif

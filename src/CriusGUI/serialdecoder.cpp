@@ -10,13 +10,20 @@ bool SerialDecoder::decodeData(const QByteArray &data, GUIData &gui_data)
     if (data[0] == this->magic_word_[0] && data[1] == this->magic_word_[1])
     {
         // Get command
-        char cmd = data[2];
+        uint8_t cmd = (uint8_t)data[2];
 
         // Decode data
         switch(cmd)
         {
             case TELEMETRY_CMD_OUT_STATUS:
                 return this->decodeStatus(data, gui_data);
+
+            case TELEMETRY_CMD_OUT_RC:
+                return this->decodeRC(data, gui_data);
+
+            case TELEMETRY_CMD_OUT_ATTITUDE:
+                return this->decodeAttitude(data, gui_data);
+
         }
     }
     return false; // Failed to detect the magic word
@@ -35,10 +42,44 @@ bool SerialDecoder::verifyCheckSum(const QByteArray &data)
 
 bool SerialDecoder::decodeStatus(const QByteArray &data, GUIData &gui_data)
 {
-    gui_data.timeStamp = ((((uint32_t)data[3]) << 24) & 0xFF000000) |
-                         ((((uint32_t)data[4]) << 16) & 0x00FF0000) |
-                         ((((uint32_t)data[5]) << 8)  & 0x0000FF00) |
-                         ((((uint32_t)data[6]))       & 0x000000FF);
+    gui_data.status.timeStamp = decode32(data, 3);
+    gui_data.status.cycleTime = decode16(data, 7);
+    return true;
+}
+
+bool SerialDecoder::decodeRC(const QByteArray &data, GUIData &gui_data)
+{
+    gui_data.rc_data.throttle = decode16(data, 3);
+    gui_data.rc_data.rudder   = decode16(data, 5);
+    gui_data.rc_data.elevator = decode16(data, 7);
+    gui_data.rc_data.aileron  = decode16(data, 9);
+    gui_data.rc_data.aux1     = decode16(data, 11);
+    gui_data.rc_data.aux2     = decode16(data, 13);
+    gui_data.rc_data.aux3     = decode16(data, 15);
+    gui_data.rc_data.aux4     = decode16(data, 17);
+    return true;
+}
+
+bool SerialDecoder::decodeAttitude(const QByteArray &data, GUIData &gui_data)
+{
+    gui_data.attitude.q0 = 0.0001 * ((int16_t) decode16(data, 3));
+    gui_data.attitude.q1 = 0.0001 * ((int16_t) decode16(data, 5));
+    gui_data.attitude.q2 = 0.0001 * ((int16_t) decode16(data, 7));
+    gui_data.attitude.q3 = 0.0001 * ((int16_t) decode16(data, 9));
 
     return true;
+}
+
+uint16_t SerialDecoder::decode16(const QByteArray &data, int ptr)
+{
+    return ((((uint16_t)data[ptr])   << 8) & 0xFF00) |
+           ((((uint16_t)data[ptr+1]))      & 0x00FF);
+}
+
+uint32_t SerialDecoder::decode32(const QByteArray &data, int ptr)
+{
+    return  ((((uint32_t)data[ptr])   << 24) & 0xFF000000) |
+            ((((uint32_t)data[ptr+1]) << 16) & 0x00FF0000) |
+            ((((uint32_t)data[ptr+2]) << 8)  & 0x0000FF00) |
+            ((((uint32_t)data[ptr+3]))       & 0x000000FF);
 }

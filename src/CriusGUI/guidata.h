@@ -3,12 +3,17 @@
 
 #include <stdint.h>
 
+#include "types.h"
+
 struct GUIData
 {
     GUIData();
     ~GUIData();
 
-    uint32_t timeStamp;
+    StatusData status;
+    RCData rc_data;
+    Quaternion attitude;
+
 };
 
 #endif // GUIDATA_H
