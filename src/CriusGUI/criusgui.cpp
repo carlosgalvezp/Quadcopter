@@ -22,8 +22,7 @@ CriusGUI::CriusGUI(QWidget *parent) :
     ui->setupUi(this);
 
     // Initialize plots
-//    this->acc_plot_  = new TimePlot(ui->acc_plot,  ui->acc_plot->geometry().width(), 3);
-//    this->gyro_plot_ = new TimePlot(ui->gyro_plot, ui->gyro_plot->geometry().width(), 3);
+    this->imu_plot= new TimePlot(this->ui->imu_plot,  this->ui->imu_plot->geometry().width()/2, 6);
 }
 
 CriusGUI::~CriusGUI()
@@ -54,88 +53,55 @@ void CriusGUI::on_pushButton_clicked()
 void CriusGUI::updateGUI()
 {
     // Status
-    this->ui->data_in_timeStamp->setText(QString::number(this->gui_data_.status.timeStamp));
-    this->ui->data_in_cycleTime->setText(QString::number(this->gui_data_.status.cycleTime));
+    if(this->gui_data_.new_status)
+    {
+        this->ui->data_in_timeStamp->setText(QString::number(this->gui_data_.status.timeStamp));
+        this->ui->data_in_cycleTime->setText(QString::number(this->gui_data_.status.cycleTime));
+
+        this->gui_data_.new_status = false;
+    }
 
     // RC readings
-    this->ui->data_in_throttle->setText(QString::number(this->gui_data_.rc_data.throttle));
-    this->ui->data_in_rudder->setText(QString::number(this->gui_data_.rc_data.rudder));
-    this->ui->data_in_elevator->setText(QString::number(this->gui_data_.rc_data.elevator));
-    this->ui->data_in_aileron->setText(QString::number(this->gui_data_.rc_data.aileron));
-    this->ui->data_in_aux1->setText(QString::number(this->gui_data_.rc_data.aux1));
-    this->ui->data_in_aux2->setText(QString::number(this->gui_data_.rc_data.aux2));
-    this->ui->data_in_aux3->setText(QString::number(this->gui_data_.rc_data.aux3));
-    this->ui->data_in_aux4->setText(QString::number(this->gui_data_.rc_data.aux4));
+    if(this->gui_data_.new_RC)
+    {
+        this->ui->data_in_throttle->setText(QString::number(this->gui_data_.rc_data.throttle));
+        this->ui->data_in_rudder->setText(QString::number(this->gui_data_.rc_data.rudder));
+        this->ui->data_in_elevator->setText(QString::number(this->gui_data_.rc_data.elevator));
+        this->ui->data_in_aileron->setText(QString::number(this->gui_data_.rc_data.aileron));
+        this->ui->data_in_aux1->setText(QString::number(this->gui_data_.rc_data.aux1));
+        this->ui->data_in_aux2->setText(QString::number(this->gui_data_.rc_data.aux2));
+        this->ui->data_in_aux3->setText(QString::number(this->gui_data_.rc_data.aux3));
+        this->ui->data_in_aux4->setText(QString::number(this->gui_data_.rc_data.aux4));
+
+        this->gui_data_.new_RC = false;
+    }
+
+    // IMU
+    if(this->gui_data_.new_IMU_data)
+    {
+        this->imu_plot->addPoint({(double)gui_data_.imu_data.acc.x,
+                                  (double)gui_data_.imu_data.acc.y,
+                                  (double)gui_data_.imu_data.acc.z,});
+
+        this->gui_data_.new_IMU_data = false;
+    }
 
     // Attitude
-    double roll, pitch, yaw;
-    Utils::quaternionToRPY(this->gui_data_.attitude.q0,
-                           this->gui_data_.attitude.q1,
-                           this->gui_data_.attitude.q2,
-                           this->gui_data_.attitude.q3,
-                           &roll, &pitch, &yaw);
+    if(this->gui_data_.new_attitude)
+    {
+        double roll, pitch, yaw;
+        Utils::quaternionToRPY(this->gui_data_.attitude.q0,
+                               this->gui_data_.attitude.q1,
+                               this->gui_data_.attitude.q2,
+                               this->gui_data_.attitude.q3,
+                               &roll, &pitch, &yaw);
 
-    this->ui->data_in_roll->setText(QString::number(roll));
-    this->ui->data_in_pitch->setText(QString::number(pitch));
-    this->ui->data_in_yaw->setText(QString::number(yaw));
+        this->ui->data_in_roll->setText(QString::number(roll));
+        this->ui->data_in_pitch->setText(QString::number(pitch));
+        this->ui->data_in_yaw->setText(QString::number(yaw));
 
-    this->ui->myGLWidget->updateRotation(-roll, -pitch);
+        this->ui->myGLWidget->updateRotation(-roll, -pitch);
+
+        this->gui_data_.new_attitude = false;
+    }
 }
-
-
-//void CriusGUI::telemetryCmdIMU(const char * const rx_data, int n_read_bytes)
-//{
-//    if (n_read_bytes == TELEMETRY_CMD_IMU_N_BYTES)
-//    {
-//        int16_t acc_x = ((((int16_t)rx_data[1]) << 8) & 0xFF00) | ((int16_t)rx_data[2] & 0x00FF);
-//        int16_t acc_y = ((((int16_t)rx_data[3]) << 8) & 0xFF00) | ((int16_t)rx_data[4] & 0x00FF);
-//        int16_t acc_z = ((((int16_t)rx_data[5]) << 8) & 0xFF00) | ((int16_t)rx_data[6] & 0x00FF);
-
-//        int16_t gyro_x = ((((int16_t)rx_data[7]) << 8) & 0xFF00) | ((int16_t)rx_data[8] & 0x00FF);
-//        int16_t gyro_y = ((((int16_t)rx_data[9]) << 8) & 0xFF00) | ((int16_t)rx_data[10] & 0x00FF);
-//        int16_t gyro_z = ((((int16_t)rx_data[11]) << 8) & 0xFF00) | ((int16_t)rx_data[12] & 0x00FF);
-
-//        this->ui->data_in_acc_x->setText(QString::number(acc_x));
-//        this->ui->data_in_acc_y->setText(QString::number(acc_y));
-//        this->ui->data_in_acc_z->setText(QString::number(acc_z));
-
-//        this->ui->data_in_gyro_x->setText(QString::number(gyro_x));
-//        this->ui->data_in_gyro_y->setText(QString::number(gyro_y));
-//        this->ui->data_in_gyro_z->setText(QString::number(gyro_z));
-
-//        this->acc_plot_->addPoint({(double)acc_x, (double)acc_y, (double)acc_z});
-//        this->gyro_plot_->addPoint({(double)gyro_x, (double)gyro_y, (double)gyro_z});
-//    }
-//}
-
-//void CriusGUI::telemetryCmdAttitude(const char * const rx_data, int n_read_bytes)
-//{
-//    if (n_read_bytes == TELEMETRY_CMD_ATTITUDE_N_BYTES)
-//    {
-//        int16_t q0_rx = ((((int16_t)rx_data[1]) << 8) & 0xFF00) | ((int16_t)rx_data[2] & 0x00FF);
-//        int16_t q1_rx = ((((int16_t)rx_data[3]) << 8) & 0xFF00) | ((int16_t)rx_data[4] & 0x00FF);
-//        int16_t q2_rx = ((((int16_t)rx_data[5]) << 8) & 0xFF00) | ((int16_t)rx_data[6] & 0x00FF);
-//        int16_t q3_rx = ((((int16_t)rx_data[7]) << 8) & 0xFF00) | ((int16_t)rx_data[8] & 0x00FF);
-
-//        double q0 = 0.0001 * q0_rx;
-//        double q1 = 0.0001 * q1_rx;
-//        double q2 = 0.0001 * q2_rx;
-//        double q3 = 0.0001 * q3_rx;
-
-//        this->ui->data_in_q0->setText(QString::number(q0));
-//        this->ui->data_in_q1->setText(QString::number(q1));
-//        this->ui->data_in_q2->setText(QString::number(q2));
-//        this->ui->data_in_q3->setText(QString::number(q3));
-
-//        // Get RPY
-//        double roll, pitch, yaw;
-//        Utils::quaternionToRPY(q0,q1,q2,q3, &roll, &pitch, &yaw);
-
-//        this->ui->data_in_roll->setText(QString::number(roll));
-//        this->ui->data_in_pitch->setText(QString::number(pitch));
-//        this->ui->data_in_yaw->setText(QString::number(yaw));
-
-//        this->ui->myGLWidget->updateRotation(roll, pitch);
-//    }
-//}
-

@@ -11,8 +11,16 @@ struct GUIData
     ~GUIData();
 
     StatusData status;
+    bool new_status;
+
     RCData rc_data;
+    bool new_RC;
+
+    IMUData imu_data;
+    bool new_IMU_data;
+
     Quaternion attitude;
+    bool new_attitude;
 
 };
 

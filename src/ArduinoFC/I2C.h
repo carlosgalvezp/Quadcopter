@@ -31,6 +31,7 @@
 #define I2C_READ_SEND_ACK					1
 #define I2C_READ_SEND_NACK					0
 
+#define checkTWSR() (TWSR & I2C_TWSR_READ_MASK)
 
 namespace I2C
 {
@@ -46,7 +47,6 @@ namespace I2C
 	uint8_t stopCondition();
 
 	uint8_t waitUntilReady();
-	uint8_t checkTWSR();
 }
 
 #endif

@@ -51,9 +51,9 @@ void Test::testCompass()
 void Test::testSensorRead()
 {
 	IMU_data_t data;
-	if (!IMU::getData(&data))
+	if (!IMU::getData(&data)){}
 	{
-		String s = "Acc.x: " + String(data.acc.x) + " Acc.y: " + String(data.acc.y) + String(" Acc.z: ") + String(data.acc.z) + " [g]";
+		String s = "Acc.x: " + String(data.acc.x) + " Acc.y: " + String(data.acc.y) + String(" Acc.z: ") + String(data.acc.z) + " [m/s^2]";
 		Serial.println(s);
 		s = "Gyro.x: " + String(data.gyro.x) + " Gyro.y: " + String(data.gyro.y) + String(" Gyro.z: ") + String(data.acc.z) + " [deg/s]";
 		Serial.println(s);
@@ -162,9 +162,15 @@ void Test::testWholeSystem(State_data_t * const state)
 
 	// Output
 
+	// Send data
+	Telemetry::sendData(state);
+
 	// Cycle time
 	state->status.cycleTime = (uint16_t)(micros() - state->status.timeStamp);
 
-	// Send data
-	Telemetry::sendData(state);
+	// Sleep
+	if (state->status.cycleTime < CYCLE_TIME_US)
+	{
+		delayMicroseconds(CYCLE_TIME_US - state->status.cycleTime);
+	}
 }

@@ -21,6 +21,9 @@ bool SerialDecoder::decodeData(const QByteArray &data, GUIData &gui_data)
             case TELEMETRY_CMD_OUT_RC:
                 return this->decodeRC(data, gui_data);
 
+            case TELEMETRY_CMD_OUT_IMU:
+                return this->decodeIMU(data, gui_data);
+
             case TELEMETRY_CMD_OUT_ATTITUDE:
                 return this->decodeAttitude(data, gui_data);
 
@@ -44,6 +47,8 @@ bool SerialDecoder::decodeStatus(const QByteArray &data, GUIData &gui_data)
 {
     gui_data.status.timeStamp = decode32(data, 3);
     gui_data.status.cycleTime = decode16(data, 7);
+
+    gui_data.new_status = true;
     return true;
 }
 
@@ -57,6 +62,22 @@ bool SerialDecoder::decodeRC(const QByteArray &data, GUIData &gui_data)
     gui_data.rc_data.aux2     = decode16(data, 13);
     gui_data.rc_data.aux3     = decode16(data, 15);
     gui_data.rc_data.aux4     = decode16(data, 17);
+
+    gui_data.new_RC = true;
+    return true;
+}
+
+bool SerialDecoder::decodeIMU(const QByteArray &data, GUIData &gui_data)
+{
+    gui_data.imu_data.acc.x = (int16_t)decode16(data, 3);
+    gui_data.imu_data.acc.y = (int16_t)decode16(data, 5);
+    gui_data.imu_data.acc.z = (int16_t)decode16(data, 7);
+
+    gui_data.imu_data.gyro.x = (int16_t)decode16(data, 9);
+    gui_data.imu_data.gyro.x = (int16_t)decode16(data, 11);
+    gui_data.imu_data.gyro.x = (int16_t)decode16(data, 13);
+
+    gui_data.new_IMU_data = true;
     return true;
 }
 
@@ -67,6 +88,7 @@ bool SerialDecoder::decodeAttitude(const QByteArray &data, GUIData &gui_data)
     gui_data.attitude.q2 = 0.0001 * ((int16_t) decode16(data, 7));
     gui_data.attitude.q3 = 0.0001 * ((int16_t) decode16(data, 9));
 
+    gui_data.new_attitude = true;
     return true;
 }
 

@@ -41,6 +41,7 @@ signals:
 private slots:
     void requestStatus();
     void requestRC();
+    void requestIMU();
     void requestAttitude();
 
     void readData();
@@ -48,7 +49,7 @@ private:
 
     void init();
     void updateStatus(const char * const dataIn);
-    void writeHeader(char * const buffer, uint8_t cmd);
+    void requestCmd(uint8_t cmd);
 
     QSerialPort* serialPort_;
     QTimer* timer_Status_, *timer_RC_, *timer_IMU, *timer_Attitude;

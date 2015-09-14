@@ -44,9 +44,13 @@ void SerialCommThread::init()
     this->timer_Status_->start(1000.0 / UPDATE_RATE_STATUS);
 
 
-    this->timer_RC_ = new QTimer(this);
-    connect(this->timer_RC_, SIGNAL(timeout()), this, SLOT(requestRC()));
-    this->timer_RC_->start(1000.0 / UPDATE_RATE_RC);
+//    this->timer_RC_ = new QTimer(this);
+//    connect(this->timer_RC_, SIGNAL(timeout()), this, SLOT(requestRC()));
+//    this->timer_RC_->start(1000.0 / UPDATE_RATE_RC);
+
+//    this->timer_IMU = new QTimer(this);
+//    connect(this->timer_IMU, SIGNAL(timeout()), this, SLOT(requestIMU()));
+//    this->timer_IMU->start(1000.0 / UPDATE_RATE_IMU);
 
     this->timer_Attitude = new QTimer(this);
     connect(this->timer_Attitude , SIGNAL(timeout()), this, SLOT(requestAttitude()));
@@ -59,27 +63,33 @@ void SerialCommThread::init()
 
 void SerialCommThread::requestStatus()
 {
-    this->writeHeader(this->dataOut, TELEMETRY_CMD_OUT_STATUS);
-    this->serialPort_->write(this->dataOut, 3);
+    this->requestCmd(TELEMETRY_CMD_OUT_STATUS);
 }
 
 void SerialCommThread::requestRC()
 {
-    this->writeHeader(this->dataOut, TELEMETRY_CMD_OUT_RC);
-    this->serialPort_->write(this->dataOut, 3);
+    this->requestCmd(TELEMETRY_CMD_OUT_RC);
+}
+
+void SerialCommThread::requestIMU()
+{
+    this->requestCmd(TELEMETRY_CMD_OUT_IMU);
 }
 
 void SerialCommThread::requestAttitude()
 {
-    this->writeHeader(this->dataOut, TELEMETRY_CMD_OUT_ATTITUDE);
-    this->serialPort_->write(this->dataOut, 3);
+    this->requestCmd(TELEMETRY_CMD_OUT_ATTITUDE);
 }
 
-void SerialCommThread::writeHeader(char * const buffer, uint8_t cmd)
+void SerialCommThread::requestCmd(uint8_t cmd)
 {
-    buffer[0] = this->magic_word_[0];
-    buffer[1] = this->magic_word_[1];
-    buffer[2] = cmd;
+    // Fill data buffer
+    this->dataOut[0] = this->magic_word_[0];
+    this->dataOut[1] = this->magic_word_[1];
+    this->dataOut[2] = cmd;
+
+    // Write to serial port
+    this->serialPort_->write(this->dataOut, 3);
 }
 
 void SerialCommThread::readData()

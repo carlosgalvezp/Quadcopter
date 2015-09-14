@@ -16,6 +16,8 @@ public:
 
 private:
     QCustomPlot * plot_;
+    double t0;
+    int n_time_points;
 
     QVector<QVector<double> > graphs_data_;
     QVector<double> time_;

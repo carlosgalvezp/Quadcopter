@@ -109,7 +109,7 @@ uint8_t I2C::writeByte(uint8_t data)
 	I2C::waitUntilReady();
 
 	// Check status
-	switch (I2C::checkTWSR())
+	switch (checkTWSR())
 	{
 		case I2C_STATE_DATA_W_ACK:
 #ifdef I2C_DEBUG
@@ -142,7 +142,7 @@ uint8_t I2C::readByte(uint8_t * const data, uint8_t read_ack)
 
 	if (read_ack == I2C_READ_SEND_ACK)
 	{
-		if (I2C::checkTWSR() != I2C_STATE_DATA_R_ACK)
+		if (checkTWSR() != I2C_STATE_DATA_R_ACK)
 		{
 #ifdef I2C_DEBUG
 			Serial.println("Read byte, sent ACK, but something failed");
@@ -156,7 +156,7 @@ uint8_t I2C::readByte(uint8_t * const data, uint8_t read_ack)
 	}
 	else if (read_ack == I2C_READ_SEND_NACK)
 	{
-		if (I2C::checkTWSR() != I2C_STATE_DATA_R_NACK)
+		if (checkTWSR() != I2C_STATE_DATA_R_NACK)
 		{
 #ifdef I2C_DEBUG
 			Serial.println("Read byte, sent NACK, but something failed");
@@ -223,13 +223,8 @@ uint8_t I2C::readReg(uint8_t dev_address, uint8_t reg, uint8_t * const data, siz
 
 inline uint8_t I2C::waitUntilReady()
 {
-	uint8_t counter = -1; // Will be the maximum value
+	uint8_t counter = 255; 
 	while (!(TWCR & (1 << TWINT)) && counter-- > 0);
 
 	return (counter == 0);  // Timeout
-}
-
-inline uint8_t I2C::checkTWSR()
-{
-	return TWSR & I2C_TWSR_READ_MASK;
 }

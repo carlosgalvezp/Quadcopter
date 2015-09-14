@@ -44,9 +44,7 @@ private slots:
 private:
     Ui::CriusGUI *ui;
 
-    TimePlot *acc_plot_;
-    TimePlot *gyro_plot_;
-    TimePlot *mag_plot_;
+    TimePlot *imu_plot;
 
     bool active_;
 

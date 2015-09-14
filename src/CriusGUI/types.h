@@ -3,6 +3,21 @@
 
 #include <stdint.h>
 
+struct Vec3i16
+{
+    int16_t x;
+    int16_t y;
+    int16_t z;
+};
+
+struct Quaternion
+{
+    double q0;
+    double q1;
+    double q2;
+    double q3;
+};
+
 struct StatusData
 {
     uint32_t timeStamp;
@@ -21,13 +36,13 @@ struct RCData
     uint16_t aux4;
 };
 
-struct Quaternion
+struct IMUData
 {
-    double q0;
-    double q1;
-    double q2;
-    double q3;
+    Vec3i16 acc;
+    Vec3i16 gyro;
 };
+
+
 
 #endif // TYPES
 

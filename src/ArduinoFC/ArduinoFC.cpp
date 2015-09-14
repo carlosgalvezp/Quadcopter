@@ -18,5 +18,6 @@ void loop()
 	//Test::testTelemetry(&state_);
 	//Test::testOutput();
 	Test::testWholeSystem(&state_);
-	delayMicroseconds(CYCLE_TIME_US);
+	//delayMicroseconds(CYCLE_TIME_US);
+	//delay(500);
 }
