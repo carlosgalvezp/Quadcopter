@@ -52,9 +52,13 @@ void SerialCommThread::init()
 //    connect(this->timer_IMU, SIGNAL(timeout()), this, SLOT(requestIMU()));
 //    this->timer_IMU->start(1000.0 / UPDATE_RATE_IMU);
 
-    this->timer_Attitude = new QTimer(this);
-    connect(this->timer_Attitude , SIGNAL(timeout()), this, SLOT(requestAttitude()));
-    this->timer_Attitude ->start(1000.0 / UPDATE_RATE_ATTITUDE);
+//    this->timer_Attitude = new QTimer(this);
+//    connect(this->timer_Attitude , SIGNAL(timeout()), this, SLOT(requestAttitude()));
+//    this->timer_Attitude ->start(1000.0 / UPDATE_RATE_ATTITUDE);
+
+    this->timer_control = new QTimer(this);
+    connect(this->timer_control, SIGNAL(timeout()), this, SLOT(requestMotors()));
+    this->timer_control->start(1000.0 / UPDATE_RATE_CONTROL);
 
 
     // ** Read interruption
@@ -79,6 +83,11 @@ void SerialCommThread::requestIMU()
 void SerialCommThread::requestAttitude()
 {
     this->requestCmd(TELEMETRY_CMD_OUT_ATTITUDE);
+}
+
+void SerialCommThread::requestMotors()
+{
+    this->requestCmd(TELEMETRY_CMD_OUT_CONTROL);
 }
 
 void SerialCommThread::requestCmd(uint8_t cmd)

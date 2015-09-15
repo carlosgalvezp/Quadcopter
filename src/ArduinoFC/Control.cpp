@@ -4,9 +4,9 @@ namespace Control
 {
 	PID controller_roll, controller_pitch, controller_yaw;
 
-	/* Assumptions: rpy_quad has angles in degrees
+	/* Assumptions: rpy_quad has angles in radians
 					RC_commands has throttle in microseconds, 
-					aileron, elevator and rudder in degrees
+					aileron, elevator and rudder in radians
 					motor_commands outputs value in microseconds between [CONTROL_U_MIN, CONTROL_U_MAX]
 
 	*/
@@ -15,8 +15,8 @@ namespace Control
 								uint16_t * const motor_commands)
 	{
 		// Get control commands for roll, pitch and yaw
-		uint16_t u_roll  = (uint16_t)controller_roll.computeU(rpy_quad->x, rc_commands->aileron);
-		uint16_t u_pitch = (uint16_t)controller_pitch.computeU(rpy_quad->y, rc_commands->elevator);
+		uint16_t u_roll  = (uint16_t)controller_roll.computeU(rpy_quad->x,  (rc_commands->aileron -  RC_IDDLE) * TILT_MAX_RAD);
+		uint16_t u_pitch = (uint16_t)controller_pitch.computeU(rpy_quad->y, (rc_commands->elevator - RC_IDDLE) * TILT_MAX_RAD);
 		uint16_t u_yaw   = (uint16_t)controller_yaw.computeU(rpy_quad->z, rc_commands->rudder);
 
 		// Compute output

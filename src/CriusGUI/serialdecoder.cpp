@@ -27,6 +27,9 @@ bool SerialDecoder::decodeData(const QByteArray &data, GUIData &gui_data)
             case TELEMETRY_CMD_OUT_ATTITUDE:
                 return this->decodeAttitude(data, gui_data);
 
+            case TELEMETRY_CMD_OUT_CONTROL:
+                return this->decodeMotors(data, gui_data);
+
         }
     }
     return false; // Failed to detect the magic word
@@ -89,6 +92,17 @@ bool SerialDecoder::decodeAttitude(const QByteArray &data, GUIData &gui_data)
     gui_data.attitude.q3 = 0.0001 * ((int16_t) decode16(data, 9));
 
     gui_data.new_attitude = true;
+    return true;
+}
+
+bool SerialDecoder::decodeMotors(const QByteArray &data, GUIData &gui_data)
+{
+    for(std::size_t i = 0; i < gui_data.motors.size(); ++i)
+    {
+        gui_data.motors[i] = decode16(data, 3 + 2*i);
+    }
+
+    gui_data.new_motors = true;
     return true;
 }
 

@@ -4,6 +4,7 @@
 #include <stdint.h>
 
 #include "types.h"
+#include <vector>
 
 struct GUIData
 {
@@ -21,6 +22,9 @@ struct GUIData
 
     Quaternion attitude;
     bool new_attitude;
+
+    std::vector<uint16_t> motors;
+    bool new_motors;
 
 };
 

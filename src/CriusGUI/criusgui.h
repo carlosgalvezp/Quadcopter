@@ -44,7 +44,7 @@ private slots:
 private:
     Ui::CriusGUI *ui;
 
-    TimePlot *imu_plot;
+    TimePlot *imu_plot, *control_plot;
 
     bool active_;
 

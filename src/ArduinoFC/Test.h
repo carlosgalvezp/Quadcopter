@@ -10,6 +10,7 @@
 #include "StateEstimation.h"
 #include "Telemetry.h"
 #include "Output.h"
+#include "Control.h"
 
 namespace Test
 {

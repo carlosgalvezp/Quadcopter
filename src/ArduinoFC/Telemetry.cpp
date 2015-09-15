@@ -125,6 +125,15 @@ void Telemetry::sendAttitude(const State_data_t * const data)
 	write16((int16_t)(10000 * data->attitude.q3));
 }
 
+void Telemetry::sendControl(const State_data_t * const data)
+{
+	write16(data->motors[0]);
+	write16(data->motors[1]);
+	write16(data->motors[2]);
+	write16(data->motors[3]);
+}
+
+
 void Telemetry::sendMagnetometer(const State_data_t * const data){}
 void Telemetry::sendBarometer(const State_data_t * const data){}
 void Telemetry::sendTemperature(const State_data_t * const data){}
@@ -132,7 +141,6 @@ void Telemetry::sendBattery(const State_data_t * const data){}
 void Telemetry::sendGPS(const State_data_t * const data){}
 void Telemetry::sendSonar(const State_data_t * const data){}
 
-void Telemetry::sendControl(const State_data_t * const data){}
 
 void Telemetry::receivePID(Config_t * const data){}
 

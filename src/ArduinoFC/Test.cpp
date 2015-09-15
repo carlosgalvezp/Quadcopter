@@ -91,10 +91,11 @@ void Test::testStateEstimation()
 	// Read sensor data
 	Sensor_data_t sensor_data;
 	quaternion_t q;
+	vec_float_3_t rpy;
 	IMU::getData(&sensor_data.imu);
 	
 	// Estimate attitude
-	StateEstimation::estimateAttitude(&sensor_data, &q);
+	StateEstimation::estimateAttitude(&sensor_data, &q, &rpy);
 
 	// Send over telemetry
 	//Telemetry::sendAttitude(&q);	
@@ -149,18 +150,20 @@ void Test::testWholeSystem(State_data_t * const state)
 	// Get timeStamp
 	state->status.timeStamp = micros();
 
-	// Get RC
+	// RC
 	RC::getReadings(&state->rc);
 
-	// Get IMU
+	// IMU
 	IMU::getData(&state->sensorData.imu);
 
 	// State estimation
-	StateEstimation::estimateAttitude(&state->sensorData, &state->attitude);
+	StateEstimation::estimateAttitude(&state->sensorData, &state->attitude, &state->attitude_rpy);
 
 	// Control
+	Control::computeControlCommands(&state->attitude_rpy, &state->rc, &state->motors[0]);
 
 	// Output
+	Output::writePWM(&state->motors[0]);
 
 	// Send data
 	Telemetry::sendData(state);

@@ -18,6 +18,7 @@
 #define UPDATE_RATE_IMU             25      // Hz
 #define UPDATE_RATE_RC              20      // Hz
 #define UPDATE_RATE_ATTITUDE        50      // Hz
+#define UPDATE_RATE_CONTROL         50      // Hz
 
 #define T_REQUEST_WAIT_MS    5
 
@@ -43,6 +44,7 @@ private slots:
     void requestRC();
     void requestIMU();
     void requestAttitude();
+    void requestMotors();
 
     void readData();
 private:
@@ -52,7 +54,7 @@ private:
     void requestCmd(uint8_t cmd);
 
     QSerialPort* serialPort_;
-    QTimer* timer_Status_, *timer_RC_, *timer_IMU, *timer_Attitude;
+    QTimer* timer_Status_, *timer_RC_, *timer_IMU, *timer_Attitude, *timer_control;
 
     char dataOut[TX_BUFFER_SIZE];
     char dataIn[RX_BUFFER_SIZE];

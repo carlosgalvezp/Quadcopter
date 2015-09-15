@@ -23,6 +23,7 @@ CriusGUI::CriusGUI(QWidget *parent) :
 
     // Initialize plots
     this->imu_plot= new TimePlot(this->ui->imu_plot,  this->ui->imu_plot->geometry().width()/2, 6);
+    this->control_plot = new TimePlot(this->ui->control_plot,  this->ui->control_plot->geometry().width()/2, 4);
 }
 
 CriusGUI::~CriusGUI()
@@ -103,5 +104,15 @@ void CriusGUI::updateGUI()
         this->ui->myGLWidget->updateRotation(-roll, -pitch);
 
         this->gui_data_.new_attitude = false;
+    }
+
+    if(this->gui_data_.new_motors)
+    {
+        this->control_plot->addPoint({(double)this->gui_data_.motors[0],
+                                      (double)this->gui_data_.motors[1],
+                                      (double)this->gui_data_.motors[2],
+                                      (double)this->gui_data_.motors[3]});
+
+        this->gui_data_.new_motors = false;
     }
 }
