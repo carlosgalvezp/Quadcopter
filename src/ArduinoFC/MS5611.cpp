@@ -3,10 +3,14 @@
 // Coefficients read from PROM to be used in calculations
 uint16_t prom_coefficients[BARO_PROM_N_COEFFS];
 
+// Buffer to read I2C data
+uint8_t data[BARO_READ_N_BYTES];
+
 // Memory of values in case we don't have time to read
 float old_pressure, old_temperature;
 uint32_t d1, d2;
 
+// Conversion state
 uint8_t state;
 unsigned long last_t;
 
@@ -28,7 +32,6 @@ uint8_t Barometer::getData(float * const pressure, float * const temperature)
 {
 	*pressure = old_pressure;
 	*temperature = old_temperature;
-	uint8_t data[BARO_READ_N_BYTES];
 	
 	// State machine in order to avoid active wait when reading the sensor registers
 	switch (state)
@@ -67,7 +70,6 @@ uint8_t Barometer::getData(float * const pressure, float * const temperature)
 			}
 			return 1;
 		default:
-			Serial.println("Barometer in unknown state!");
 			return 1;
 	}
 }
@@ -76,7 +78,8 @@ void Barometer::computeValues(float * const pressure, float * const temperature)
 {
 	// Compute pressure and temperature according to datasheet
 	int32_t dT = (int32_t)d2 - ((int32_t)prom_coefficients[4] << 8);
-	*temperature = 0.01f * (2000 + ((dT * (int32_t)prom_coefficients[5]) >> 23));
+	//*temperature = 0.01f * (2000 + ((dT * (int32_t)prom_coefficients[5]) >> 23));
+	*temperature = 0; // Not interested in computing temperature, let's save some CPU cycles!
 
 	int64_t off = ((int64_t)prom_coefficients[1] << 16) + (((int64_t)prom_coefficients[3] * dT) >> 7);
 	int64_t sens = ((int64_t)prom_coefficients[0] << 15) + (((int64_t)prom_coefficients[2] * dT) >> 8);

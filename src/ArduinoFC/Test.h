@@ -21,9 +21,17 @@ namespace Test
 	void testCompass();
 	void testStateEstimation();
 	void testOutput();
+	void testSonar();
 
 	void testWholeSystem(State_data_t * const state);
 
+	namespace Unit
+	{
+		void testAtan2Full(); 
+		void testAtan2();
+
+		void testQuaternionToRPY();
+	}
 }
 
 #endif

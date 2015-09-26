@@ -7,6 +7,7 @@
 #include "MPU6050.h"
 #include "HMC5883L.h"
 #include "MS5611.h"
+#include "HC-SR04.h"
 
 // ** Definitions ** 
 #define CPU_FREQUENCY		16000000L	// Hz
@@ -37,24 +38,24 @@
 #define PIN_M2				PE5		
 #define PIN_M3				PE3		
 #define PIN_M4				PH3		
-#define PIN_M5				PH4		
-#define PIN_M6				PH5		
-#define PIN_M7				PH6		
-#define PIN_M8				PB0
 
 // Motor control registers
 #define OUT_M1				OCR3B
 #define OUT_M2				OCR3C
 #define OUT_M3				OCR3A
 #define OUT_M4				OCR4A
-#define OUT_M5				OCR4B
-#define OUT_M6				OCR4C
 
+// Sonar
+#define PIN_SONAR_TRIGGER		PB5
+#define PIN_SONAR_ECHO			PB4
+#define SONAR_INT_NUMBER		PCINT4
+#define SONAR_CLOCK_PRESCALER	64
 namespace HAL
 {
 	void init();
 	void initGPIO();
 	void initRC();
 	void initMotors();
+	void initSonar();
 }
 #endif

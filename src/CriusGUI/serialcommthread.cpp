@@ -56,9 +56,9 @@ void SerialCommThread::init()
 //    connect(this->timer_Attitude , SIGNAL(timeout()), this, SLOT(requestAttitude()));
 //    this->timer_Attitude ->start(1000.0 / UPDATE_RATE_ATTITUDE);
 
-    this->timer_control = new QTimer(this);
-    connect(this->timer_control, SIGNAL(timeout()), this, SLOT(requestMotors()));
-    this->timer_control->start(1000.0 / UPDATE_RATE_CONTROL);
+//    this->timer_control = new QTimer(this);
+//    connect(this->timer_control, SIGNAL(timeout()), this, SLOT(requestMotors()));
+//    this->timer_control->start(1000.0 / UPDATE_RATE_CONTROL);
 
 
     // ** Read interruption

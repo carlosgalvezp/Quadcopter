@@ -23,6 +23,9 @@ void HAL::init()
 	// Init RC
 	HAL::initRC();
 	
+	// Init Sonar
+	HAL::initSonar();
+
 	// Init Serial
 	Serial.begin(SERIAL0_BAUDRATE);
 
@@ -56,12 +59,8 @@ void HAL::initMotors()
 			(1 << PIN_M2) |
 			(1 << PIN_M3);
 
-	DDRH |= (1 << PIN_M4) |
-			(1 << PIN_M5) |
-			(1 << PIN_M6) |
-			(1 << PIN_M7);
+	DDRH |= (1 << PIN_M4);
 
-	DDRB |= (1 << PIN_M8);
 
 	// --- Configure Timers 3 and 4 ---
 	// Non-inverted output, TOP = ICRn
@@ -75,4 +74,35 @@ void HAL::initMotors()
 	// Set TOP value to ICRn to generate correct ESC_FREQUENCY
 	ICR3 = CPU_FREQUENCY / (2 * ESC_FREQUENCY); 
 	ICR4 = CPU_FREQUENCY / (2 * ESC_FREQUENCY);
+}
+
+void HAL::initSonar()
+{
+	// Disable power reduction for Timer 1
+	PRR0 &= ~(1 << PRTIM1);
+
+	// Set trigger pin as output, echo as input
+	DDRB &= ~(1 << PIN_SONAR_ECHO);		// Echo as input
+	PORTB |= (1 << PIN_SONAR_ECHO);		// Enable pull-up for echo pin
+	DDRB |= (1 << PIN_SONAR_TRIGGER);	// Trigger as output
+		
+	// --- Configure Timer 1-A for PWM signal ---
+	// Non-inverted output, TOP = ICRn
+	TCCR1A = 0b10000010;
+	TCCR1B = 0b00011011;
+
+	// Set TOP value to ICR1 to generate correct SONAR_FREQUENCY
+	ICR1 = CPU_FREQUENCY / (SONAR_CLOCK_PRESCALER * SONAR_FREQUENCY) - 1;
+
+	// Set OCR1A to generate correct pulse width
+	OCR1A = (SONAR_T_TRIGGER_HIGH_US) / (1000000L/(CPU_FREQUENCY / SONAR_CLOCK_PRESCALER));
+
+	// Enable interrupts PCIE0, since the sonar echo pin is connected to PCINT4
+	PCICR |= (1 << PCIE0);
+
+	// Enable INT4 within PCIE0
+	PCMSK2 = (1 << SONAR_INT_NUMBER);
+
+	// Enable interrupt for Output Compare in Timer 1-A
+	TIMSK1 |= (1 << OCIE1A);
 }

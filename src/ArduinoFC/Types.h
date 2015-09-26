@@ -52,7 +52,8 @@ typedef struct
 	IMU_data_t imu;
 	vec_float_3_t mag;
 	vec_int16_3_t mag_raw;
-	uint16_t pressure;
+	float pressure;
+	float temperature;
 }Sensor_data_t;
 
 typedef struct
