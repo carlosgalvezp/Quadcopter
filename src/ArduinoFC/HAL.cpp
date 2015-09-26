@@ -101,7 +101,7 @@ void HAL::initSonar()
 	PCICR |= (1 << PCIE0);
 
 	// Enable INT4 within PCIE0
-	PCMSK2 = (1 << SONAR_INT_NUMBER);
+	PCMSK0 = (1 << SONAR_INT_NUMBER);
 
 	// Enable interrupt for Output Compare in Timer 1-A
 	TIMSK1 |= (1 << OCIE1A);

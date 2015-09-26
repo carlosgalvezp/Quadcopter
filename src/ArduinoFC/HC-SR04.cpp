@@ -2,7 +2,6 @@
 
 bool sentTrigger(false);
 bool measurementReady(false);
-unsigned long tTrigger(0);
 unsigned long tEcho(0);
 float distance_(0);
 uint8_t prevPortB(0);
@@ -42,7 +41,7 @@ ISR(PCINT0_vect)
 		}
 		else	// Falling edge
 		{
-			distance_ = 0.5f * SOUND_SPEED_CM_US * (micros() - tEcho);
+			distance_ = SOUND_SPEED_CM_US_2 * (micros() - tEcho);
 			measurementReady = true;
 			sentTrigger = false; 
 		}
