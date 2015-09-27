@@ -38,11 +38,14 @@ public slots:
 signals:
     void toggleSerial();
     void loadFCConfig();
+    void sendFCConfig(const QByteArray &data);
 
 private slots:
     void on_pushButton_clicked();
 
     void on_PushButton_Config_Load_clicked();
+
+    void on_PushButton_Config_Send_clicked();
 
 private:
     Ui::CriusGUI *ui;

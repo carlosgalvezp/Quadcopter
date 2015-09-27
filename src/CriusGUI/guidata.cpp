@@ -5,7 +5,8 @@ GUIData::GUIData():
     new_RC(false),
     new_IMU_data(false),
     new_attitude(false),
-    new_motors(false)
+    new_motors(false),
+    new_config(false)
 {
     motors = std::vector<uint16_t>(4);
 }

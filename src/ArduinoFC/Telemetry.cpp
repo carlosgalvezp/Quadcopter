@@ -86,8 +86,8 @@ void Telemetry::main(const State_data_t * const state, Config * const config)
 			}
 			// Send checksum
 			sendCheckSum();
-		}
-	}
+		} // config_in
+	} // n_bytes > 0
 }
 
 void Telemetry::sendStatus(const State_data_t * const data)
@@ -168,7 +168,7 @@ void Telemetry::sendConfig(const Config * const config)
 }
 
 void Telemetry::receiveConfig(Config * const data)
-{
+{		
 	checksum_ = 0;
 	// Verify checksum
 	uint8_t checksum = 0;
@@ -194,21 +194,21 @@ void Telemetry::receiveConfig(Config * const data)
 
 		// Store config
 		EEPROM::storeConfig(data);
-
-		// Send ACK
-		write8((uint8_t)magic_word_[0]);
-		write8((uint8_t)magic_word_[1]);
-		write8(TELEMETRY_ACK);
 	}
-	else
-	{
-		// Send NACK so that we the app will send data again
-		write8((uint8_t)magic_word_[0]);
-		write8((uint8_t)magic_word_[1]);
-		write8(TELEMETRY_NACK);
-	}
-	// Write checksum
-	sendCheckSum();
+	//	// Send ACK
+	//	write8((uint8_t)magic_word_[0]);
+	//	write8((uint8_t)magic_word_[1]);
+	//	write8(TELEMETRY_ACK);
+	//}
+	//else
+	//{
+	//	// Send NACK so that we the app will send data again
+	//	write8((uint8_t)magic_word_[0]);
+	//	write8((uint8_t)magic_word_[1]);
+	//	write8(TELEMETRY_NACK);
+	//}
+	//// Write checksum
+	//sendCheckSum();
 }
 
 void Telemetry::sendCheckSum()
@@ -232,14 +232,14 @@ void Telemetry::write32(uint32_t data)
 
 uint16_t Telemetry::read16(uint8_t ptr)
 {
-	return (((uint16_t)rx_data_buffer_[ptr    ] << 8) & 0xFF00) |
-		   (((uint16_t)rx_data_buffer_[ptr + 1]     ) & 0x00FF);			
+	return (((uint16_t)(rx_data_buffer_[ptr    ]) << 8) & 0xFF00) |
+		   (((uint16_t)(rx_data_buffer_[ptr + 1])     ) & 0x00FF);			
 }
 
 uint32_t Telemetry::read32(uint8_t ptr)
 {
-	return (((uint32_t)rx_data_buffer_[ptr    ] << 24) & 0xFF000000) |
-		   (((uint32_t)rx_data_buffer_[ptr + 1] << 16) & 0x00FF0000) |
-		   (((uint32_t)rx_data_buffer_[ptr + 2] <<  8) & 0x0000FF00) |
-		   (((uint32_t)rx_data_buffer_[ptr + 3]      ) & 0x000000FF);
+	return (((uint32_t)(rx_data_buffer_[ptr    ]) << 24) & 0xFF000000) |
+		   (((uint32_t)(rx_data_buffer_[ptr + 1]) << 16) & 0x00FF0000) |
+		   (((uint32_t)(rx_data_buffer_[ptr + 2]) <<  8) & 0x0000FF00) |
+		   (((uint32_t)(rx_data_buffer_[ptr + 3])      ) & 0x000000FF);
 }

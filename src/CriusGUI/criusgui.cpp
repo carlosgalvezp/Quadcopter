@@ -14,6 +14,8 @@ CriusGUI::CriusGUI(QWidget *parent) :
     serial_thread->moveToThread(thread);
     connect(thread, SIGNAL(started()), serial_thread, SLOT(process()));
     connect(this, SIGNAL(loadFCConfig()), serial_thread, SLOT(requestConfig()));
+    connect(this, SIGNAL(sendFCConfig(QByteArray)), serial_thread, SLOT(sendConfig(QByteArray)));
+
     connect(serial_thread, SIGNAL(sendData(QByteArray)), this, SLOT(getSerialData(QByteArray)));
 
     thread->start();
@@ -140,4 +142,26 @@ void CriusGUI::updateGUI()
 void CriusGUI::on_PushButton_Config_Load_clicked()
 {
     emit loadFCConfig(); // Call Serial Communication thread
+}
+
+void CriusGUI::on_PushButton_Config_Send_clicked()
+{
+    // Update gui_data with the lastest configuration
+    this->gui_data_.config.pid_roll.kp = this->ui->Config_PID_Roll_KP->toPlainText().toFloat();
+    this->gui_data_.config.pid_roll.kd = this->ui->Config_PID_Roll_KD->toPlainText().toFloat();
+    this->gui_data_.config.pid_roll.ki = this->ui->Config_PID_Roll_KI->toPlainText().toFloat();
+
+    this->gui_data_.config.pid_pitch.kp = this->ui->Config_PID_Pitch_KP->toPlainText().toFloat();
+    this->gui_data_.config.pid_pitch.kd = this->ui->Config_PID_Pitch_KD->toPlainText().toFloat();
+    this->gui_data_.config.pid_pitch.ki = this->ui->Config_PID_Pitch_KI->toPlainText().toFloat();
+
+    this->gui_data_.config.pid_yaw.kp = this->ui->Config_PID_Yaw_KP->toPlainText().toFloat();
+    this->gui_data_.config.pid_yaw.kd = this->ui->Config_PID_Yaw_KD->toPlainText().toFloat();
+    this->gui_data_.config.pid_yaw.ki = this->ui->Config_PID_Yaw_KI->toPlainText().toFloat();
+
+
+    QByteArray data;
+    this->gui_data_.config.serialize(data);
+
+    emit sendFCConfig(data);
 }

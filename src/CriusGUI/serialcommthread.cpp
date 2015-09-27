@@ -40,9 +40,9 @@ void SerialCommThread::init()
     std::cout << "OK" << std::endl;
     // ** Initialize timers
 
-//    this->timer_Status_ = new QTimer(this);
-//    connect(this->timer_Status_, SIGNAL(timeout()), this, SLOT(requestStatus()));
-//    this->timer_Status_->start(1000.0 / UPDATE_RATE_STATUS);
+    this->timer_Status_ = new QTimer(this);
+    connect(this->timer_Status_, SIGNAL(timeout()), this, SLOT(requestStatus()));
+    this->timer_Status_->start(1000.0 / UPDATE_RATE_STATUS);
 
 //    this->timer_RC_ = new QTimer(this);
 //    connect(this->timer_RC_, SIGNAL(timeout()), this, SLOT(requestRC()));
@@ -95,6 +95,30 @@ void SerialCommThread::requestConfig()
     this->requestCmd(TELEMETRY_CMD_OUT_CONFIG);
 }
 
+void SerialCommThread::sendConfig(const QByteArray &data)
+{
+    // Define package size
+    uint8_t data_size = 4 + data.size(); // Header + data + checksum
+    uint8_t checksum = 0;
+
+    // Fill header
+    this->dataOut[0] = this->magic_word_[0];     checksum ^= this->dataOut[0];
+    this->dataOut[1] = this->magic_word_[1];     checksum ^= this->dataOut[1];
+    this->dataOut[2] = TELEMETRY_CMD_IN_CONFIG;  checksum ^= this->dataOut[2];
+
+    // Fill data
+    for(int i = 0; i < data.size(); ++i)
+    {
+        this->dataOut[3+i] = data[i];
+        checksum ^= data[i];
+    }
+
+    this->dataOut[data_size - 1] = checksum;
+
+    // Send
+    this->serialPort_->write(this->dataOut, data_size);
+}
+
 void SerialCommThread::requestCmd(uint8_t cmd)
 {
     // Fill data buffer
@@ -109,6 +133,7 @@ void SerialCommThread::requestCmd(uint8_t cmd)
 void SerialCommThread::readData()
 {
     int n_bytes = this->serialPort_->read(this->dataIn, RX_BUFFER_SIZE);
+
     std::cout << "READ BYTES: "<< n_bytes << std::endl;
     QByteArray out_array(this->dataIn, n_bytes);
 

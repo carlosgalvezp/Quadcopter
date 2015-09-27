@@ -36,6 +36,7 @@ public:
 public slots:
     void process();
     void requestConfig();
+    void sendConfig(const QByteArray &data);
 
 signals:
     void sendData(const QByteArray &data);

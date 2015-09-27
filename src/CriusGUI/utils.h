@@ -1,7 +1,9 @@
 #ifndef UTILS_H
 #define UTILS_H
 
-#include <cmath>
+#include <math.h>
+#include <stdint.h>
+#include <QByteArray>
 
 
 #ifndef M_PI
@@ -14,6 +16,8 @@ namespace Utils
 {
     void quaternionToRPY(double q0, double q1, double q2, double q3,
                          double * const roll, double * const pitch, double * const yaw);
+
+    void serializeUint32(uint32_t val, QByteArray &out, std::size_t ptr);
 }
 
 #endif // UTILS_H
