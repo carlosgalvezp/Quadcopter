@@ -2,11 +2,15 @@
 
 unsigned long t1, t2;
 State_data_t state_;
+Config config_;
 
 void setup() 
 {
 	// Init hardware
 	HAL::init();
+
+	// Load configuration
+	EEPROM::loadConfig(&config_);
 }
 
 void loop() 

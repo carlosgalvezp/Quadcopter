@@ -6,13 +6,13 @@
 #include "Telemetry_Protocol.h"
 #include "Config.h"
 
-#define TELEMETRY_RX_BUFFER_SIZE 50
+#define TELEMETRY_RX_BUFFER_SIZE 100
 
 #define write8(data) Serial.write(data); checksum_ ^= data;
 
 namespace Telemetry
 {
-	void sendData(const State_data_t * const data);
+	void main(const State_data_t * const state, Config * const config);
 
 	void sendStatus(const State_data_t * const data);
 
@@ -27,12 +27,17 @@ namespace Telemetry
 
 	void sendAttitude(const State_data_t * const data);
 	void sendControl(const State_data_t * const data);
+	void sendConfig(const Config * const data);
 
-	void receivePID(Config * const data);
+
+	void receiveConfig(Config * const config);
 
 	void sendCheckSum();
 
 	void write16(uint16_t data);
 	void write32(uint32_t data);
+
+	uint16_t read16(uint8_t ptr);
+	uint32_t read32(uint8_t ptr);
 }
 #endif

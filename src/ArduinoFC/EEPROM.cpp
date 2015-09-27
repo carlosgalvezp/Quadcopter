@@ -1,6 +1,45 @@
 #include "EEPROM.h"
 
 
+void EEPROM::loadConfig(Config *config)
+{
+	config->pid_roll.kp = (float)EEPROM::read32(EEPROM_ADDR_PID_ROLL_KP);
+	config->pid_roll.kd = (float)EEPROM::read32(EEPROM_ADDR_PID_ROLL_KD);
+	config->pid_roll.ki = (float)EEPROM::read32(EEPROM_ADDR_PID_ROLL_KI);
+
+	config->pid_pitch.kp = (float)EEPROM::read32(EEPROM_ADDR_PID_PITCH_KP);
+	config->pid_pitch.kd = (float)EEPROM::read32(EEPROM_ADDR_PID_PITCH_KD);
+	config->pid_pitch.ki = (float)EEPROM::read32(EEPROM_ADDR_PID_PITCH_KI);
+
+	config->pid_yaw.kp = (float)EEPROM::read32(EEPROM_ADDR_PID_YAW_KP);
+	config->pid_yaw.kd = (float)EEPROM::read32(EEPROM_ADDR_PID_YAW_KD);
+	config->pid_yaw.ki = (float)EEPROM::read32(EEPROM_ADDR_PID_YAW_KI);
+}
+
+void EEPROM::storeConfig(const Config *config)
+{
+	// PID configuration
+	EEPROM::write32(EEPROM_ADDR_PID_ROLL_KP, (uint32_t)config->pid_roll.kp);
+	EEPROM::write32(EEPROM_ADDR_PID_ROLL_KD, (uint32_t)config->pid_roll.kd);
+	EEPROM::write32(EEPROM_ADDR_PID_ROLL_KI, (uint32_t)config->pid_roll.ki);
+
+	EEPROM::write32(EEPROM_ADDR_PID_PITCH_KP, (uint32_t)config->pid_pitch.kp);
+	EEPROM::write32(EEPROM_ADDR_PID_PITCH_KD, (uint32_t)config->pid_pitch.kd);
+	EEPROM::write32(EEPROM_ADDR_PID_PITCH_KI, (uint32_t)config->pid_pitch.ki);
+
+	EEPROM::write32(EEPROM_ADDR_PID_YAW_KP, (uint32_t)config->pid_yaw.kp);
+	EEPROM::write32(EEPROM_ADDR_PID_YAW_KD, (uint32_t)config->pid_yaw.kd);
+	EEPROM::write32(EEPROM_ADDR_PID_YAW_KI, (uint32_t)config->pid_yaw.ki);
+}
+
+void EEPROM::clear()
+{
+	for (uint16_t i = 0; i < EEPROM_MAX_SIZE_BYTES; ++i)
+	{
+		EEPROM::write(i, 0x00);
+	}
+}
+
 uint8_t	EEPROM::read(uint16_t addr)
 {
 	return eeprom_read_byte( (uint8_t *) addr);

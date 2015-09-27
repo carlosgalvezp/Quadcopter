@@ -77,13 +77,13 @@ void Test::testSensorRead()
 	Serial.println("--------------------");
 }
 
-void Test::testTelemetry(State_data_t * const state)
+void Test::testTelemetry(State_data_t * const state, Config * const config)
 {
 	// Get timeStamp
 	state->status.timeStamp = micros();
 
 	// Send data
-	Telemetry::sendData(state);	
+	Telemetry::main(state, config);	
 }
 
 void Test::testStateEstimation()
@@ -155,7 +155,7 @@ void Test::testSonar()
 	delay(100);
 }
 
-void Test::testWholeSystem(State_data_t * const state)
+void Test::testWholeSystem(State_data_t * const state, Config * const config)
 {
 	//Serial.println("----------------------------------------");
 	// Get timeStamp
@@ -195,7 +195,7 @@ void Test::testWholeSystem(State_data_t * const state)
 	//Serial.println("Output: " + String(micros() - t1));
 
 	// Send data
-	Telemetry::sendData(state);
+	Telemetry::main(state, config);
 
 	// Cycle time
 	state->status.cycleTime = (uint16_t)(micros() - state->status.timeStamp);

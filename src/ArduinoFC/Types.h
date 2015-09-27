@@ -82,5 +82,10 @@ typedef struct
 	
 }State_data_t;
 
-
+typedef struct
+{
+	float kp;
+	float kd;
+	float ki;
+}PID_Params_t;
 #endif
