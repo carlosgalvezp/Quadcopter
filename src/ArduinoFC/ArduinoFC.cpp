@@ -14,7 +14,7 @@ void loop()
 	//Test::testRC();
 	//Test::testCompass();
 	//Test::testSensorRead();
-	Test::testSonar();
+	//Test::testSonar();
 	//Test::testStateEstimation();
 	//Test::testTelemetry(&state_);
 	//Test::testOutput();
@@ -22,5 +22,6 @@ void loop()
 	//Test::Unit::testAtan2();
 	//Test::Unit::testAtan2Full();
 	//Test::Unit::testQuaternionToRPY();
+	Test::Unit::testEEPROM();
 	//delay(500);
 }

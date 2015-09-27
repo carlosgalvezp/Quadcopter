@@ -15,8 +15,8 @@ namespace Control
 								uint16_t * const motor_commands)
 	{
 		// Get control commands for roll, pitch and yaw
-		uint16_t u_roll  = (uint16_t)controller_roll.computeU(rpy_quad->x,  (rc_commands->aileron -  RC_IDDLE) * TILT_MAX_RAD);
-		uint16_t u_pitch = (uint16_t)controller_pitch.computeU(rpy_quad->y, (rc_commands->elevator - RC_IDDLE) * TILT_MAX_RAD);
+		uint16_t u_roll  = (uint16_t)controller_roll.computeU(rpy_quad->x,  (rc_commands->aileron -  RC_IDDLE) * TILT_MAX_DEG);
+		uint16_t u_pitch = (uint16_t)controller_pitch.computeU(rpy_quad->y, (rc_commands->elevator - RC_IDDLE) * TILT_MAX_DEG);
 		uint16_t u_yaw   = (uint16_t)controller_yaw.computeU(rpy_quad->z, rc_commands->rudder);
 
 		// Compute output

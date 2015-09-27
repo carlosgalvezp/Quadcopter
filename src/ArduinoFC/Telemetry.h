@@ -4,6 +4,7 @@
 #include "Arduino.h"
 #include "ArduinoFC.h"
 #include "Telemetry_Protocol.h"
+#include "Config.h"
 
 #define TELEMETRY_RX_BUFFER_SIZE 50
 
@@ -27,7 +28,7 @@ namespace Telemetry
 	void sendAttitude(const State_data_t * const data);
 	void sendControl(const State_data_t * const data);
 
-	void receivePID(Config_t * const data);
+	void receivePID(Config * const data);
 
 	void sendCheckSum();
 

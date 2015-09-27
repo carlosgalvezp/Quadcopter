@@ -82,8 +82,5 @@ typedef struct
 	
 }State_data_t;
 
-typedef struct
-{
-	float pid; // TO-DO: complete
-}Config_t;
+
 #endif

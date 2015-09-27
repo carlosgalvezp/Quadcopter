@@ -11,6 +11,7 @@
 #include "Telemetry.h"
 #include "Output.h"
 #include "Control.h"
+#include "EEPROM.h"
 
 namespace Test
 {
@@ -27,6 +28,7 @@ namespace Test
 
 	namespace Unit
 	{
+		void testEEPROM();
 		void testAtan2Full(); 
 		void testAtan2();
 

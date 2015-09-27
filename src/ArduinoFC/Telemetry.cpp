@@ -142,7 +142,7 @@ void Telemetry::sendGPS(const State_data_t * const data){}
 void Telemetry::sendSonar(const State_data_t * const data){}
 
 
-void Telemetry::receivePID(Config_t * const data){}
+void Telemetry::receivePID(Config * const data){}
 
 void Telemetry::sendCheckSum()
 {

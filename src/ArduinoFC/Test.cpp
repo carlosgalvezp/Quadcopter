@@ -288,3 +288,22 @@ void Test::Unit::testQuaternionToRPY()
 	}
 }
 
+void Test::Unit::testEEPROM()
+{
+	// Fill memory with numbers
+	Serial.println("Writing to EEPROM...");
+	for (uint16_t i = 0; i < EEPROM_MAX_SIZE_BYTES; ++i)
+	{
+		EEPROM::write(i, EEPROM_MAX_SIZE_BYTES - i);
+	}
+	Serial.println("Finished writing to EEPROM");
+
+	// Read and display it
+	for (uint16_t i = 0; i < EEPROM_MAX_SIZE_BYTES; ++i)
+	{
+		uint8_t val = EEPROM::read(i);
+		Serial.println("Value at " + String(i) + ": " + String(val));
+		delay(100);
+	}
+}
+

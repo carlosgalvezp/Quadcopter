@@ -18,21 +18,21 @@ bool Sonar::getDistance(float *distance)
 
 ISR(PCINT0_vect) 
 {
-	// Identify which bit interrupted by XORing to previous one
-	uint8_t currentPortB = PINB;
-	uint8_t diff = prevPortB ^ currentPortB;
-	uint8_t bitNo = 0;
-	diff >>= 1;
-	while (diff > 0)
-	{
-		diff >>= 1;
-		++bitNo;
-	}
+	//// Identify which bit interrupted by XORing to previous one
+	//uint8_t currentPortB = PINB;
+	//uint8_t diff = prevPortB ^ currentPortB;
+	//uint8_t bitNo = 0;
+	//diff >>= 1;
+	//while (diff > 0)
+	//{
+	//	diff >>= 1;
+	//	++bitNo;
+	//}
 
-	if (sentTrigger && bitNo == SONAR_INT_NUMBER)
+	if (sentTrigger) // && bitNo == SONAR_INT_NUMBER)
 	{
 		// Read current value
-		bool val = (currentPortB & (1 << bitNo)) > 0;
+		bool val = (PINB & (1 << PIN_SONAR_ECHO)) > 0;
 		
 		// Update timers
 		if (val) // Rising edge
@@ -43,11 +43,11 @@ ISR(PCINT0_vect)
 		{
 			distance_ = SOUND_SPEED_CM_US_2 * (micros() - tEcho);
 			measurementReady = true;
-			sentTrigger = false; 
+			sentTrigger = false;  // This way, we only read the first echo
 		}
 	}
-	// Store current port K for the next iteration
-	prevPortB = currentPortB;
+	//// Store current port K for the next iteration
+	//prevPortB = currentPortB;
 }
 
 // This is executed whenever we finish sending the trigger
