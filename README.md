@@ -1,2 +1,2 @@
 # Quadcopter
-Source code Quadcopter Flight Controller, based on Crius AIOP (Atmega 2560) + Raspberry Pi 2
+Source code Quadcopter Flight Controller, based on Crius AIOP v2.0 (Atmega 2560) + potentially Raspberry Pi 2
