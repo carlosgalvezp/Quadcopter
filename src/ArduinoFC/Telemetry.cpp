@@ -80,6 +80,9 @@ void Telemetry::main(const State_data_t * const state, Config * const config)
 				case TELEMETRY_CMD_OUT_CONTROL:
 					sendControl(state);
 					break;
+				case TELEMETRY_CMD_OUT_CONFIG:
+					sendConfig(config);
+					break;
 			}
 			// Send checksum
 			sendCheckSum();

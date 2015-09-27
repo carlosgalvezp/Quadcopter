@@ -29,6 +29,8 @@ bool SerialDecoder::decodeData(const QByteArray &data, GUIData &gui_data)
 
             case TELEMETRY_CMD_OUT_CONTROL:
                 return this->decodeMotors(data, gui_data);
+            case TELEMETRY_CMD_OUT_CONFIG:
+                return this->decodeConfig(data, gui_data);
 
         }
     }
@@ -103,6 +105,25 @@ bool SerialDecoder::decodeMotors(const QByteArray &data, GUIData &gui_data)
     }
 
     gui_data.new_motors = true;
+    return true;
+}
+
+bool SerialDecoder::decodeConfig(const QByteArray &data, GUIData &gui_data)
+{
+    gui_data.config.pid_roll.kp = (float) decode32(data, 3);
+    gui_data.config.pid_roll.kd = (float) decode32(data, 7);
+    gui_data.config.pid_roll.ki = (float) decode32(data, 11);
+
+    gui_data.config.pid_pitch.kp = (float) decode32(data, 15);
+    gui_data.config.pid_pitch.kd = (float) decode32(data, 19);
+    gui_data.config.pid_pitch.ki = (float) decode32(data, 23);
+
+    gui_data.config.pid_yaw.kp = (float) decode32(data, 27);
+    gui_data.config.pid_yaw.kd = (float) decode32(data, 31);
+    gui_data.config.pid_yaw.ki = (float) decode32(data, 35);
+
+    gui_data.new_config = true;
+
     return true;
 }
 

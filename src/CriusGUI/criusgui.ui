@@ -398,6 +398,200 @@
      <string>Output</string>
     </property>
    </widget>
+   <widget class="QLabel" name="label_21">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>790</y>
+      <width>71</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Roll</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_22">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>850</y>
+      <width>71</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Pitch</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_23">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>910</y>
+      <width>71</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Yaw</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_24">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>740</y>
+      <width>31</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>P</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_25">
+    <property name="geometry">
+     <rect>
+      <x>230</x>
+      <y>740</y>
+      <width>31</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>I</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_26">
+    <property name="geometry">
+     <rect>
+      <x>310</x>
+      <y>740</y>
+      <width>31</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>D</string>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="Config_PID_Roll_KP">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>780</y>
+      <width>81</width>
+      <height>51</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="Config_PID_Roll_KI">
+    <property name="geometry">
+     <rect>
+      <x>190</x>
+      <y>780</y>
+      <width>81</width>
+      <height>51</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="Config_PID_Roll_KD">
+    <property name="geometry">
+     <rect>
+      <x>280</x>
+      <y>780</y>
+      <width>81</width>
+      <height>51</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="Config_PID_Pitch_KD">
+    <property name="geometry">
+     <rect>
+      <x>280</x>
+      <y>840</y>
+      <width>81</width>
+      <height>51</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="Config_PID_Pitch_KI">
+    <property name="geometry">
+     <rect>
+      <x>190</x>
+      <y>840</y>
+      <width>81</width>
+      <height>51</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="Config_PID_Pitch_KP">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>840</y>
+      <width>81</width>
+      <height>51</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="Config_PID_Yaw_KD">
+    <property name="geometry">
+     <rect>
+      <x>280</x>
+      <y>900</y>
+      <width>81</width>
+      <height>51</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="Config_PID_Yaw_KP">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>900</y>
+      <width>81</width>
+      <height>51</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="Config_PID_Yaw_KI">
+    <property name="geometry">
+     <rect>
+      <x>190</x>
+      <y>900</y>
+      <width>81</width>
+      <height>51</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="PushButton_Config_Send">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>950</y>
+      <width>141</width>
+      <height>57</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Send to FC</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="PushButton_Config_Load">
+    <property name="geometry">
+     <rect>
+      <x>190</x>
+      <y>950</y>
+      <width>171</width>
+      <height>57</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Load from FC</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">

@@ -13,10 +13,10 @@ CriusGUI::CriusGUI(QWidget *parent) :
     QThread*  thread = new QThread;
     serial_thread->moveToThread(thread);
     connect(thread, SIGNAL(started()), serial_thread, SLOT(process()));
+    connect(this, SIGNAL(loadFCConfig()), serial_thread, SLOT(requestConfig()));
     connect(serial_thread, SIGNAL(sendData(QByteArray)), this, SLOT(getSerialData(QByteArray)));
+
     thread->start();
-
-
 
     // Setup UI
     ui->setupUi(this);
@@ -106,6 +106,7 @@ void CriusGUI::updateGUI()
         this->gui_data_.new_attitude = false;
     }
 
+    // Control input
     if(this->gui_data_.new_motors)
     {
         this->control_plot->addPoint({(double)this->gui_data_.motors[0],
@@ -115,4 +116,28 @@ void CriusGUI::updateGUI()
 
         this->gui_data_.new_motors = false;
     }
+
+    // Config
+    if(this->gui_data_.new_config)
+    {
+        // PID config
+        this->ui->Config_PID_Roll_KP->setText(QString::number(gui_data_.config.pid_roll.kp));
+        this->ui->Config_PID_Roll_KD->setText(QString::number(gui_data_.config.pid_roll.kd));
+        this->ui->Config_PID_Roll_KI->setText(QString::number(gui_data_.config.pid_roll.ki));
+
+        this->ui->Config_PID_Pitch_KP->setText(QString::number(gui_data_.config.pid_pitch.kp));
+        this->ui->Config_PID_Pitch_KD->setText(QString::number(gui_data_.config.pid_pitch.kd));
+        this->ui->Config_PID_Pitch_KI->setText(QString::number(gui_data_.config.pid_pitch.ki));
+
+        this->ui->Config_PID_Yaw_KP->setText(QString::number(gui_data_.config.pid_yaw.kp));
+        this->ui->Config_PID_Yaw_KD->setText(QString::number(gui_data_.config.pid_yaw.kd));
+        this->ui->Config_PID_Yaw_KI->setText(QString::number(gui_data_.config.pid_yaw.ki));
+
+        this->gui_data_.new_config = false;
+    }
+}
+
+void CriusGUI::on_PushButton_Config_Load_clicked()
+{
+    emit loadFCConfig(); // Call Serial Communication thread
 }

@@ -26,6 +26,9 @@ struct GUIData
     std::vector<uint16_t> motors;
     bool new_motors;
 
+    Config config;
+    bool new_config;
+
 };
 
 #endif // GUIDATA_H

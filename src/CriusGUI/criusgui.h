@@ -37,9 +37,12 @@ public slots:
 
 signals:
     void toggleSerial();
+    void loadFCConfig();
 
 private slots:
     void on_pushButton_clicked();
+
+    void on_PushButton_Config_Load_clicked();
 
 private:
     Ui::CriusGUI *ui;

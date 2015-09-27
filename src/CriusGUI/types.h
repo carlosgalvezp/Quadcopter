@@ -42,6 +42,19 @@ struct IMUData
     Vec3i16 gyro;
 };
 
+struct PID_Params
+{
+    float kp;
+    float ki;
+    float kd;
+};
+
+struct Config
+{
+    PID_Params pid_roll;
+    PID_Params pid_pitch;
+    PID_Params pid_yaw;
+};
 
 
 #endif // TYPES

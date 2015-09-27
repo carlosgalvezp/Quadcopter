@@ -39,10 +39,10 @@ void SerialCommThread::init()
 
     std::cout << "OK" << std::endl;
     // ** Initialize timers
-    this->timer_Status_ = new QTimer(this);
-    connect(this->timer_Status_, SIGNAL(timeout()), this, SLOT(requestStatus()));
-    this->timer_Status_->start(1000.0 / UPDATE_RATE_STATUS);
 
+//    this->timer_Status_ = new QTimer(this);
+//    connect(this->timer_Status_, SIGNAL(timeout()), this, SLOT(requestStatus()));
+//    this->timer_Status_->start(1000.0 / UPDATE_RATE_STATUS);
 
 //    this->timer_RC_ = new QTimer(this);
 //    connect(this->timer_RC_, SIGNAL(timeout()), this, SLOT(requestRC()));
@@ -90,6 +90,11 @@ void SerialCommThread::requestMotors()
     this->requestCmd(TELEMETRY_CMD_OUT_CONTROL);
 }
 
+void SerialCommThread::requestConfig()
+{
+    this->requestCmd(TELEMETRY_CMD_OUT_CONFIG);
+}
+
 void SerialCommThread::requestCmd(uint8_t cmd)
 {
     // Fill data buffer
@@ -104,7 +109,10 @@ void SerialCommThread::requestCmd(uint8_t cmd)
 void SerialCommThread::readData()
 {
     int n_bytes = this->serialPort_->read(this->dataIn, RX_BUFFER_SIZE);
+    std::cout << "READ BYTES: "<< n_bytes << std::endl;
     QByteArray out_array(this->dataIn, n_bytes);
 
     emit sendData(out_array);
 }
+
+
