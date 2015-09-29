@@ -57,5 +57,6 @@ namespace HAL
 	void initRC();
 	void initMotors();
 	void initSonar();
+	void initADC();
 }
 #endif

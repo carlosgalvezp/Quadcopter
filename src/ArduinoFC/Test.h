@@ -12,6 +12,7 @@
 #include "Output.h"
 #include "Control.h"
 #include "EEPROM.h"
+#include "Power.h"
 
 namespace Test
 {
@@ -22,6 +23,7 @@ namespace Test
 	void testCompass();
 	void testStateEstimation();
 	void testOutput();
+	void testADC();
 	void testSonar();
 
 	void testWholeSystem(State_data_t * const state, Config * const config);

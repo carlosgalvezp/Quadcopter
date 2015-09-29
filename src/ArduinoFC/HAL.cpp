@@ -26,6 +26,9 @@ void HAL::init()
 	// Init Sonar
 	HAL::initSonar();
 
+	// Init ADC to read voltage and current
+	HAL::initADC();
+
 	// Init Serial
 	Serial.begin(SERIAL0_BAUDRATE);
 
@@ -105,4 +108,17 @@ void HAL::initSonar()
 
 	// Enable interrupt for Output Compare in Timer 1-A
 	TIMSK1 |= (1 << OCIE1A);
+}
+
+void HAL::initADC()
+{
+	// Disable power reduction for ADC
+	PRR0 &= ~(1 << PRADC);
+
+	// Select AVCC as source
+	ADMUX = 0b01000000;
+
+	// Enable ADC, Prescaler 128 to keep ADC clock between 50 and 200 kHz, and start first conversion
+	ADCSRA = 0b11000111;
+
 }

@@ -20,7 +20,8 @@ void loop()
 	//Test::testSensorRead();
 	//Test::testSonar();
 	//Test::testStateEstimation();
-	Test::testTelemetry(&state_, &config_);
+	//Test::testTelemetry(&state_, &config_);
+	Test::testADC();
 	//Test::testOutput();
 	//Test::testWholeSystem(&state_);
 	//Test::Unit::testAtan2();
