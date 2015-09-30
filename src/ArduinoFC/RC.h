@@ -1,7 +1,8 @@
 #ifndef RC_H
 #define RC_H
 
-#include <Arduino.h>
+#include <avr/io.h>
+#include <avr/interrupt.h>
 
 #include "Types.h"
 #include "HAL.h"

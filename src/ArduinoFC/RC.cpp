@@ -1,8 +1,11 @@
 #include "RC.h"
 
-volatile unsigned long RC_last_t_rise[NUM_CHANNELS];
-volatile uint16_t RC_readings[NUM_CHANNELS];
-uint8_t prevPortK;
+namespace RC
+{
+	volatile unsigned long RC_last_t_rise[NUM_CHANNELS];
+	volatile uint16_t RC_readings[NUM_CHANNELS];
+	uint8_t prevPortK;
+}
 
 void RC::getReadings(RC_data_t * const readings)
 {
@@ -21,7 +24,7 @@ ISR(PCINT2_vect)
 {
 	// Identify which bit interrupted by XORing to previous one
 	uint8_t pK = PINK;
-	uint8_t diff = prevPortK ^ pK;
+	uint8_t diff = RC::prevPortK ^ pK;
 	uint8_t bitNo = 0;
 	diff >>= 1;
 	while (diff > 0)
@@ -36,12 +39,13 @@ ISR(PCINT2_vect)
 	// Update timers
 	if (val) // Rising edge
 	{
-		RC_last_t_rise[bitNo] = micros();
+		RC::RC_last_t_rise[bitNo] = micros();
 	}
 	else	// Falling edge
 	{
-		RC_readings[bitNo] = uint16_t(micros() - RC_last_t_rise[bitNo]);
+		RC::RC_readings[bitNo] = uint16_t(micros() - RC::RC_last_t_rise[bitNo]);
 	}
 	// Store current port K for the next iteration
-	prevPortK = pK;
+	RC::prevPortK = pK;
 }
+

@@ -158,10 +158,8 @@ void Test::testSonar()
 void Test::testADC()
 {
 	uint16_t voltage;
-	if (Power::readVoltage(&voltage))
-	{
-		Serial.println("Voltage: " + String(voltage));
-	}
+	Adc::Power::readVoltage(&voltage);
+	Serial.println("Voltage: " + String(voltage));	
 	delay(100);
 }
 void Test::testWholeSystem(State_data_t * const state, Config * const config)

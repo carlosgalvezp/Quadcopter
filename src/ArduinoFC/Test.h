@@ -12,7 +12,7 @@
 #include "Output.h"
 #include "Control.h"
 #include "EEPROM.h"
-#include "Power.h"
+#include "ADC.h"
 
 namespace Test
 {

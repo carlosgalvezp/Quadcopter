@@ -116,9 +116,12 @@ void HAL::initADC()
 	PRR0 &= ~(1 << PRADC);
 
 	// Select AVCC as source
-	ADMUX = 0b01000000;
+	ADMUX = (1 << REFS0);
 
-	// Enable ADC, Prescaler 128 to keep ADC clock between 50 and 200 kHz, and start first conversion
-	ADCSRA = 0b11000111;
-
+	// Enable ADC, NO Auto-Trigger, Prescaler=128 to keep ADC clock between 50 and 200 kHz, 
+	// Enable ADC interrupt. 
+	ADCSRA = (1 << ADEN) | (1 << ADSC) | (1 << ADIE) | 
+		    (1 << ADPS2) | (1 << ADPS1) | (1 << ADPS0);
 }
+
+
