@@ -314,3 +314,7 @@ void Test::Unit::testEEPROM()
 	}
 }
 
+void Test::testSoftPWM()
+{
+	GPIO::getBodyLEDs().run();
+}

@@ -8,6 +8,7 @@
 #include "HMC5883L.h"
 #include "MS5611.h"
 #include "HC-SR04.h"
+#include "GPIO.h"
 
 // ** Definitions ** 
 #define CPU_FREQUENCY		16000000L	// Hz
@@ -15,8 +16,6 @@
 #define SERIAL0_BAUDRATE	115200		// baud
 
 // PINs
-#define PIN_BUZZER
-
 #define PIN_LED_A			13
 #define PIN_LED_B			31
 #define PIN_LED_C			30
@@ -50,6 +49,11 @@
 #define PIN_SONAR_ECHO			PB4
 #define SONAR_INT_NUMBER		PCINT4
 #define SONAR_CLOCK_PRESCALER	64
+
+// LEDS and Buzzer
+#define PIN_LEDS_BODY			A6 
+#define PIN_BUZZER				A7
+
 namespace HAL
 {
 	void init();

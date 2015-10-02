@@ -13,6 +13,8 @@
 #include "Control.h"
 #include "EEPROM.h"
 #include "ADC.h"
+#include "SoftPWM.h"
+#include "GPIO.h"
 
 namespace Test
 {
@@ -25,6 +27,7 @@ namespace Test
 	void testOutput();
 	void testADC();
 	void testSonar();
+	void testSoftPWM();
 
 	void testWholeSystem(State_data_t * const state, Config * const config);
 

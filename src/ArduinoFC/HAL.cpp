@@ -2,8 +2,8 @@
 
 void HAL::init()
 {
-	// Init GPIO
-	HAL::initGPIO();
+	// Init RC
+	HAL::initRC();
 
 	// Init motors
 	HAL::initMotors();
@@ -19,15 +19,15 @@ void HAL::init()
 
 	// Init Barometer
 	if (Barometer::init())	Serial.println("Failed to init Barometer");
-
-	// Init RC
-	HAL::initRC();
-	
+			
 	// Init Sonar
 	HAL::initSonar();
 
 	// Init ADC to read voltage and current
 	HAL::initADC();
+
+	// Init LEDs
+	GPIO::init();
 
 	// Init Serial
 	Serial.begin(SERIAL0_BAUDRATE);
@@ -36,14 +36,12 @@ void HAL::init()
 	SREG |= (1 << 7);
 }
 
-void HAL::initGPIO()
-{
-	// ** RX pins as inputs, with pull-up resistors
-	DDRK  = 0x00;	// Port K as input
-	PORTK = 0xFF;   // Pull-up resistors enabled
-}
 void HAL::initRC()
 {
+	// ** RX pins as inputs, with pull-up resistors
+	DDRK = 0x00;	// Port K as input
+	PORTK = 0xFF;   // Pull-up resistors enabled
+
 	// Enable interrupts PCIE2, since the RC channels are connected
 	// to PCINT 16:23
 	PCICR |= (1 << PCIE2);
@@ -123,5 +121,3 @@ void HAL::initADC()
 	ADCSRA = (1 << ADEN) | (1 << ADSC) | (1 << ADIE) | 
 		    (1 << ADPS2) | (1 << ADPS1) | (1 << ADPS0);
 }
-
-

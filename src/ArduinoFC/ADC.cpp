@@ -22,7 +22,11 @@ ISR(ADC_vect)
 	Adc::readings[Adc::currentChannel] = ADCW;
 
 	// Update counter
-	Adc::currentChannel = (Adc::currentChannel + 1) % N_ADC_CHANNELS;
+	Adc::currentChannel++;
+	if (Adc::currentChannel >= N_ADC_CHANNELS) // This is faster than using mod, although it looks dummy
+	{
+		Adc::currentChannel = 0;
+	}
 
 	// Update MUX for next conversion
 	ADMUX = (ADMUX & MUX_MASK_INV) | Adc::currentChannel;

@@ -4,13 +4,15 @@ unsigned long t1, t2;
 State_data_t state_;
 Config config_;
 
+#define PIN A6
 void setup() 
 {
 	// Init hardware
-	HAL::init();
+	//HAL::init();
 
 	// Load configuration
-	EEPROM::loadConfig(&config_);
+	//EEPROM::loadConfig(&config_);
+	pinMode(PIN, OUTPUT);
 }
 
 void loop() 
@@ -21,7 +23,12 @@ void loop()
 	//Test::testSonar();
 	//Test::testStateEstimation();
 	//Test::testTelemetry(&state_, &config_);
-	Test::testADC();
+	//Test::testADC();
+	//Test::testSoftPWM();
+	digitalWrite(PIN, HIGH);
+	delay(100);
+	digitalWrite(PIN,LOW);
+	delay(100);
 	//Test::testOutput();
 	//Test::testWholeSystem(&state_);
 	//Test::Unit::testAtan2();
