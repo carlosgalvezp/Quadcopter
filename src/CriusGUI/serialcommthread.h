@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QSerialPort>
+#include <QSerialPortInfo>
 #include <QTimer>
 
 #include <iostream>

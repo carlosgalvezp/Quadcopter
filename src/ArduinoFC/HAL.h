@@ -13,7 +13,7 @@
 // ** Definitions ** 
 #define CPU_FREQUENCY		16000000L	// Hz
 #define ESC_FREQUENCY		400			// Hz
-#define SERIAL0_BAUDRATE	115200		// baud
+#define TELEMETRY_BAUDRATE	115200		// baud
 
 // PINs
 #define PIN_LED_A			13
@@ -30,7 +30,6 @@
 #define PIN_RC_AUX2			5   // Equals to A13
 #define PIN_RC_AUX3			6   // Equals to A13
 #define PIN_RC_AUX4			7   // Equals to A13
-
 
 // Motor pins
 #define PIN_M1				PE4		
@@ -53,6 +52,10 @@
 // LEDS and Buzzer
 #define PIN_LEDS_BODY			A6 
 #define PIN_BUZZER				A7
+
+// Serial Ports
+#define Serial_Telemetry		Serial
+#define Serial_GPS				Serial1
 
 namespace HAL
 {

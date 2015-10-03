@@ -18,6 +18,12 @@ void SerialCommThread::init()
 {
     std::cout << "Initializing COM port...";
 
+    QList<QSerialPortInfo> ports = QSerialPortInfo::availablePorts();
+    std::cout << "Available ports: " << std::endl;
+    for (const QSerialPortInfo& p : ports)
+    {
+        std::cout << p.portName().toStdString() << " - " << p.description().toStdString() << std::endl;
+    }
     // Create Serial Port object
     serialPort_ = new QSerialPort("COM4", this);
 
@@ -132,10 +138,8 @@ void SerialCommThread::requestCmd(uint8_t cmd)
 
 void SerialCommThread::readData()
 {
-    int n_bytes = this->serialPort_->read(this->dataIn, RX_BUFFER_SIZE);
-
-    std::cout << "READ BYTES: "<< n_bytes << std::endl;
-    QByteArray out_array(this->dataIn, n_bytes);
+    QByteArray out_array = this->serialPort_->readAll();
+    std::cout << "READ BYTES: " << out_array.size() <<std::endl;
 
     emit sendData(out_array);
 }

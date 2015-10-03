@@ -30,7 +30,7 @@ void HAL::init()
 	GPIO::init();
 
 	// Init Serial
-	Serial.begin(SERIAL0_BAUDRATE);
+	Serial_Telemetry.begin(TELEMETRY_BAUDRATE);
 
 	// Enable interrupts globally
 	SREG |= (1 << 7);

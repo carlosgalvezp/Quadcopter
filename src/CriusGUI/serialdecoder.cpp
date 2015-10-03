@@ -1,5 +1,62 @@
 #include "serialdecoder.h"
 
+bool SerialDecoder::decodeBuffer(QQueue<unsigned char> &buffer, GUIData &gui_data)
+{
+    // Extract complete packages
+    std::vector<QByteArray> packages;
+    this->extractCompleteFrames(buffer, packages);
+
+    // Decode each package
+    for (const QByteArray &pkg : packages)
+    {
+        this->decodeData(pkg, gui_data);
+    }
+    return true;
+}
+
+void SerialDecoder::extractCompleteFrames(QQueue<unsigned char> &buffer, std::vector<QByteArray> &packages)
+{
+    QByteArray pkg_i;
+    QQueue<unsigned char> buffer_copy(buffer);
+
+    for(int i  = 0; i < buffer.size() - 1; ++i)
+    {
+        if(buffer[i]   == this->magic_word_[0] &&
+           buffer[i+1] == this->magic_word_[1]) // Found magic word
+        {
+            if(pkg_i.size() > 0) // This successfully ends the current package
+            {
+                // Store
+                packages.push_back(pkg_i);
+
+                // Clear queue
+                for(int j = i - pkg_i.size(); j < i; ++j)
+                {
+                    buffer_copy.pop_front();
+                }
+
+                // Reset package for new iteration
+                pkg_i.clear();
+            }
+            pkg_i.push_back(buffer[i]);
+        }
+        else
+        {
+            if(pkg_i.size() > 0) // Package already initialised
+            {
+                pkg_i.push_back(buffer[i]);
+            }
+            else                 // No package -> this is noisy data
+            {
+                buffer_copy.pop_front();
+            }
+        }
+    }
+
+    // Update the output buffer
+    buffer = buffer_copy;
+}
+
 bool SerialDecoder::decodeData(const QByteArray &data, GUIData &gui_data)
 {
     // Verify checkSum

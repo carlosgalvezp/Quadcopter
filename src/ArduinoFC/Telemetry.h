@@ -5,10 +5,11 @@
 #include "ArduinoFC.h"
 #include "Telemetry_Protocol.h"
 #include "Config.h"
+#include "HAL.h"
 
 #define TELEMETRY_RX_BUFFER_SIZE 100
 
-#define write8(data) Serial.write(data); checksum_ ^= data;
+#define write8(data) Serial_Telemetry.write(data); checksum_ ^= data;
 
 namespace Telemetry
 {

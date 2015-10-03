@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QTimer>
+#include <QQueue>
 
 #include <time.h>
 #include <unistd.h>
@@ -56,6 +57,7 @@ private:
 
     GUIData gui_data_;
     SerialDecoder serial_decoder_;
+    QQueue<unsigned char> rx_data_buffer_;
 
     void updateGUI();
 };

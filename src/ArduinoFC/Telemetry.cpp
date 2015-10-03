@@ -19,10 +19,10 @@ void Telemetry::main(const State_data_t * const state, Config * const config)
 	checksum_ = 0;
 
 	// Check whether we have a request available
-	if ((n_bytes_available_ = Serial.available()) > 0)
+	if ((n_bytes_available_ = Serial_Telemetry.available()) > 0)
 	{
 		// Read all data
-		Serial.readBytes(rx_data_buffer_, n_bytes_available_);
+		Serial_Telemetry.readBytes(rx_data_buffer_, n_bytes_available_);
 
 		// Check for the magic word
 		if (rx_data_buffer_[ptr_++] == magic_word_[0] && rx_data_buffer_[ptr_++] == magic_word_[1])
@@ -213,7 +213,7 @@ void Telemetry::receiveConfig(Config * const data)
 
 void Telemetry::sendCheckSum()
 {
-	Serial.write(checksum_);
+	Serial_Telemetry.write(checksum_);
 }
 
 void Telemetry::write16(uint16_t data)

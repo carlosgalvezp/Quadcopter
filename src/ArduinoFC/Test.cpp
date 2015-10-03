@@ -255,10 +255,6 @@ void Test::Unit::testAtan2()
 	x = 0.2f;
 	y = 0.1f;
 
-	t1 = micros();
-	float r = y / x;
-	t2 = micros();
-	Serial.println("Float division: " + String(t2 - t1));
 
 	t1 = micros();
 	float res = Utils::FastMath::atan2(y, x);
@@ -270,10 +266,10 @@ void Test::Unit::testAtan2()
 	t2 = micros();
 	Serial.println("Standard library: " + String(t2 - t1) + String(" us"));
 
-	t1 = micros();
-	float resSin = asin(1.0f/(micros()%10));
-	t2 = micros();
-	Serial.println("Standard library sin: " + String(t2 - t1) + String(" us"));
+	//t1 = micros();
+	//float resSin = asin(1.0f/(micros()%10));
+	//t2 = micros();
+	//Serial.println("Standard library sin: " + String(t2 - t1) + String(" us"));
 
 	Serial.println("Result: " + String(res) + " ; Should be: " + String(resOK));
 }

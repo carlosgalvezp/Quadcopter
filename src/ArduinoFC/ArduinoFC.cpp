@@ -8,11 +8,10 @@ Config config_;
 void setup() 
 {
 	// Init hardware
-	//HAL::init();
+	HAL::init();
 
 	// Load configuration
-	//EEPROM::loadConfig(&config_);
-	pinMode(PIN, OUTPUT);
+	EEPROM::loadConfig(&config_);
 }
 
 void loop() 
@@ -22,13 +21,9 @@ void loop()
 	//Test::testSensorRead();
 	//Test::testSonar();
 	//Test::testStateEstimation();
-	//Test::testTelemetry(&state_, &config_);
+	Test::testTelemetry(&state_, &config_);
 	//Test::testADC();
 	//Test::testSoftPWM();
-	digitalWrite(PIN, HIGH);
-	delay(100);
-	digitalWrite(PIN,LOW);
-	delay(100);
 	//Test::testOutput();
 	//Test::testWholeSystem(&state_);
 	//Test::Unit::testAtan2();

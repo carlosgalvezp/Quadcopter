@@ -35,7 +35,13 @@ CriusGUI::~CriusGUI()
 
 void CriusGUI::getSerialData(const QByteArray &data)
 {
-    this->serial_decoder_.decodeData(data, this->gui_data_);
+    // Store data in buffer
+    for(unsigned char c : data) this->rx_data_buffer_.push_back(c);
+
+    // Decode available packages
+    this->serial_decoder_.decodeBuffer(this->rx_data_buffer_, this->gui_data_);
+
+    // Update GUI
     this->updateGUI();
 }
 

@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include <QByteArray>
+#include <QQueue>
 #include "guidata.h"
 
 #include "../ArduinoFC/Telemetry_Protocol.h"
@@ -12,11 +13,14 @@
 class SerialDecoder
 {
 public:
-    bool decodeData(const QByteArray &data, GUIData &gui_data);
+    bool decodeBuffer(QQueue<unsigned char> &buffer, GUIData &gui_data);
 
 private:
     const char * magic_word_ = TELEMETRY_MAGIC_WORD;
     uint8_t checkSum_;
+
+    bool decodeData(const QByteArray &data, GUIData &gui_data);
+    void extractCompleteFrames(QQueue<unsigned char> &buffer, std::vector<QByteArray> &packages);
 
     bool verifyCheckSum(const QByteArray &data);
 
