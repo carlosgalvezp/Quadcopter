@@ -1,6 +1,12 @@
 #include "serialcommthread.h"
 
-SerialCommThread::SerialCommThread()
+SerialCommThread::SerialCommThread():
+    serialPort_(nullptr),
+    timer_Status_(nullptr),
+    timer_RC_(nullptr),
+    timer_IMU(nullptr),
+    timer_Attitude(nullptr),
+    timer_control(nullptr)
 {
 }
 
@@ -9,23 +15,24 @@ SerialCommThread::~SerialCommThread()
     delete this->serialPort_;
 }
 
-void SerialCommThread::process()
-{
-    this->init();
-}
-
 void SerialCommThread::init()
 {
-    std::cout << "Initializing COM port...";
-
+    // Send information to GUI
     QList<QSerialPortInfo> ports = QSerialPortInfo::availablePorts();
-    std::cout << "Available ports: " << std::endl;
+    QStringList data_out;
     for (const QSerialPortInfo& p : ports)
     {
-        std::cout << p.portName().toStdString() << " - " << p.description().toStdString() << std::endl;
+        data_out.push_back(p.portName());
     }
+
+    emit sendSerialPortInfo(data_out);
+}
+
+void SerialCommThread::connectSerial(const QString &portName, const QString &baud_rate)
+{
+    std::cout << "Connecting to serial port " << portName.toStdString()<<std::endl;
     // Create Serial Port object
-    serialPort_ = new QSerialPort("COM4", this);
+    serialPort_ = new QSerialPort(portName, this);
 
     // Open it
     serialPort_->open(QIODevice::ReadWrite);
@@ -43,9 +50,8 @@ void SerialCommThread::init()
     serialPort_->setDataBits(QSerialPort::Data8);
     serialPort_->setStopBits(QSerialPort::OneStop);
 
-    std::cout << "OK" << std::endl;
-    // ** Initialize timers
 
+    // ** Initialize timers
     this->timer_Status_ = new QTimer(this);
     connect(this->timer_Status_, SIGNAL(timeout()), this, SLOT(requestStatus()));
     this->timer_Status_->start(1000.0 / UPDATE_RATE_STATUS);
@@ -66,9 +72,21 @@ void SerialCommThread::init()
 //    connect(this->timer_control, SIGNAL(timeout()), this, SLOT(requestMotors()));
 //    this->timer_control->start(1000.0 / UPDATE_RATE_CONTROL);
 
-
     // ** Read interruption
     connect(this->serialPort_, SIGNAL(readyRead()), this, SLOT(readData()));
+}
+
+void SerialCommThread::disconnectSerial()
+{
+    // Delete serial port
+    delete this->serialPort_;
+
+    // Delete timers
+    delete this->timer_Status_;
+    delete this->timer_RC_;
+    delete this->timer_IMU;
+    delete this->timer_control;
+    delete this->timer_Attitude;
 }
 
 void SerialCommThread::requestStatus()

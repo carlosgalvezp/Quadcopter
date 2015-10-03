@@ -5,6 +5,7 @@
 #include <QSerialPort>
 #include <QSerialPortInfo>
 #include <QTimer>
+#include <QStringList>
 
 #include <iostream>
 #include <chrono>
@@ -35,11 +36,14 @@ public:
     ~SerialCommThread();
 
 public slots:
-    void process();
+    void init();
+    void connectSerial(const QString &portName, const QString &baud_rate);
+    void disconnectSerial();
     void requestConfig();
     void sendConfig(const QByteArray &data);
 
 signals:
+    void sendSerialPortInfo(const QStringList &port_names);
     void sendData(const QByteArray &data);
 
 private slots:
@@ -51,13 +55,11 @@ private slots:
 
     void readData();
 private:
-
-    void init();
     void updateStatus(const char * const dataIn);
     void requestCmd(uint8_t cmd);
 
     QSerialPort* serialPort_;
-    QTimer* timer_Status_, *timer_RC_, *timer_IMU, *timer_Attitude, *timer_control;
+    QTimer *timer_Status_, *timer_RC_, *timer_IMU, *timer_Attitude, *timer_control;
 
     char dataOut[TX_BUFFER_SIZE];
     char dataIn[RX_BUFFER_SIZE];

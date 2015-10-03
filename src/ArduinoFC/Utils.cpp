@@ -109,3 +109,17 @@ float Utils::FastMath::atanFP(float t)
 	// Transform to actual degrees by multiplying by the resolution
 	return LUT_ATAN2_RESOLUTION_DEG * val;
 }
+
+namespace Utils
+{
+	unsigned long t_start;
+}
+
+unsigned long Utils::timeFunction(void(*f)(void))
+{
+	t_start = micros();
+
+	(*f)();
+
+	return micros() - t_start;
+}

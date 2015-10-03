@@ -18,18 +18,17 @@
 
 namespace Test
 {
+	void run();
 	void testRC();
 	void testI2CScan();
 	void testSensorRead();
-	void testTelemetry(State_data_t * const state, Config * const config);
+	void testTelemetry(State_t * const state, Config_t * const config);
 	void testCompass();
 	void testStateEstimation();
 	void testOutput();
 	void testADC();
 	void testSonar();
 	void testSoftPWM();
-
-	void testWholeSystem(State_data_t * const state, Config * const config);
 
 	namespace Unit
 	{

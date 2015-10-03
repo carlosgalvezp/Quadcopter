@@ -6,17 +6,22 @@
 CriusGUI::CriusGUI(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::CriusGUI),
-    active_(false)
+    active_(false),
+    connected_(false)
 {
     // Create SerialCommThread
     SerialCommThread* serial_thread = new SerialCommThread();
     QThread*  thread = new QThread;
     serial_thread->moveToThread(thread);
-    connect(thread, SIGNAL(started()), serial_thread, SLOT(process()));
+    connect(thread, SIGNAL(started()), serial_thread, SLOT(init()));
+
     connect(this, SIGNAL(loadFCConfig()), serial_thread, SLOT(requestConfig()));
     connect(this, SIGNAL(sendFCConfig(QByteArray)), serial_thread, SLOT(sendConfig(QByteArray)));
+    connect(this, SIGNAL(sendSerialConfig(QString,QString)), serial_thread, SLOT(connectSerial(QString,QString)));
+    connect(this, SIGNAL(sendSerialDisconnect()), serial_thread, SLOT(disconnectSerial()));
 
     connect(serial_thread, SIGNAL(sendData(QByteArray)), this, SLOT(getSerialData(QByteArray)));
+    connect(serial_thread, SIGNAL(sendSerialPortInfo(QStringList)), this, SLOT(receiveSerialPortInfo(QStringList)));
 
     thread->start();
 
@@ -170,4 +175,35 @@ void CriusGUI::on_PushButton_Config_Send_clicked()
     this->gui_data_.config.serialize(data);
 
     emit sendFCConfig(data);
+}
+
+void CriusGUI::on_pushButton_Connect_clicked()
+{
+    if(!this->connected_)
+    {
+        this->connected_ = true;
+        this->ui->pushButton_Connect->setText("Disconnect");
+
+        emit sendSerialConfig(this->ui->comboBox_PortName->currentText(), this->ui->comboBox_BaudRate->currentText());
+    }
+    else
+    {
+        this->connected_ = false;
+        this->ui->pushButton_Connect->setText("Connect");
+
+        emit sendSerialDisconnect();
+    }
+}
+
+void CriusGUI::receiveSerialPortInfo(const QStringList &port_names)
+{
+    // Set port names
+    for (int i = 0; i < port_names.size(); ++i)
+    {
+        this->ui->comboBox_PortName->insertItem(i, port_names[i]);
+    }
+
+    // Set baud rate (for now, fixed)
+    this->ui->comboBox_BaudRate->insertItem(0, "115200");
+
 }

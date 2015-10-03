@@ -1,6 +1,28 @@
 #include "Test.h"
 
-bool armed_ = false;
+namespace Test
+{
+	State_t *state_ = GlobalVariables::getState();
+	Config_t *config_ = GlobalVariables::getConfig();
+}
+
+void Test::run()
+{
+	//Test::testRC();
+	//Test::testCompass();
+	//Test::testSensorRead();
+	//Test::testSonar();
+	//Test::testStateEstimation();
+	Test::testTelemetry(state_, config_);
+	//Test::testADC();
+	//Test::testSoftPWM();
+	//Test::testOutput();
+	//Test::testWholeSystem(&state_);
+	//Test::Unit::testAtan2();
+	//Test::Unit::testAtan2Full();
+	//Test::Unit::testQuaternionToRPY();
+	//Test::Unit::testEEPROM();
+}
 
 void Test::testRC()
 {
@@ -77,7 +99,7 @@ void Test::testSensorRead()
 	Serial.println("--------------------");
 }
 
-void Test::testTelemetry(State_data_t * const state, Config * const config)
+void Test::testTelemetry(State_t * const state, Config_t * const config)
 {
 	// Get timeStamp
 	state->status.timeStamp = micros();
@@ -120,14 +142,14 @@ void Test::testOutput()
 	// Get readings
 	RC::getReadings(&rc_);
 
-	if (rc_.rudder < 1200 && rc_.rudder > 0 && rc_.throttle < 1200 && rc_.throttle > 0)
-	{ armed_ = !armed_; 
-	toggled = true; 
-	digitalWrite(PIN_LED_A, armed_);
-	}
+	//if (rc_.rudder < 1200 && rc_.rudder > 0 && rc_.throttle < 1200 && rc_.throttle > 0)
+	//{ armed_ = !armed_; 
+	//toggled = true; 
+	//digitalWrite(PIN_LED_A, armed_);
+	//}
 
 	// Assign output value for m1
-	pwm_us[0] = armed_?rc_.aileron:500;
+	pwm_us[0] = rc_.aileron;
 
 	// Output
 	Output::writePWM(&(pwm_us[0]));
@@ -161,57 +183,6 @@ void Test::testADC()
 	Adc::Power::readVoltage(&voltage);
 	Serial.println("Voltage: " + String(voltage));	
 	delay(100);
-}
-void Test::testWholeSystem(State_data_t * const state, Config * const config)
-{
-	//Serial.println("----------------------------------------");
-	// Get timeStamp
-	state->status.timeStamp = micros();
-
-	// RC
-	//unsigned long t1 = micros();
-	RC::getReadings(&state->rc);
-	//Serial.println("RC: " + String(micros() - t1));
-
-	// Get sensor data
-	//t1 = micros();
-	IMU::getData(&state->sensorData.imu);
-	//Serial.println("IMU: " + String(micros() - t1));
-
-	//t1 = micros();
-	Magnetometer::getData(&state->sensorData.mag);
-	//Serial.println("Magneto: " + String(micros() - t1));
-
-	//t1 = micros();
-	Barometer::getData(&state->sensorData.pressure, &state->sensorData.temperature);
-	//Serial.println("Baro: " + String(micros() - t1));
-
-	// State estimation
-	//t1 = micros();
-	StateEstimation::estimateAttitude(&state->sensorData, &state->attitude, &state->attitude_rpy);
-	//Serial.println("State estimation: " + String(micros() - t1));
-
-	// Control
-	//t1 = micros();
-	Control::computeControlCommands(&state->attitude_rpy, &state->rc, &state->motors[0]);
-	//Serial.println("Control: " + String(micros() - t1));
-
-	// Output
-	//t1 = micros();
-	Output::writePWM(&state->motors[0]);
-	//Serial.println("Output: " + String(micros() - t1));
-
-	// Send data
-	Telemetry::main(state, config);
-
-	// Cycle time
-	state->status.cycleTime = (uint16_t)(micros() - state->status.timeStamp);
-
-	// Sleep
-	if (state->status.cycleTime < CYCLE_TIME_US)
-	{
-		delayMicroseconds(CYCLE_TIME_US - state->status.cycleTime);
-	}
 }
 
 void Test::Unit::testAtan2Full()

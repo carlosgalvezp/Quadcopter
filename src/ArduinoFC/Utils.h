@@ -29,5 +29,7 @@ namespace Utils
 	float atan2(float y, float x);
 
 	void quaternionToRPY(const quaternion_t * q, vec_float_3_t * const rpy);
+
+	unsigned long timeFunction(void (*f)(void));
 }
 #endif

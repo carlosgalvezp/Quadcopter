@@ -80,7 +80,7 @@ typedef struct
 	// Control input
 	uint16_t motors[4];
 	
-}State_data_t;
+}State_t;
 
 typedef struct
 {

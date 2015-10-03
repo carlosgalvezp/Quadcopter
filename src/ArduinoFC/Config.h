@@ -12,6 +12,6 @@ typedef struct
 	PID_Params_t pid_pitch;
 	PID_Params_t pid_yaw;
 
-}Config;
+}Config_t;
 
 #endif

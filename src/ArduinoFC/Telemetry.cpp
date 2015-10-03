@@ -11,7 +11,7 @@ namespace Telemetry
 	uint8_t checksum_;
 }
 
-void Telemetry::main(const State_data_t * const state, Config * const config)
+void Telemetry::main(const State_t * const state, Config_t * const config)
 {
 	// Re-initialize variables
 	cmd_ = 0;
@@ -90,7 +90,7 @@ void Telemetry::main(const State_data_t * const state, Config * const config)
 	} // n_bytes > 0
 }
 
-void Telemetry::sendStatus(const State_data_t * const data)
+void Telemetry::sendStatus(const State_t * const data)
 {
 	// TimeStamp
 	Telemetry::write32(data->status.timeStamp);
@@ -99,7 +99,7 @@ void Telemetry::sendStatus(const State_data_t * const data)
 	Telemetry::write16(data->status.cycleTime);
 }
 
-void Telemetry::sendRC(const State_data_t * const data)
+void Telemetry::sendRC(const State_t * const data)
 {
 	Telemetry::write16(data->rc.throttle);
 	Telemetry::write16(data->rc.rudder);
@@ -112,7 +112,7 @@ void Telemetry::sendRC(const State_data_t * const data)
 }
 
 
-void Telemetry::sendIMU(const State_data_t * const data)
+void Telemetry::sendIMU(const State_t * const data)
 {
 	// Acc
 	Telemetry::write16(data->sensorData.imu.acc_raw.x);
@@ -125,7 +125,7 @@ void Telemetry::sendIMU(const State_data_t * const data)
 	Telemetry::write16(data->sensorData.imu.gyro_raw.z);
 }
 
-void Telemetry::sendAttitude(const State_data_t * const data)
+void Telemetry::sendAttitude(const State_t * const data)
 {
 	// Send each component as int16_t, so maximum is +- 32768.
 	// Multiply by 10000, since we have normalized quaternion
@@ -135,7 +135,7 @@ void Telemetry::sendAttitude(const State_data_t * const data)
 	Telemetry::write16((int16_t)(10000 * data->attitude.q3));
 }
 
-void Telemetry::sendControl(const State_data_t * const data)
+void Telemetry::sendControl(const State_t * const data)
 {
 	Telemetry::write16(data->motors[0]);
 	Telemetry::write16(data->motors[1]);
@@ -144,14 +144,14 @@ void Telemetry::sendControl(const State_data_t * const data)
 }
 
 
-void Telemetry::sendMagnetometer(const State_data_t * const data){}
-void Telemetry::sendBarometer(const State_data_t * const data){}
-void Telemetry::sendTemperature(const State_data_t * const data){}
-void Telemetry::sendBattery(const State_data_t * const data){}
-void Telemetry::sendGPS(const State_data_t * const data){}
-void Telemetry::sendSonar(const State_data_t * const data){}
+void Telemetry::sendMagnetometer(const State_t * const data){}
+void Telemetry::sendBarometer(const State_t * const data){}
+void Telemetry::sendTemperature(const State_t * const data){}
+void Telemetry::sendBattery(const State_t * const data){}
+void Telemetry::sendGPS(const State_t * const data){}
+void Telemetry::sendSonar(const State_t * const data){}
 
-void Telemetry::sendConfig(const Config * const config)
+void Telemetry::sendConfig(const Config_t * const config)
 {
 	// PID
 	Telemetry::write32((uint32_t)config->pid_roll.kp);
@@ -167,7 +167,7 @@ void Telemetry::sendConfig(const Config * const config)
 	Telemetry::write32((uint32_t)config->pid_yaw.ki);
 }
 
-void Telemetry::receiveConfig(Config * const data)
+void Telemetry::receiveConfig(Config_t * const data)
 {		
 	checksum_ = 0;
 	// Verify checksum

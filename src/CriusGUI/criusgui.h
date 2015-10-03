@@ -35,25 +35,27 @@ public:
 
 public slots:
     void getSerialData(const QByteArray &data);
+    void receiveSerialPortInfo(const QStringList &port_names);
 
 signals:
-    void toggleSerial();
+//    void toggleSerial();
     void loadFCConfig();
     void sendFCConfig(const QByteArray &data);
+    void sendSerialConfig(const QString &port_name, const QString &baud_rate);
+    void sendSerialDisconnect();
 
 private slots:
     void on_pushButton_clicked();
-
     void on_PushButton_Config_Load_clicked();
-
     void on_PushButton_Config_Send_clicked();
+    void on_pushButton_Connect_clicked();
 
 private:
     Ui::CriusGUI *ui;
 
     TimePlot *imu_plot, *control_plot;
 
-    bool active_;
+    bool active_, connected_;
 
     GUIData gui_data_;
     SerialDecoder serial_decoder_;
