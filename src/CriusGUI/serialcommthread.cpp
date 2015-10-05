@@ -1,12 +1,7 @@
 #include "serialcommthread.h"
 
 SerialCommThread::SerialCommThread():
-    serialPort_(nullptr),
-    timer_Status_(nullptr),
-    timer_RC_(nullptr),
-    timer_IMU(nullptr),
-    timer_Attitude(nullptr),
-    timer_control(nullptr)
+    serialPort_(nullptr)
 {
 }
 
@@ -52,9 +47,22 @@ void SerialCommThread::connectSerial(const QString &portName, const QString &bau
 
 
     // ** Initialize timers
-    this->timer_Status_ = new QTimer(this);
-    connect(this->timer_Status_, SIGNAL(timeout()), this, SLOT(requestStatus()));
-    this->timer_Status_->start(1000.0 / UPDATE_RATE_STATUS);
+    for (std::size_t i = 0; i < timer_on.size(); ++i)
+    {
+        if (timer_on[i])
+        {
+            this->timers_.push_back(new QTimer(this));
+            QTimer* timer = this->timers_.back();
+
+            connect(timer, SIGNAL(timeout()), this, this->timer_fncs[i]);
+            timer->start(1000.0 / timer_frequencies[i]);
+        }
+    }
+
+
+//    this->timer_Status_ = new QTimer(this);
+//    connect(this->timer_Status_, SIGNAL(timeout()), this, SLOT(requestStatus()));
+//    this->timer_Status_->start(1000.0 / UPDATE_RATE_STATUS);
 
 //    this->timer_RC_ = new QTimer(this);
 //    connect(this->timer_RC_, SIGNAL(timeout()), this, SLOT(requestRC()));
@@ -82,11 +90,10 @@ void SerialCommThread::disconnectSerial()
     delete this->serialPort_;
 
     // Delete timers
-    delete this->timer_Status_;
-    delete this->timer_RC_;
-    delete this->timer_IMU;
-    delete this->timer_control;
-    delete this->timer_Attitude;
+    for (QTimer * t : this->timers_)
+    {
+        delete t;
+    }
 }
 
 void SerialCommThread::requestStatus()

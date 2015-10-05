@@ -10,6 +10,7 @@
 #include <iostream>
 #include <chrono>
 #include <thread>
+#include <vector>
 
 #include "../ArduinoFC/Telemetry_Protocol.h"
 
@@ -59,7 +60,25 @@ private:
     void requestCmd(uint8_t cmd);
 
     QSerialPort* serialPort_;
-    QTimer *timer_Status_, *timer_RC_, *timer_IMU, *timer_Attitude, *timer_control;
+    std::vector<QTimer *> timers_;
+    const std::vector<uint8_t> timer_frequencies = { UPDATE_RATE_STATUS,
+                                                     UPDATE_RATE_RC,
+                                                     UPDATE_RATE_IMU,
+                                                     UPDATE_RATE_ATTITUDE,
+                                                     UPDATE_RATE_CONTROL};
+
+    std::vector<const char*> timer_fncs = {SLOT(requestStatus()),
+                                           SLOT(requestRC()),
+                                           SLOT(requestIMU()),
+                                           SLOT(requestAttitude()),
+                                           SLOT(requestMotors())};
+
+    const std::vector<bool> timer_on = {1, 0, 0, 0, 0};
+
+
+
+
+//    QTimer *timer_Status_, *timer_RC_, *timer_IMU, *timer_Attitude, *timer_control;
 
     char dataOut[TX_BUFFER_SIZE];
     char dataIn[RX_BUFFER_SIZE];
