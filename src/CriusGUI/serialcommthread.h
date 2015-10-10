@@ -66,19 +66,13 @@ private:
                                                      UPDATE_RATE_IMU,
                                                      UPDATE_RATE_ATTITUDE,
                                                      UPDATE_RATE_CONTROL};
-
     std::vector<const char*> timer_fncs = {SLOT(requestStatus()),
                                            SLOT(requestRC()),
                                            SLOT(requestIMU()),
                                            SLOT(requestAttitude()),
                                            SLOT(requestMotors())};
+    const std::vector<bool> timer_on = {1, 0, 1, 1, 0};
 
-    const std::vector<bool> timer_on = {1, 0, 0, 0, 0};
-
-
-
-
-//    QTimer *timer_Status_, *timer_RC_, *timer_IMU, *timer_Attitude, *timer_control;
 
     char dataOut[TX_BUFFER_SIZE];
     char dataIn[RX_BUFFER_SIZE];

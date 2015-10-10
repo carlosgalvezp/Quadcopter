@@ -201,7 +201,7 @@
    <widget class="QLabel" name="data_in_pitch">
     <property name="geometry">
      <rect>
-      <x>210</x>
+      <x>240</x>
       <y>310</y>
       <width>151</width>
       <height>33</height>
@@ -214,7 +214,7 @@
    <widget class="QLabel" name="data_in_roll">
     <property name="geometry">
      <rect>
-      <x>210</x>
+      <x>240</x>
       <y>270</y>
       <width>151</width>
       <height>33</height>
@@ -227,7 +227,7 @@
    <widget class="QLabel" name="data_in_yaw">
     <property name="geometry">
      <rect>
-      <x>210</x>
+      <x>240</x>
       <y>350</y>
       <width>151</width>
       <height>33</height>
@@ -265,18 +265,18 @@
      <rect>
       <x>30</x>
       <y>110</y>
-      <width>181</width>
+      <width>201</width>
       <height>31</height>
      </rect>
     </property>
     <property name="text">
-     <string>TimeStamp</string>
+     <string>TimeStamp (μs)</string>
     </property>
    </widget>
    <widget class="QLabel" name="data_in_timeStamp">
     <property name="geometry">
      <rect>
-      <x>210</x>
+      <x>240</x>
       <y>110</y>
       <width>191</width>
       <height>33</height>
@@ -312,7 +312,7 @@
    <widget class="QLabel" name="data_in_throttle">
     <property name="geometry">
      <rect>
-      <x>210</x>
+      <x>240</x>
       <y>420</y>
       <width>151</width>
       <height>33</height>
@@ -338,7 +338,7 @@
    <widget class="QLabel" name="data_in_rudder">
     <property name="geometry">
      <rect>
-      <x>210</x>
+      <x>240</x>
       <y>460</y>
       <width>151</width>
       <height>33</height>
@@ -364,7 +364,7 @@
    <widget class="QLabel" name="data_in_elevator">
     <property name="geometry">
      <rect>
-      <x>210</x>
+      <x>240</x>
       <y>500</y>
       <width>151</width>
       <height>33</height>
@@ -390,7 +390,7 @@
    <widget class="QLabel" name="data_in_aileron">
     <property name="geometry">
      <rect>
-      <x>210</x>
+      <x>240</x>
       <y>540</y>
       <width>151</width>
       <height>33</height>
@@ -416,7 +416,7 @@
    <widget class="QLabel" name="data_in_aux1">
     <property name="geometry">
      <rect>
-      <x>210</x>
+      <x>240</x>
       <y>580</y>
       <width>151</width>
       <height>33</height>
@@ -442,7 +442,7 @@
    <widget class="QLabel" name="data_in_aux2">
     <property name="geometry">
      <rect>
-      <x>210</x>
+      <x>240</x>
       <y>620</y>
       <width>151</width>
       <height>33</height>
@@ -468,7 +468,7 @@
    <widget class="QLabel" name="data_in_aux3">
     <property name="geometry">
      <rect>
-      <x>210</x>
+      <x>240</x>
       <y>660</y>
       <width>151</width>
       <height>33</height>
@@ -494,7 +494,7 @@
    <widget class="QLabel" name="data_in_aux4">
     <property name="geometry">
      <rect>
-      <x>210</x>
+      <x>240</x>
       <y>700</y>
       <width>151</width>
       <height>33</height>
@@ -509,18 +509,18 @@
      <rect>
       <x>30</x>
       <y>150</y>
-      <width>181</width>
+      <width>191</width>
       <height>31</height>
      </rect>
     </property>
     <property name="text">
-     <string>Cycle Time</string>
+     <string>Cycle Time (μs)</string>
     </property>
    </widget>
    <widget class="QLabel" name="data_in_cycleTime">
     <property name="geometry">
      <rect>
-      <x>210</x>
+      <x>240</x>
       <y>150</y>
       <width>191</width>
       <height>33</height>

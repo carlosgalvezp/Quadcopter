@@ -134,7 +134,7 @@ namespace Madgwick
 		if (!((ax == 0.0f) && (ay == 0.0f) && (az == 0.0f))) {
 
 			// Normalise accelerometer measurement
-			recipNorm = Utils::invSqrt(ax * ax + ay * ay + az * az);
+			recipNorm = Utils::FastMath::invSqrt(ax * ax + ay * ay + az * az);
 			ax *= recipNorm;
 			ay *= recipNorm;
 			az *= recipNorm;
@@ -159,7 +159,7 @@ namespace Madgwick
 			s1 = _4q1 * q3q3 - _2q3 * ax + 4.0f * q0q0 * q1 - _2q0 * ay - _4q1 + _8q1 * q1q1 + _8q1 * q2q2 + _4q1 * az;
 			s2 = 4.0f * q0q0 * q2 + _2q0 * ax + _4q2 * q3q3 - _2q3 * ay - _4q2 + _8q2 * q1q1 + _8q2 * q2q2 + _4q2 * az;
 			s3 = 4.0f * q1q1 * q3 - _2q1 * ax + 4.0f * q2q2 * q3 - _2q2 * ay;
-			recipNorm = Utils::invSqrt(s0 * s0 + s1 * s1 + s2 * s2 + s3 * s3); // normalise step magnitude
+			recipNorm = Utils::FastMath::invSqrt(s0 * s0 + s1 * s1 + s2 * s2 + s3 * s3); // normalise step magnitude
 			s0 *= recipNorm;
 			s1 *= recipNorm;
 			s2 *= recipNorm;
@@ -179,7 +179,7 @@ namespace Madgwick
 		q3 += qDot4 * deltaT;
 
 		// Normalise quaternion
-		recipNorm = Utils::invSqrt(q0 * q0 + q1 * q1 + q2 * q2 + q3 * q3);
+		recipNorm = Utils::FastMath::invSqrt(q0 * q0 + q1 * q1 + q2 * q2 + q3 * q3);
 		q0 *= recipNorm;
 		q1 *= recipNorm;
 		q2 *= recipNorm;

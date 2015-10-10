@@ -75,3 +75,25 @@ while out_res > RESOLUTION
     fprintf('Res = %.10f, MaxDelta = %.10f deg\n',res, maxDelta);
     out_res = maxDelta;
 end
+
+%% cos
+LUT_COS_CONVERSION_FACTOR = 1.0 / (2^16 -1);
+COS_IN_RESOLUTION = 0.01;
+
+theta = 0 : COS_IN_RESOLUTION * pi/180 : pi/2;
+N_VALS = length(theta);
+
+fileID = fopen('LUT_cos.h','w');
+fprintf(fileID, '#define LUT_COS_CONVERSION_FACTOR %.20ff\n',LUT_COS_CONVERSION_FACTOR);
+fprintf(fileID, '#define LUT_COS_INDEX_FACTOR %d\n',1/COS_IN_RESOLUTION);
+fprintf(fileID, '#define LUT_COS_TABLE_SIZE %d\n',N_VALS);
+fprintf(fileID, 'const uint16_t LUT_cos [%d] PROGMEM = {', N_VALS);
+for i = 1:N_VALS
+    if i < N_VALS
+        fprintf(fileID,'%u, ', uint16(cos(theta(i))/LUT_COS_CONVERSION_FACTOR));
+    else
+        fprintf(fileID,'%u};', uint16(cos(theta(i))/LUT_COS_CONVERSION_FACTOR));
+    end
+end
+fclose(fileID);
+

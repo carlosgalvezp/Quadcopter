@@ -59,29 +59,11 @@ void SerialCommThread::connectSerial(const QString &portName, const QString &bau
         }
     }
 
-
-//    this->timer_Status_ = new QTimer(this);
-//    connect(this->timer_Status_, SIGNAL(timeout()), this, SLOT(requestStatus()));
-//    this->timer_Status_->start(1000.0 / UPDATE_RATE_STATUS);
-
-//    this->timer_RC_ = new QTimer(this);
-//    connect(this->timer_RC_, SIGNAL(timeout()), this, SLOT(requestRC()));
-//    this->timer_RC_->start(1000.0 / UPDATE_RATE_RC);
-
-//    this->timer_IMU = new QTimer(this);
-//    connect(this->timer_IMU, SIGNAL(timeout()), this, SLOT(requestIMU()));
-//    this->timer_IMU->start(1000.0 / UPDATE_RATE_IMU);
-
-//    this->timer_Attitude = new QTimer(this);
-//    connect(this->timer_Attitude , SIGNAL(timeout()), this, SLOT(requestAttitude()));
-//    this->timer_Attitude ->start(1000.0 / UPDATE_RATE_ATTITUDE);
-
-//    this->timer_control = new QTimer(this);
-//    connect(this->timer_control, SIGNAL(timeout()), this, SLOT(requestMotors()));
-//    this->timer_control->start(1000.0 / UPDATE_RATE_CONTROL);
-
     // ** Read interruption
     connect(this->serialPort_, SIGNAL(readyRead()), this, SLOT(readData()));
+
+    // ** Request FC config
+    this->requestConfig();
 }
 
 void SerialCommThread::disconnectSerial()

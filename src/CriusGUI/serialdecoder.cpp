@@ -86,6 +86,7 @@ bool SerialDecoder::decodeData(const QByteArray &data, GUIData &gui_data)
 
             case TELEMETRY_CMD_OUT_CONTROL:
                 return this->decodeMotors(data, gui_data);
+
             case TELEMETRY_CMD_OUT_CONFIG:
                 return this->decodeConfig(data, gui_data);
 

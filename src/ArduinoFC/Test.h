@@ -35,6 +35,8 @@ namespace Test
 		void testEEPROM();
 		void testAtan2Full(); 
 		void testAtan2();
+		void testCos();
+		void testSin();
 
 		void testQuaternionToRPY();
 	}

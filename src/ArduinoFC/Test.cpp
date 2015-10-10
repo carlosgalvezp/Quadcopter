@@ -13,15 +13,16 @@ void Test::run()
 	//Test::testSensorRead();
 	//Test::testSonar();
 	//Test::testStateEstimation();
-	Test::testTelemetry(state_, config_);
+	//Test::testTelemetry(state_, config_);
 	//Test::testADC();
 	//Test::testSoftPWM();
 	//Test::testOutput();
-	//Test::testWholeSystem(&state_);
 	//Test::Unit::testAtan2();
 	//Test::Unit::testAtan2Full();
 	//Test::Unit::testQuaternionToRPY();
 	//Test::Unit::testEEPROM();
+	//Test::Unit::testCos();
+	Test::Unit::testSin();
 }
 
 void Test::testRC()
@@ -243,6 +244,60 @@ void Test::Unit::testAtan2()
 	//Serial.println("Standard library sin: " + String(t2 - t1) + String(" us"));
 
 	Serial.println("Result: " + String(res) + " ; Should be: " + String(resOK));
+}
+
+void Test::Unit::testCos()
+{
+	Serial.println("Testing cos...");
+	float step = 0.01;
+	float maxDelta = 0.0f;
+	float delta, x_LUT, x_lib;
+
+	unsigned long t1 = micros();
+	Utils::FastMath::cos(45);
+	unsigned long t2 = micros();
+	Serial.println("Time cos: " + String(t2 - t1));
+
+	for (float x = -180.0f; x < 180.0f; x += step)
+	{
+		x_LUT = Utils::FastMath::cos(x);
+		x_lib = cos(x * DEG_TO_RAD);
+		delta = fabs(x_LUT - x_lib);
+
+		if (delta > maxDelta)
+		{
+			maxDelta = delta;
+		}
+	}
+	Serial.println(maxDelta);
+	delay(1000);
+}
+
+void Test::Unit::testSin()
+{
+	Serial.println("Testing sin...");
+	float step = 0.01;
+	float maxDelta = 0.0f;
+	float delta, x_LUT, x_lib;
+
+	unsigned long t1 = micros();
+	Utils::FastMath::sin(45);
+	unsigned long t2 = micros();
+	Serial.println("Time sin: " + String(t2 - t1));
+
+	for (float x = -180; x < 180.0f; x += step)
+	{
+		x_LUT = Utils::FastMath::sin(x);
+		x_lib = sin(x * DEG_TO_RAD);
+		delta = fabs(x_LUT - x_lib);
+
+		if (delta > maxDelta)
+		{
+			maxDelta = delta;
+		}
+	}
+	Serial.println(maxDelta);
+	delay(1000);
 }
 
 void Test::Unit::testQuaternionToRPY()

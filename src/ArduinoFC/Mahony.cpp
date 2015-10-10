@@ -35,7 +35,7 @@ namespace Mahony
 		if (!((ax == 0.0f) && (ay == 0.0f) && (az == 0.0f))) {
 
 			// Normalise accelerometer measurement
-			recipNorm = Utils::invSqrt(ax * ax + ay * ay + az * az);
+			recipNorm = Utils::FastMath::invSqrt(ax * ax + ay * ay + az * az);
 			ax *= recipNorm;
 			ay *= recipNorm;
 			az *= recipNorm;
@@ -84,7 +84,7 @@ namespace Mahony
 		q3 += (qa * gz + qb * gy - qc * gx);
 
 		// Normalise quaternion
-		recipNorm = Utils::invSqrt(q0 * q0 + q1 * q1 + q2 * q2 + q3 * q3);
+		recipNorm = Utils::FastMath::invSqrt(q0 * q0 + q1 * q1 + q2 * q2 + q3 * q3);
 		q0 *= recipNorm;
 		q1 *= recipNorm;
 		q2 *= recipNorm;
@@ -114,13 +114,13 @@ namespace Mahony
 		if (!((ax == 0.0f) && (ay == 0.0f) && (az == 0.0f))) {
 
 			// Normalise accelerometer measurement
-			recipNorm = Utils::invSqrt(ax * ax + ay * ay + az * az);
+			recipNorm = Utils::FastMath::invSqrt(ax * ax + ay * ay + az * az);
 			ax *= recipNorm;
 			ay *= recipNorm;
 			az *= recipNorm;
 
 			// Normalise magnetometer measurement
-			recipNorm = Utils::invSqrt(mx * mx + my * my + mz * mz);
+			recipNorm = Utils::FastMath::invSqrt(mx * mx + my * my + mz * mz);
 			mx *= recipNorm;
 			my *= recipNorm;
 			mz *= recipNorm;
@@ -190,7 +190,7 @@ namespace Mahony
 		q3 += (qa * gz + qb * gy - qc * gx);
 
 		// Normalise quaternion
-		recipNorm = Utils::invSqrt(q0 * q0 + q1 * q1 + q2 * q2 + q3 * q3);
+		recipNorm = Utils::FastMath::invSqrt(q0 * q0 + q1 * q1 + q2 * q2 + q3 * q3);
 		q0 *= recipNorm;
 		q1 *= recipNorm;
 		q2 *= recipNorm;

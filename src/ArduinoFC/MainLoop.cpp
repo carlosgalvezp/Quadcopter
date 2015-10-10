@@ -23,11 +23,11 @@ void MainLoop::run()
 	//Serial.println("IMU: " + String(micros() - t1));
 
 	//t1 = micros();
-	Magnetometer::getData(&state_->sensorData.mag);
+	//Magnetometer::getData(&state_->sensorData.mag);
 	//Serial.println("Magneto: " + String(micros() - t1));
 
 	//t1 = micros();
-	Barometer::getData(&state_->sensorData.pressure, &state_->sensorData.temperature);
+	//Barometer::getData(&state_->sensorData.pressure, &state_->sensorData.temperature);
 	//Serial.println("Baro: " + String(micros() - t1));
 
 	// State estimation
@@ -37,12 +37,12 @@ void MainLoop::run()
 
 	// Control
 	//t1 = micros();
-	Control::computeControlCommands(&state_->attitude_rpy, &state_->rc, &state_->motors[0]);
+	//Control::computeControlCommands(&state_->attitude_rpy, &state_->rc, &state_->motors[0]);
 	//Serial.println("Control: " + String(micros() - t1));
 
 	// Output
 	//t1 = micros();
-	Output::writePWM(&state_->motors[0]);
+	//Output::writePWM(&state_->motors[0]);
 	//Serial.println("Output: " + String(micros() - t1));
 
 	// Send data

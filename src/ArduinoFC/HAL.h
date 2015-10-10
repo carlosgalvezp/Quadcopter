@@ -9,6 +9,7 @@
 #include "MS5611.h"
 #include "HC-SR04.h"
 #include "GPIO.h"
+#include "Config.h"
 
 // ** Definitions ** 
 #define CPU_FREQUENCY		16000000L	// Hz
@@ -56,6 +57,7 @@
 // Serial Ports
 #define Serial_Telemetry		Serial
 #define Serial_GPS				Serial1
+#define Serial_Debug			Serial3
 
 namespace HAL
 {

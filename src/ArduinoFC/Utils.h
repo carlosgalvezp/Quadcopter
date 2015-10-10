@@ -2,6 +2,7 @@
 #define UTILS_H
 
 #include <stdint.h>
+#include <stdio.h>
 #include <math.h>
 #include "Types.h"
 #include "Arduino.h"
@@ -15,21 +16,28 @@
 
 #define write0(reg, pin)	reg |=  (1 << pin)
 #define write1(reg, pin)	reg &= ~(1 << pin)
+#define _abs(x) x > 0 ? x : -x)
 
-
-namespace Utils
+class Utils
 {
-	namespace FastMath
+public:
+	static void quaternionToRPY(const quaternion_t * q, vec_float_3_t * const rpy);
+	static unsigned long timeFunction(void(*f)(void));
+	//static float normalizeAngle(float x);
+
+	class FastMath
 	{
-		float atanFP(float x);
-		float atan2(float x, float y);
-	}
+	public:
+		static float invSqrt(float x);
+		static float atan2(float x, float y);		
+		static float cos(float x);
+		static float sin(float x);
+	private:
+		static float atanFP(float x);
+		static float readCosLUT(float x);
+	};
 
-	float invSqrt(float x);
-	float atan2(float y, float x);
-
-	void quaternionToRPY(const quaternion_t * q, vec_float_3_t * const rpy);
-
-	unsigned long timeFunction(void (*f)(void));
-}
+private:
+	static unsigned long t_start;
+};
 #endif
