@@ -17,9 +17,9 @@
 #define TELEMETRY_BAUDRATE	115200		// baud
 
 // PINs
-#define PIN_LED_A			13
-#define PIN_LED_B			31
-#define PIN_LED_C			30
+#define PIN_LED_RED				13
+#define PIN_LED_BLUE			31
+#define PIN_LED_GREEN			30
 
 // RX pins are connected to Port K (PCINT16:23). 
 // These numbers represent the pin within the port

@@ -9,12 +9,15 @@ void setup()
 
 	// Load configuration
 	EEPROM::loadConfig(GlobalVariables::getConfig());
+
+	// Init global variables
+	GlobalVariables::init();
 }
 
 void loop() 
 {
-	//cycleTime = Utils::timeFunction(&MainLoop::run);
-	cycleTime = Utils::timeFunction(&Test::run);
+	cycleTime = Utils::timeFunction(&MainLoop::run);
+	//cycleTime = Utils::timeFunction(&Test::run);
 
 	if (cycleTime < CYCLE_TIME_US)
 	{

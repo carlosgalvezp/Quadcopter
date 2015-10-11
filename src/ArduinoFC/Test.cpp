@@ -8,7 +8,7 @@ namespace Test
 
 void Test::run()
 {
-	//Test::testRC();
+	Test::testRC();
 	//Test::testCompass();
 	//Test::testSensorRead();
 	//Test::testSonar();
@@ -22,7 +22,8 @@ void Test::run()
 	//Test::Unit::testQuaternionToRPY();
 	//Test::Unit::testEEPROM();
 	//Test::Unit::testCos();
-	Test::Unit::testSin();
+	//Test::Unit::testSin();
+	delay(100);
 }
 
 void Test::testRC()

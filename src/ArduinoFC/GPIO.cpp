@@ -9,6 +9,12 @@ namespace GPIO
 
 void GPIO::init()
 {
+	// Init status LEDs
+	pinMode(PIN_LED_GREEN, OUTPUT);
+	pinMode(PIN_LED_RED, OUTPUT);
+	pinMode(PIN_LED_BLUE, OUTPUT);
+
+	// Init Body LEDs and buzzer
 	bodyLEDs.init();
 	buzzer.init();
 }

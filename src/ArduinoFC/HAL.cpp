@@ -26,7 +26,7 @@ void HAL::init()
 	// Init ADC to read voltage and current
 	HAL::initADC();
 
-	// Init LEDs
+	// Init GPIO
 	GPIO::init();
 
 	// Init Serial ports

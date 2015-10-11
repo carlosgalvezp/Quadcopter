@@ -4,13 +4,13 @@
 #include <stdint.h>
 
 #include "pid.h"
+#include "RC.h"
 #include "Types.h"
 #include "Config.h"
 
 #define CONTROL_U_MIN			1050
 #define CONTROL_U_MAX			1950
 
-#define RC_IDDLE				1500
 namespace Control
 {
 	void computeControlCommands(const vec_float_3_t * const rpy_quad,

@@ -9,6 +9,8 @@ namespace GlobalVariables
 {
 	Config_t * getConfig();
 	State_t * getState();
+
+	void init();
 }
 
 #endif
