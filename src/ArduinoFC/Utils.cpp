@@ -155,14 +155,3 @@ float Utils::FastMath::readCosLUT(float x)
 		return 0;
 	}
 }
-
-unsigned long Utils::t_start;
-unsigned long Utils::timeFunction(void(*f)(void))
-{
-	t_start = micros();
-
-	(*f)();
-
-	return micros() - t_start;
-}
-

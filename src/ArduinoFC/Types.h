@@ -56,15 +56,10 @@ typedef struct
 	float temperature;
 }Sensor_data_t;
 
-enum FlyMode_t {ACRO = 1, HEADFREE = 2, AUTO_2D = 3, AUTO_3D = 4};
-enum Armed_t {DISARMED = 0, ARMED = 1, PASSTHROUGH = 2, RC_CALIBRATION = 3};
-
 typedef struct
 {
 	uint32_t timeStamp;
 	uint16_t cycleTime;
-
-	Armed_t armed;
 }Status_t;
 
 typedef struct
@@ -93,4 +88,13 @@ typedef struct
 	float kd;
 	float ki;
 }PID_Params_t;
+
+enum FlightMode
+{
+	FAILSAFE = 0,
+	ACRO = 1,
+	HEADFREE = 2,
+	HOLD_Z = 3,
+	HOLD_XYZ = 4,	
+};
 #endif

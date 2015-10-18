@@ -16,11 +16,6 @@ void setup()
 
 void loop() 
 {
-	cycleTime = Utils::timeFunction(&MainLoop::run);
-	//cycleTime = Utils::timeFunction(&Test::run);
-
-	if (cycleTime < CYCLE_TIME_US)
-	{
-		delayMicroseconds(CYCLE_TIME_US - cycleTime);
-	}
+	//Test::run();
+	MainLoop::run();	
 }

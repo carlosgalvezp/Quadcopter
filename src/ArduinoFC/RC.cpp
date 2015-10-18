@@ -4,6 +4,7 @@ namespace RC
 {
 	volatile unsigned long RC_last_t_rise[NUM_CHANNELS];
 	volatile uint16_t RC_readings[NUM_CHANNELS];
+	volatile uint16_t rcVal;
 	uint8_t prevPortK;
 }
 
@@ -43,7 +44,11 @@ ISR(PCINT2_vect)
 	}
 	else	// Falling edge
 	{
-		RC::RC_readings[bitNo] = uint16_t(micros() - RC::RC_last_t_rise[bitNo]);
+		RC::rcVal = uint16_t(micros() - RC::RC_last_t_rise[bitNo]);
+		if (RC_isValid(RC::rcVal))
+		{
+			RC::RC_readings[bitNo] = RC::rcVal;
+		}
 	}
 	// Store current port K for the next iteration
 	RC::prevPortK = pK;

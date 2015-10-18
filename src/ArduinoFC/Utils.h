@@ -22,7 +22,6 @@ class Utils
 {
 public:
 	static void quaternionToRPY(const quaternion_t * q, vec_float_3_t * const rpy);
-	static unsigned long timeFunction(void(*f)(void));
 	//static float normalizeAngle(float x);
 
 	class FastMath
@@ -36,8 +35,5 @@ public:
 		static float atanFP(float x);
 		static float readCosLUT(float x);
 	};
-
-private:
-	static unsigned long t_start;
 };
 #endif

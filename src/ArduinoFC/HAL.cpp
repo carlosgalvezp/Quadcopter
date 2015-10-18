@@ -125,3 +125,10 @@ void HAL::initADC()
 	ADCSRA = (1 << ADEN) | (1 << ADSC) | (1 << ADIE) | 
 		    (1 << ADPS2) | (1 << ADPS1) | (1 << ADPS0);
 }
+
+void HAL::boardLEDs(bool r, bool g, bool b)
+{
+	digitalWrite(PIN_LED_RED,   r);
+	digitalWrite(PIN_LED_GREEN, g);
+	digitalWrite(PIN_LED_BLUE,  b);
+}
