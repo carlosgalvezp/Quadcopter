@@ -28,6 +28,7 @@ namespace Test
 	void testOutput();
 	void testADC();
 	void testSonar();
+	void testGPS();
 	void testSoftPWM();
 
 	namespace Unit

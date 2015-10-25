@@ -9,15 +9,20 @@ namespace MainLoop
 
 void MainLoop::run()
 {
-	// Update internal state
+	// Update internal state from sensor data
 	Internal::updateInternalState(state_);
 
-	// Update state in the state machine
+	// Update logical state in the state machine
 	Internal::updateStateMachineState(state_);
 
 	// Output
-	Serial.println("OUTPUT");
 	Internal::output(state_, config_);
+
+	// Telemetry
+	Telemetry::main(state_, config_);
+
+	// Cycle time
+	state_->status.cycleTime = (uint16_t)(micros() - state_->status.timeStamp);
 
 	// Sleep if necessary
 	if (CYCLE_TIME_US > state_->status.cycleTime)
@@ -69,10 +74,4 @@ void MainLoop::Internal::output(State_t *state, Config_t *config)
 
 	// Call its output function
 	currentState->output(config, state);
-
-	// Send data
-	Telemetry::main(state_, config_);
-
-	// Cycle time
-	state_->status.cycleTime = (uint16_t)(micros() - state_->status.timeStamp);
 }

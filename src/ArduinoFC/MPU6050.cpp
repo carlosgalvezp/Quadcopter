@@ -40,9 +40,9 @@ namespace IMU
 		data->gyro_raw.z = ((int16_t)rawData[12]) << 8 | rawData[13];
 
 		// Convert to real values
-		data->acc.x = ACC_SENSITIVITY * data->acc_raw.x;
-		data->acc.y = ACC_SENSITIVITY * data->acc_raw.y;
-		data->acc.z = ACC_SENSITIVITY * data->acc_raw.z;
+		//data->acc.x = ACC_SENSITIVITY * data->acc_raw.x; // Not needed, the filter already normalizes
+		//data->acc.y = ACC_SENSITIVITY * data->acc_raw.y;
+		//data->acc.z = ACC_SENSITIVITY * data->acc_raw.z;
 
 		data->gyro.x = GYRO_SENSITIVITY * data->gyro_raw.x;
 		data->gyro.y = GYRO_SENSITIVITY * data->gyro_raw.y;

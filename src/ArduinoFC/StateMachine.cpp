@@ -35,13 +35,13 @@ void StateMachine::init()
 	SM_State *state_PowerOn			= this->addState(SM_State_Name::POWER_ON,    3, &SM_Outputs::powerOn);
 	SM_State *state_PassThrough		= this->addState(SM_State_Name::PASSTHROUGH, 0, &SM_Outputs::passThrough);
 	SM_State *state_Disarmed		= this->addState(SM_State_Name::DISARMED,    1, &SM_Outputs::disarmed);
-	SM_State *state_Armed_Acro		= this->addState(SM_State_Name::ARMED_ACRO,  1, &SM_Outputs::dummyOutput);
+	SM_State *state_Armed_Acro		= this->addState(SM_State_Name::ARMED_ACRO,  1, &SM_Outputs::armedAcro);
 		
 	// Add connections
 	this->createConnection(state_PowerOn,		state_PassThrough,	&SM_Conditions::powerOn_PassThrough);
 	this->createConnection(state_PowerOn,		state_Disarmed,		&SM_Conditions::powerOn_Disarmed);
-	this->createConnection(state_Disarmed,		state_Armed_Acro,	&SM_Conditions::dummyCondition);
-	this->createConnection(state_Armed_Acro,		state_Disarmed,		&SM_Conditions::dummyCondition);
+	this->createConnection(state_Disarmed,		state_Armed_Acro,	&SM_Conditions::disarmed_Armed);
+	this->createConnection(state_Armed_Acro,		state_Disarmed,		&SM_Conditions::disarmed_Armed);
 
 	// Set initial state
 	this->currentState_ = state_PowerOn;
@@ -104,18 +104,39 @@ void SM_Outputs::powerOn(const Config_t *config, State_t *state)
 
 void SM_Outputs::disarmed(const Config_t *config, State_t *state)
 {
+	// LEDs
 	HAL::boardLEDs(0, 1, 0);
 }
 
 void SM_Outputs::passThrough(const Config_t *config, State_t *state)
 {
+	// LEDs
 	HAL::boardLEDs(1, 0, 1);
+
+	// Motors
+	for (uint8_t i = 0; i < N_MOTORS; ++i)
+	{
+		state->motors[i] = state->rc.throttle;
+	}
+	Output::writePWM(&state->motors[0]);
+}
+
+void SM_Outputs::armedAcro(const Config_t *config, State_t *state)
+{
+	// LEDs
+	HAL::boardLEDs(1, 0, 0);
+
+	// Control
+	Control::computeControlCommands(&state->attitude_rpy, &state->rc, &state->motors[0]);
+	
+	// Output
+	Output::writePWM(&state->motors[0]);
 }
 
 // ==================== CONDITIONS ======================================
 namespace SM_Conditions
 {
-	
+	bool disarmedToArmedReady(false);
 }
 bool SM_Conditions::dummyCondition(const State_t *state)
 {
@@ -135,4 +156,19 @@ bool SM_Conditions::powerOn_PassThrough(const State_t *state)
 		   RC_isIddle(state->rc.aileron) &&
 		   RC_isIddle(state->rc.elevator) &&
 		   RC_isIddle(state->rc.rudder);
+}
+
+bool SM_Conditions::disarmed_Armed(const State_t *state)
+{
+	if (RC_isIddle(state->rc.rudder))
+	{
+		SM_Conditions::disarmedToArmedReady = true;
+	}
+
+	if (SM_Conditions::disarmedToArmedReady && RC_isAtMin(state->rc.throttle) && RC_isAtMax(state->rc.rudder))
+	{
+		SM_Conditions::disarmedToArmedReady = false;
+		return true;
+	}
+	return false;
 }

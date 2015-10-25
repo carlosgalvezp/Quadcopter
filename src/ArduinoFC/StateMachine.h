@@ -7,6 +7,8 @@
 #include "Config.h"
 #include "HAL.h"
 #include "RC.h"
+#include "Output.h"
+#include "Control.h"
 
 #define N_MAX_STATES			20
 
@@ -74,6 +76,8 @@ namespace SM_Conditions
 
 	bool powerOn_Disarmed(const State_t *state);
 	bool powerOn_PassThrough(const State_t *state);
+	bool disarmed_Armed(const State_t *state);
+	bool armed_Disarmed(const State_t *state);
 }
 
 // Outputs
@@ -84,6 +88,7 @@ namespace SM_Outputs
 	void powerOn(const Config_t *config, State_t *state);
 	void disarmed(const Config_t *config, State_t *state);
 	void passThrough(const Config_t *config, State_t *state);
+	void armedAcro(const Config_t *config, State_t *state);
 }
 
 

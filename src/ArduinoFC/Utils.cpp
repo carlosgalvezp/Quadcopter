@@ -139,19 +139,20 @@ float Utils::FastMath::sin(float x)
 // 0 <= x <= 90 
 float Utils::FastMath::readCosLUT(float x)
 {
-	if (x >= 0 && x <= 90)
-	{
-		// Compute index in LUT
-		uint16_t idx = (uint16_t)(x * LUT_COS_INDEX_FACTOR);
+	//if (x >= 0 && x <= 90)
+	//{
+	//	// Compute index in LUT
+	//	uint16_t idx = (uint16_t)(x * LUT_COS_INDEX_FACTOR);
 
-		// Read value from LUT
-		uint16_t val = pgm_read_word_near(LUT_cos + idx);
+	//	// Read value from LUT
+	//	uint16_t val = pgm_read_word_near(LUT_cos + idx);
 
-		// Transform to actual degrees by multiplying by the resolution
-		return LUT_COS_CONVERSION_FACTOR * val;
-	}
-	else
-	{
-		return 0;
-	}
+	//	// Transform to actual degrees by multiplying by the resolution
+	//	return LUT_COS_CONVERSION_FACTOR * val;
+	//}
+	//else
+	//{
+	//	return 0;
+	//}
+	return 0;
 }

@@ -1,11 +1,42 @@
 #ifndef GPS_H
 #define GPS_H
 
-class GPS
-{
-public:
-	GPS();
-	~GPS();
-};
+#include "Types.h"
+#include "HAL.h"
 
+#define GPS_RX_BUFFER_SIZE		100
+#define GPS_RX_BATCH_READ_SIZE	5	   // Number of bytes we read at every iteration, in order not to spend too much time
+#define GPS_SERIAL_BAUDRATE		115200
+
+#define GPS_MAGIC_WORD_FIRST	0xB5
+#define GPS_MAGIC_WORD_SECOND	0x62
+
+#define GPS_CLASS_NAV			0x01
+#define GPS_ID_NAV_SOL			0x06
+
+#define GPS_NAV_SOL_LENGTH		52
+#define GPS_NAV_FIX_OK_MASK		0x01
+
+#define GPS_POSITION_SCALE		0.01f
+#define GPS_VELOCITY_SCALE		0.01f
+
+namespace GPS
+{
+	void init();
+	bool getGPSData(GPS_Data_t *data);
+	namespace Internal
+	{
+		bool receiveSerialData();
+
+		bool readHeader();
+		bool readPayload(uint8_t payloadLength);
+		uint8_t readByteAndComputeCheckSum();
+
+		namespace Decode
+		{
+			uint16_t decode16LittleEndian(const uint8_t *buffer);
+			uint32_t decode32LittleEndian(const uint8_t *buffer);
+		}
+	}
+}
 #endif

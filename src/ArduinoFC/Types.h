@@ -97,4 +97,12 @@ enum FlightMode
 	HOLD_Z = 3,
 	HOLD_XYZ = 4,	
 };
+
+typedef struct
+{
+	uint8_t fix;
+	uint8_t nSatellites;
+	vec_float_3_t position_ecef;
+	vec_float_3_t velocity_ecef;
+}GPS_Data_t;
 #endif

@@ -8,7 +8,7 @@ namespace Test
 
 void Test::run()
 {
-	Test::testRC();
+	//Test::testRC();
 	//Test::testCompass();
 	//Test::testSensorRead();
 	//Test::testSonar();
@@ -17,13 +17,14 @@ void Test::run()
 	//Test::testADC();
 	//Test::testSoftPWM();
 	//Test::testOutput();
+	Test::testGPS();
 	//Test::Unit::testAtan2();
 	//Test::Unit::testAtan2Full();
 	//Test::Unit::testQuaternionToRPY();
 	//Test::Unit::testEEPROM();
 	//Test::Unit::testCos();
 	//Test::Unit::testSin();
-	delay(100);
+	//delay(100);
 }
 
 void Test::testRC()
@@ -185,6 +186,38 @@ void Test::testADC()
 	Adc::Power::readVoltage(&voltage);
 	Serial.println("Voltage: " + String(voltage));	
 	delay(100);
+}
+
+namespace Test
+{
+	unsigned long maxDeltaGPS(0);
+}
+void Test::testGPS()
+{
+	GPS_Data_t gps_data;
+	unsigned long t1 = micros();
+	if (GPS::getGPSData(&gps_data))
+	{
+		Serial.print("Fix: " + String(gps_data.fix));
+		Serial.print("; Pos: ");
+		Serial.print(gps_data.position_ecef.x);
+		Serial.print(",");
+		Serial.print(gps_data.position_ecef.y);
+		Serial.print(",");
+		Serial.print(gps_data.position_ecef.z);
+		Serial.print("; Sat: " + String(gps_data.nSatellites) + "\n");
+	}
+	unsigned long t2 = micros();
+	unsigned long delta = t2 - t1;
+
+	if (delta > maxDeltaGPS)
+		maxDeltaGPS = delta;
+
+	//Serial.print(delta);
+	//Serial.print("/");
+	//Serial.print(maxDeltaGPS);
+	//Serial.print("\n");
+	delayMicroseconds(2500);
 }
 
 void Test::Unit::testAtan2Full()

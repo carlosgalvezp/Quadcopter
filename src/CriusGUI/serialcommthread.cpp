@@ -145,10 +145,7 @@ void SerialCommThread::requestCmd(uint8_t cmd)
 
 void SerialCommThread::readData()
 {
-    QByteArray out_array = this->serialPort_->readAll();
-    std::cout << "READ BYTES: " << out_array.size() <<std::endl;
-
-    emit sendData(out_array);
+    emit sendData(this->serialPort_->readAll());
 }
 
 

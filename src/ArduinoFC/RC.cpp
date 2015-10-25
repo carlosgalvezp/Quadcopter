@@ -33,12 +33,9 @@ ISR(PCINT2_vect)
 		diff >>= 1;
 		++bitNo;
 	}
-
-	// Read current value
-	bool val = (pK & (1 << bitNo)) > 0;
-
+	
 	// Update timers
-	if (val) // Rising edge
+	if (pK & (1 << bitNo)) // Rising edge
 	{
 		RC::RC_last_t_rise[bitNo] = micros();
 	}

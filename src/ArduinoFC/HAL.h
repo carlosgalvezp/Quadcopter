@@ -10,6 +10,7 @@
 #include "HC-SR04.h"
 #include "GPIO.h"
 #include "Config.h"
+#include "GPS.h"
 
 // ** Definitions ** 
 #define CPU_FREQUENCY		16000000L	// Hz
@@ -33,6 +34,7 @@
 #define PIN_RC_AUX4			7   // Equals to A13
 
 // Motor pins
+#define N_MOTORS			4
 #define PIN_M1				PE4		
 #define PIN_M2				PE5		
 #define PIN_M3				PE3		

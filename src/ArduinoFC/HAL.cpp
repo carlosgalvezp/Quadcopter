@@ -36,6 +36,9 @@ void HAL::init()
 	Serial_Debug.begin(TELEMETRY_BAUDRATE);
 #endif
 
+	// Init GPS
+	GPS::init();
+
 	// Enable interrupts globally
 	SREG |= (1 << 7);
 }

@@ -16,6 +16,6 @@ void setup()
 
 void loop() 
 {
-	//Test::run();
-	MainLoop::run();	
+	Test::run();
+	//MainLoop::run();	
 }
