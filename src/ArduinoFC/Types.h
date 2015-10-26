@@ -25,6 +25,13 @@ typedef struct
 
 typedef struct
 {
+	int32_t x;
+	int32_t y;
+	int32_t z;
+}vec_int32_3_t;
+
+typedef struct
+{
 	float x;
 	float y;
 	float z;
@@ -102,7 +109,7 @@ typedef struct
 {
 	uint8_t fix;
 	uint8_t nSatellites;
-	vec_float_3_t position_ecef;
-	vec_float_3_t velocity_ecef;
+	vec_int32_3_t position_ecef;
+	vec_int32_3_t velocity_ecef;
 }GPS_Data_t;
 #endif

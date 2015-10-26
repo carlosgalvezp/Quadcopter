@@ -11,14 +11,11 @@
 #define GPS_MAGIC_WORD_FIRST	0xB5
 #define GPS_MAGIC_WORD_SECOND	0x62
 
-#define GPS_CLASS_NAV			0x01
-#define GPS_ID_NAV_SOL			0x06
+#define GPS_MSG_NAV_SOL			0x0106
 
+#define GPS_HEADER_LENGTH		6
 #define GPS_NAV_SOL_LENGTH		52
 #define GPS_NAV_FIX_OK_MASK		0x01
-
-#define GPS_POSITION_SCALE		0.01f
-#define GPS_VELOCITY_SCALE		0.01f
 
 namespace GPS
 {
@@ -28,12 +25,14 @@ namespace GPS
 	{
 		bool receiveSerialData();
 
-		bool readHeader();
-		bool readPayload(uint8_t payloadLength);
+		bool readHeader(uint16_t *msg, uint16_t *length);
+		bool readPayload(uint16_t payloadLength);
 		uint8_t readByteAndComputeCheckSum();
 
 		namespace Decode
 		{
+			bool decodeNavSol(GPS_Data_t *data);
+
 			uint16_t decode16LittleEndian(const uint8_t *buffer);
 			uint32_t decode32LittleEndian(const uint8_t *buffer);
 		}
