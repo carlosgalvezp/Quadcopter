@@ -41,6 +41,11 @@ namespace Test
 
 		void testQuaternionToRPY();
 	}
+
+	namespace Performance
+	{
+		void testSin();
+	}
 }
 
 #endif

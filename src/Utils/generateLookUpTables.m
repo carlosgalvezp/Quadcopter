@@ -45,54 +45,34 @@ for i = 1:N_VALS
     end
 end
 fclose(fileID);
+%% sin
+THETA_RES = 0.01 * pi/180;
+THETA_MIN = 0;
+THETA_MAX = pi/2;
 
-%% asin
-THETA_MIN =  0.0 * pi/180;
-THETA_MAX =  90.0 * pi/180;
-RESOLUTION = 0.01;
+theta = THETA_MIN : THETA_RES : THETA_MAX - THETA_RES;
+N_VALS = length(theta)/2;
 
-% First, determine the minimum input resolution so that we obtain
-% a minimum resolution of RESOLUTION degrees
-step = 0.00001;
-res = 0.1 + step;
-out_res = 1;
-
-while out_res > RESOLUTION
-    res = res - step;
-    t_in = sin(THETA_MIN) : res : sin(THETA_MAX);
-    lut = asin(t_in) * 180 / pi;
-    
-    maxDelta = 0;
-    for i = 1:length(lut) - 1
-        delta = abs(lut(i) - lut(i+1));
-        if delta > maxDelta
-            maxDelta = delta;
-            if maxDelta > RESOLUTION
-                break;
-            end
-        end
-    end
-    fprintf('Res = %.10f, MaxDelta = %.10f deg, Table Size: %d\n',res, maxDelta, (THETA_MAX - THETA_MIN)/res);
-    out_res = maxDelta;
-end
-
-%% cos
-% LUT_COS_CONVERSION_FACTOR = 1.0 / (2^16 -1);
-% COS_IN_RESOLUTION = 0.01;
-
-% theta = 0 : COS_IN_RESOLUTION * pi/180 : pi/2;
-N_VALS = 8096; %length(theta);
-theta = linspace(0, pi/2, N_VALS);
-
-fileID = fopen('LUT_cos.h','w');
-fprintf(fileID, '#define LUT_COS_INDEX_FACTOR %d\n',1.0/(theta(end) - (theta(end-1))));
-fprintf(fileID, '#define LUT_COS_TABLE_SIZE %d\n',N_VALS);
-fprintf(fileID, 'const float LUT_cos [%d] PROGMEM = {', N_VALS);
+fileID = fopen('LUT_sin.h','w');
+fprintf(fileID, '#define LUT_SIN_TABLE_SIZE %d\n',N_VALS);
+% First half
+fprintf(fileID, 'const float LUT_sin1 [%d] PROGMEM = {', N_VALS);
 for i = 1:N_VALS
     if i < N_VALS
-        fprintf(fileID,'%.10ff, ', cos(theta(i)));
+        fprintf(fileID,'%.10ff, ', sin(theta(i)));
     else
-        fprintf(fileID,'%.10ff};', cos(theta(i)));
+        fprintf(fileID,'%.10ff};', sin(theta(i)));
+    end
+end
+
+% Second half
+fprintf(fileID, '\n');
+fprintf(fileID, 'const float LUT_sin2 [%d] PROGMEM = {', N_VALS);
+for i = 1:N_VALS
+    if i < N_VALS
+        fprintf(fileID,'%.10ff, ', sin(theta(i+N_VALS)));
+    else
+        fprintf(fileID,'%.10ff};', sin(theta(i+N_VALS)));
     end
 end
 fclose(fileID);

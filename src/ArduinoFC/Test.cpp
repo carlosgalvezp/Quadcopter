@@ -17,13 +17,14 @@ void Test::run()
 	//Test::testADC();
 	//Test::testSoftPWM();
 	//Test::testOutput();
-	Test::testGPS();
+	//Test::testGPS();
 	//Test::Unit::testAtan2();
 	//Test::Unit::testAtan2Full();
 	//Test::Unit::testQuaternionToRPY();
 	//Test::Unit::testEEPROM();
-	//Test::Unit::testCos();
+	Test::Unit::testCos();
 	//Test::Unit::testSin();
+	//Test::Performance::testSin();
 	//delay(100);
 }
 
@@ -283,54 +284,48 @@ void Test::Unit::testAtan2()
 void Test::Unit::testCos()
 {
 	Serial.println("Testing cos...");
-	float step = 0.01;
+	uint16_t step = 1;
+	int16_t worstAngle;
 	float maxDelta = 0.0f;
 	float delta, x_LUT, x_lib;
 
-	unsigned long t1 = micros();
-	Utils::FastMath::cos(45);
-	unsigned long t2 = micros();
-	Serial.println("Time cos: " + String(t2 - t1));
-
-	for (float x = -180.0f; x < 180.0f; x += step)
+	for (int16_t x = -18000; x < 18000; x += step)
 	{
 		x_LUT = Utils::FastMath::cos(x);
-		x_lib = cos(x * DEG_TO_RAD);
+		x_lib = cos(0.01f * x * DEG_TO_RAD);
 		delta = fabs(x_LUT - x_lib);
 
 		if (delta > maxDelta)
 		{
+			worstAngle = x;
 			maxDelta = delta;
 		}
 	}
-	Serial.println(maxDelta);
+	Serial.println(String(maxDelta) + "," + String(worstAngle));
 	delay(1000);
 }
 
 void Test::Unit::testSin()
 {
 	Serial.println("Testing sin...");
-	float step = 0.01;
+	uint16_t step = 1;
+	int16_t worstAngle;
 	float maxDelta = 0.0f;
 	float delta, x_LUT, x_lib;
-
-	unsigned long t1 = micros();
-	Utils::FastMath::sin(45);
-	unsigned long t2 = micros();
-	Serial.println("Time sin: " + String(t2 - t1));
-
-	for (float x = -180; x < 180.0f; x += step)
+		
+	for (int16_t x = -18000; x < 18000; x += step)
 	{
 		x_LUT = Utils::FastMath::sin(x);
-		x_lib = sin(x * DEG_TO_RAD);
+		x_lib = sin(0.01f * x * DEG_TO_RAD);
 		delta = fabs(x_LUT - x_lib);
 
 		if (delta > maxDelta)
 		{
+			worstAngle = x;
 			maxDelta = delta;
 		}
 	}
-	Serial.println(maxDelta);
+	Serial.println(String(maxDelta)+","+String(worstAngle));
 	delay(1000);
 }
 
@@ -373,4 +368,20 @@ void Test::Unit::testEEPROM()
 void Test::testSoftPWM()
 {
 	GPIO::getBodyLEDs().run();
+}
+
+void Test::Performance::testSin()
+{
+	Serial.println("Timing sin...");
+	unsigned long tStart, tEnd;
+	int16_t x = -18000;
+	tStart = micros();
+	for (; x < 18000; ++x)
+	{
+		Utils::FastMath::sin(x);
+	}
+	tEnd = micros();
+	Serial.println("Time fast sin: " + String((float)(tEnd - tStart) / 36001)+ " us");
+
+	delay(1000);
 }

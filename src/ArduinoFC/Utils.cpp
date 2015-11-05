@@ -1,7 +1,7 @@
 #include "Utils.h"
 
 #include "LUT_atan.h"
-#include "LUT_cos.h"
+#include "LUT_sin.h"
 
 // Fast inverse square-root
 // See: http://en.wikipedia.org/wiki/Fast_inverse_square_root
@@ -101,38 +101,50 @@ float Utils::FastMath::atanFP(float t)
 	return LUT_ATAN2_RESOLUTION_DEG * val;
 }
 
-// ** Assumptions:
-// x is in DEGREES
-// -180 <= x <= 180 
-
-float Utils::FastMath::cos(float x)
+/*
+	Assumptions:
+	-x is expressed in 0.01 degrees. For example: x = 10000 == 100 deg
+	-180 <= x <= 180
+*/
+float Utils::FastMath::sin(int16_t x)
 {
-	// Cos is the same for both positive and negative x
-	if (x < 0)	x = -x;
-	if (x > 180.0f) x -= 180.0f;
-
-	if (x < 90.0f)		// 1st quadrant
-	{			
-		return readCosLUT(x);
-	}
-	else				// 2nd quadrant
+	if (x < 0)		// sin(x) = -sin(x)
 	{
-		return -readCosLUT(180.0f - x);
-	}
-}
+		x = -x;
 
-// ** Assumptions:
-// x is in DEGREES
-// -180 <= x <= 180 
-float Utils::FastMath::sin(float x)
-{
-	if (x >= -90.0f)
-		return Utils::FastMath::cos(x - 90.0f);
+		if (x > 9000) x = 18000 - x;
+
+		if (x < 4500)
+			return -pgm_read_float_near(LUT_sin1 + x);
+		else
+			return -pgm_read_float_near(LUT_sin2 + x - 4500);
+	}
 	else
 	{
-		return Utils::FastMath::cos(x + 270.0f);
+		if (x > 9000) x = 18000 - x;
+
+		if (x < 4500)
+			return pgm_read_float_near(LUT_sin1 + x);
+		else
+			return pgm_read_float_near(LUT_sin2 + x - 4500);
+
 	}
 }
+
+
+/*
+Assumptions:
+-x is expressed in 0.01 degrees. For example: x = 10000 == 100 deg
+-180 <= x <= 180
+*/
+float Utils::FastMath::cos(int16_t x)
+{
+	if (x < 0)	x = -x; // cos(x) = cos(-x)
+	
+	return Utils::FastMath::sin(9000 - x);
+}
+
+
 
 // ** Assumptions:
 // x is in DEGREES

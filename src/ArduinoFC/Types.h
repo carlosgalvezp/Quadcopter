@@ -99,10 +99,11 @@ typedef struct
 enum FlightMode
 {
 	FAILSAFE = 0,
-	ACRO = 1,
-	HEADFREE = 2,
-	HOLD_Z = 3,
-	HOLD_XYZ = 4,	
+	ACRO,
+	SELF_LEVEL,
+	HEADFREE,
+	HOLD_Z,
+	HOLD_XYZ,	
 };
 
 typedef struct

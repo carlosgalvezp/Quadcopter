@@ -29,8 +29,8 @@ public:
 	public:
 		static float invSqrt(float x);
 		static float atan2(float x, float y);		
-		static float cos(float x);
-		static float sin(float x);
+		static float cos(int16_t x);
+		static float sin(int16_t x);
 	private:
 		static float atanFP(float x);
 		static float readCosLUT(float x);
