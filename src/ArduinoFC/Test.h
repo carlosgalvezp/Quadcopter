@@ -38,6 +38,7 @@ namespace Test
 		void testAtan2();
 		void testCos();
 		void testSin();
+		void testAsin();
 
 		void testQuaternionToRPY();
 	}
@@ -45,7 +46,9 @@ namespace Test
 	namespace Performance
 	{
 		void testSin();
+		void testAsin();
 	}
 }
+
 
 #endif

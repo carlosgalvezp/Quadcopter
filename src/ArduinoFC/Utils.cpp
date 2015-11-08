@@ -113,21 +113,12 @@ float Utils::FastMath::sin(int16_t x)
 		x = -x;
 
 		if (x > 9000) x = 18000 - x;
-
-		if (x < 4500)
-			return -pgm_read_float_near(LUT_sin1 + x);
-		else
-			return -pgm_read_float_near(LUT_sin2 + x - 4500);
+		return -LUT_SIN_CONV_FACTOR * pgm_read_word_near(LUT_sin + x);
 	}
 	else
 	{
 		if (x > 9000) x = 18000 - x;
-
-		if (x < 4500)
-			return pgm_read_float_near(LUT_sin1 + x);
-		else
-			return pgm_read_float_near(LUT_sin2 + x - 4500);
-
+		return LUT_SIN_CONV_FACTOR * pgm_read_float_near(LUT_sin + x);
 	}
 }
 
@@ -144,27 +135,36 @@ float Utils::FastMath::cos(int16_t x)
 	return Utils::FastMath::sin(9000 - x);
 }
 
-
-
-// ** Assumptions:
-// x is in DEGREES
-// 0 <= x <= 90 
-float Utils::FastMath::readCosLUT(float x)
+int16_t Utils::FastMath::asin(float x)
 {
-	//if (x >= 0 && x <= 90)
-	//{
-	//	// Compute index in LUT
-	//	uint16_t idx = (uint16_t)(x * LUT_COS_INDEX_FACTOR);
+	if (x < 0)
+	{
+		x = -x;
+		return  -(Utils::binarySearchProgMemUint16(LUT_sin, 0, LUT_SIN_TABLE_SIZE - 1, (uint16_t)(LUT_ASIN_CONV_FACTOR * x)));
+	}
+	else
+	{
+		return   (Utils::binarySearchProgMemUint16(LUT_sin, 0, LUT_SIN_TABLE_SIZE - 1, (uint16_t)(LUT_ASIN_CONV_FACTOR * x)));
+	}
+}
 
-	//	// Read value from LUT
-	//	uint16_t val = pgm_read_word_near(LUT_cos + idx);
+int16_t Utils::FastMath::acos(float x)
+{
+	return 9000 - Utils::FastMath::asin(x);
+}
 
-	//	// Transform to actual degrees by multiplying by the resolution
-	//	return LUT_COS_CONVERSION_FACTOR * val;
-	//}
-	//else
-	//{
-	//	return 0;
-	//}
-	return 0;
+
+uint16_t Utils::binarySearchProgMemUint16(const uint16_t *data, uint16_t minIdx, uint16_t maxIdx, uint16_t key)
+{
+	uint16_t idxMid(0);
+	while (minIdx <= maxIdx)
+	{
+		idxMid = (minIdx + maxIdx) / 2;
+
+		if (pgm_read_word_near(data + idxMid) > key)
+			maxIdx = idxMid - 1;
+		else
+			minIdx = idxMid + 1;
+	}
+	return idxMid;
 }

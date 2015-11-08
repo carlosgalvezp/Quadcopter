@@ -18,22 +18,27 @@
 #define write1(reg, pin)	reg &= ~(1 << pin)
 #define _abs(x) x > 0 ? x : -x)
 
-class Utils
+namespace Utils
 {
-public:
-	static void quaternionToRPY(const quaternion_t * q, vec_float_3_t * const rpy);
+	void quaternionToRPY(const quaternion_t * q, vec_float_3_t * const rpy);
 	//static float normalizeAngle(float x);
 
-	class FastMath
+	namespace FastMath
 	{
-	public:
-		static float invSqrt(float x);
-		static float atan2(float x, float y);		
-		static float cos(int16_t x);
-		static float sin(int16_t x);
-	private:
-		static float atanFP(float x);
-		static float readCosLUT(float x);
-	};
+		float invSqrt(float x);
+		float atan2(float x, float y);
+		float cos(int16_t x);
+		float sin(int16_t x);
+		int16_t acos(float x);
+		int16_t asin(float x);
+
+		float atanFP(float x);
+
+	}
+
+	uint16_t binarySearchProgMemUint16(const uint16_t *data, uint16_t minIdx, uint16_t maxIdx, uint16_t key);
 };
+
+//void foo();
+
 #endif

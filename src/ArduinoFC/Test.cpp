@@ -22,9 +22,11 @@ void Test::run()
 	//Test::Unit::testAtan2Full();
 	//Test::Unit::testQuaternionToRPY();
 	//Test::Unit::testEEPROM();
-	Test::Unit::testCos();
+	//Test::Unit::testCos();
 	//Test::Unit::testSin();
+	//Test::Unit::testAsin();
 	//Test::Performance::testSin();
+	Test::Performance::testAsin();
 	//delay(100);
 }
 
@@ -285,8 +287,8 @@ void Test::Unit::testCos()
 {
 	Serial.println("Testing cos...");
 	uint16_t step = 1;
-	int16_t worstAngle;
-	float maxDelta = 0.0f;
+	int16_t worstAngle=0;
+	float maxDelta = -1;
 	float delta, x_LUT, x_lib;
 
 	for (int16_t x = -18000; x < 18000; x += step)
@@ -309,8 +311,8 @@ void Test::Unit::testSin()
 {
 	Serial.println("Testing sin...");
 	uint16_t step = 1;
-	int16_t worstAngle;
-	float maxDelta = 0.0f;
+	int16_t worstAngle=0;
+	float maxDelta = -1.0f;
 	float delta, x_LUT, x_lib;
 		
 	for (int16_t x = -18000; x < 18000; x += step)
@@ -326,6 +328,13 @@ void Test::Unit::testSin()
 		}
 	}
 	Serial.println(String(maxDelta)+","+String(worstAngle));
+	delay(1000);
+}
+
+void Test::Unit::testAsin()
+{
+	float x = 0.96592582628f;
+	Serial.println(Utils::FastMath::asin(x));
 	delay(1000);
 }
 
@@ -382,6 +391,26 @@ void Test::Performance::testSin()
 	}
 	tEnd = micros();
 	Serial.println("Time fast sin: " + String((float)(tEnd - tStart) / 36001)+ " us");
+
+	delay(1000);
+}
+
+
+
+void Test::Performance::testAsin()
+{
+	Serial.println("Timing asin...");
+	unsigned long tStart, tEnd;
+	float x = -1.0f;
+	uint8_t nIters = 100;
+	tStart = micros();
+	for (uint8_t i = 0; i < nIters; ++i)
+	{
+		Utils::FastMath::asin(x);
+		asm("");
+	}
+	tEnd = micros();
+	Serial.println("Time fast asin: " + String((float)(tEnd - tStart) / nIters) + " us");
 
 	delay(1000);
 }

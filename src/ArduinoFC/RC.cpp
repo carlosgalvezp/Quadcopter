@@ -50,4 +50,3 @@ ISR(PCINT2_vect)
 	// Store current port K for the next iteration
 	RC::prevPortK = pK;
 }
-

@@ -77,3 +77,35 @@ for i = 1:N_VALS
 end
 fclose(fileID);
 
+%% sin uint16_t
+THETA_RES = 0.01 * pi/180;
+THETA_MIN = 0;
+THETA_MAX = pi/2;
+
+theta = THETA_MIN : THETA_RES : THETA_MAX - THETA_RES;
+N_VALS = length(theta)/2;
+
+fileID = fopen('LUT_sin.h','w');
+fprintf(fileID, '#define LUT_SIN1_TABLE_SIZE %d\n',N_VALS);
+% First half
+fprintf(fileID, 'const uint16_t LUT_sin1 [%d] PROGMEM = {', N_VALS);
+for i = 1:N_VALS
+    if i < N_VALS
+        fprintf(fileID,'%d, ', uint16(((2^16)-1)*sin(theta(i))));
+    else
+        fprintf(fileID,'%d};', uint16(((2^16)-1)*sin(theta(i))));
+    end
+end
+
+% Second half
+fprintf(fileID, '\n');
+fprintf(fileID, '#define LUT_SIN2_TABLE_SIZE %d\n',N_VALS+1);
+fprintf(fileID, 'const uint16_t LUT_sin2 [%d] PROGMEM = {', N_VALS);
+for i = 1:N_VALS
+    if i < N_VALS
+        fprintf(fileID,'%d, ', uint16(((2^16)-1)*sin(theta(i + N_VALS))));
+    else
+        fprintf(fileID,'%d};', uint16(((2^16)-1)*sin(theta(i + N_VALS))));
+    end
+end
+fclose(fileID);
