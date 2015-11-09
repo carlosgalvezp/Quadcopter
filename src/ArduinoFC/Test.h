@@ -39,6 +39,7 @@ namespace Test
 		void testCos();
 		void testSin();
 		void testAsin();
+		void testAcos();
 
 		void testQuaternionToRPY();
 	}

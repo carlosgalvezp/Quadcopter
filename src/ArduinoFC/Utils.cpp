@@ -108,18 +108,12 @@ float Utils::FastMath::atanFP(float t)
 */
 float Utils::FastMath::sin(int16_t x)
 {
-	if (x < 0)		// sin(x) = -sin(x)
-	{
-		x = -x;
+	bool isPositive = x > 0;
+	x = abs(x);
+	x = x > 9000 ? 18000 - x : x;
 
-		if (x > 9000) x = 18000 - x;
-		return -LUT_SIN_CONV_FACTOR * pgm_read_word_near(LUT_sin + x);
-	}
-	else
-	{
-		if (x > 9000) x = 18000 - x;
-		return LUT_SIN_CONV_FACTOR * pgm_read_float_near(LUT_sin + x);
-	}
+	float result = LUT_SIN_CONV_FACTOR * pgm_read_word_near(LUT_sin + x);
+	return isPositive ? result : -result;
 }
 
 
@@ -137,15 +131,8 @@ float Utils::FastMath::cos(int16_t x)
 
 int16_t Utils::FastMath::asin(float x)
 {
-	if (x < 0)
-	{
-		x = -x;
-		return  -(Utils::binarySearchProgMemUint16(LUT_sin, 0, LUT_SIN_TABLE_SIZE - 1, (uint16_t)(LUT_ASIN_CONV_FACTOR * x)));
-	}
-	else
-	{
-		return   (Utils::binarySearchProgMemUint16(LUT_sin, 0, LUT_SIN_TABLE_SIZE - 1, (uint16_t)(LUT_ASIN_CONV_FACTOR * x)));
-	}
+	uint16_t result = Utils::binarySearchProgMemUint16(LUT_sin, 0, 9000, (uint16_t)(LUT_ASIN_CONV_FACTOR * abs(x)));
+	return x > 0? result : -result;	
 }
 
 int16_t Utils::FastMath::acos(float x)

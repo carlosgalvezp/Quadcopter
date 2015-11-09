@@ -25,8 +25,10 @@ void Test::run()
 	//Test::Unit::testCos();
 	//Test::Unit::testSin();
 	//Test::Unit::testAsin();
+	Test::Unit::testAcos();
+
 	//Test::Performance::testSin();
-	Test::Performance::testAsin();
+	//Test::Performance::testAsin();
 	//delay(100);
 }
 
@@ -303,7 +305,7 @@ void Test::Unit::testCos()
 			maxDelta = delta;
 		}
 	}
-	Serial.println(String(maxDelta) + "," + String(worstAngle));
+	Serial.println(String(1000.0f * maxDelta) + "(x 0.0001)," + String(worstAngle));
 	delay(1000);
 }
 
@@ -314,27 +316,70 @@ void Test::Unit::testSin()
 	int16_t worstAngle=0;
 	float maxDelta = -1.0f;
 	float delta, x_LUT, x_lib;
-		
+
 	for (int16_t x = -18000; x < 18000; x += step)
 	{
 		x_LUT = Utils::FastMath::sin(x);
 		x_lib = sin(0.01f * x * DEG_TO_RAD);
 		delta = fabs(x_LUT - x_lib);
-
 		if (delta > maxDelta)
 		{
 			worstAngle = x;
 			maxDelta = delta;
 		}
 	}
-	Serial.println(String(maxDelta)+","+String(worstAngle));
+	Serial.println("Result:");
+	Serial.println(String(1000.0f * maxDelta)+","+String(worstAngle));
 	delay(1000);
 }
 
 void Test::Unit::testAsin()
 {
-	float x = 0.96592582628f;
-	Serial.println(Utils::FastMath::asin(x));
+	Serial.println("Testing asin...");
+	float step = 0.01f;
+	float worstSin = -2.0f;
+	float maxDelta = -1;
+	float delta, x_LUT, x_lib;
+
+	for (float x = -1.0f; x < 1.0f; x += step)
+	{
+		x_LUT = Utils::FastMath::asin(x) * 0.01f;
+		x_lib = asin(x) * RAD_TO_DEG_F;
+		delta = fabs(x_LUT - x_lib);
+
+		if (delta > maxDelta)
+		{
+			worstSin = x;
+			maxDelta = delta;
+			Serial.print("Got: "); Serial.print(x_LUT); Serial.print(" ; Should be: "); Serial.println(x_lib);
+		}
+	}
+	Serial.println(String(maxDelta) + "," + String(worstSin));
+	delay(1000);
+}
+
+void Test::Unit::testAcos()
+{
+	Serial.println("Testing acos...");
+	float step = 0.01f;
+	float worstSin = -2.0f;
+	float maxDelta = -1;
+	float delta, x_LUT, x_lib;
+
+	for (float x = -1.0f; x < 1.0f; x += step)
+	{
+		x_LUT = Utils::FastMath::acos(x) * 0.01f;
+		x_lib = acos(x) * RAD_TO_DEG_F;
+		delta = fabs(x_LUT - x_lib);
+
+		if (delta > maxDelta)
+		{
+			worstSin = x;
+			maxDelta = delta;
+			Serial.print("Got: "); Serial.print(x_LUT); Serial.print(" ; Should be: "); Serial.println(x_lib);
+		}
+	}
+	Serial.println(String(maxDelta) + "," + String(worstSin));
 	delay(1000);
 }
 
