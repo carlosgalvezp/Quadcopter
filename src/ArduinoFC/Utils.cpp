@@ -17,15 +17,14 @@ float Utils::FastMath::invSqrt(float x)
 	return y.f * (1.68191409f - 0.703952253f * x * y.f * y.f);
 }
 
-void Utils::quaternionToRPY(const quaternion_t * const q, vec_float_3_t * const rpy)
+void Utils::quaternionToRPY(const quaternion_t *q, vec_int16_3_t *rpy)
 {
 	rpy->x = Utils::FastMath::atan2(2.0f * (q->q0 * q->q1 + q->q2 * q->q3), 1.0f - 2.0f * (q->q1 * q->q1 + q->q2 * q->q2));
-	//rpy->x = atan2(2.0f * (q->q0 * q->q1 + q->q2 * q->q3), 1.0f - 2.0f * (q->q1 * q->q1 + q->q2 * q->q2));
-	rpy->y = asin(2.0f * (q->q0 * q->q2 - q->q3 * q->q1));
+	rpy->y = Utils::FastMath::asin(2.0f * (q->q0 * q->q2 - q->q3 * q->q1));
 	//rpy->z = 0;// atan2(2.0*(q->q0*q->q3 + q->q1*q->q2), 1.0 - 2.0*(q->q2*q->q2 + q->q3*q->q3)); yaw is obtained from compass
 }
 
-float Utils::FastMath::atan2(float y, float x)
+int16_t Utils::FastMath::atan2(float y, float x)
 {
 	// Determine octant and compute angle
 	if (x > 0)
@@ -38,7 +37,7 @@ float Utils::FastMath::atan2(float y, float x)
 			}
 			else							// 2nd octant
 			{
-				return M_PI_2_DEG - Utils::FastMath::atanFP(x / y);
+				return 9000 - Utils::FastMath::atanFP(x / y);
 			}
 		}
 		else // y < 0
@@ -50,7 +49,7 @@ float Utils::FastMath::atan2(float y, float x)
 			}
 			else							// 7th octant
 			{
-				return -M_PI_2_DEG + Utils::FastMath::atanFP(x / y);
+				return -9000 + Utils::FastMath::atanFP(x / y);
 			}
 		}
 	}
@@ -61,11 +60,11 @@ float Utils::FastMath::atan2(float y, float x)
 		{
 			if (x > y)			// 4th octant
 			{
-				return M_PI_DEG - Utils::FastMath::atanFP(y / x);
+				return 18000 - Utils::FastMath::atanFP(y / x);
 			}
 			else				// 3rd octant
 			{
-				return M_PI_2_DEG + Utils::FastMath::atanFP(x / y);
+				return 9000 + Utils::FastMath::atanFP(x / y);
 			}
 		}
 		else // y < 0
@@ -73,11 +72,11 @@ float Utils::FastMath::atan2(float y, float x)
 			y = -y;
 			if (x > y)		    // 5th octant
 			{
-				return -M_PI_DEG + Utils::FastMath::atanFP(y / x);
+				return -18000 + Utils::FastMath::atanFP(y / x);
 			}
 			else				// 6th octant
 			{
-				return -M_PI_2_DEG - Utils::FastMath::atanFP(x / y);
+				return -9000 - Utils::FastMath::atanFP(x / y);
 			}
 		}
 	}
@@ -89,16 +88,13 @@ Input: t \in [0, 1] i.e.: first octant
 Output: angle in degrees \in [0, 45]
 It takes around 48 us
 */
-float Utils::FastMath::atanFP(float t)
+uint16_t Utils::FastMath::atanFP(float t)
 {
 	// Compute index in LUT
 	uint16_t idx = (uint16_t)(t * (LUT_ATAN2_TABLE_SIZE - 1));
 	
 	// Read value from LUT
-	uint16_t val = pgm_read_word_near(LUT_atan + idx);	// 12 us
-
-	// Transform to actual degrees by multiplying by the resolution
-	return LUT_ATAN2_RESOLUTION_DEG * val;
+	return pgm_read_word_near(LUT_atan + idx);	
 }
 
 /*

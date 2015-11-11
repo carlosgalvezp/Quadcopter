@@ -10,9 +10,9 @@ namespace Control
 					motor_commands outputs value in microseconds between [CONTROL_U_MIN, CONTROL_U_MAX]
 
 	*/
-	void computeControlCommands(const vec_float_3_t * const rpy_quad,
-							    const RC_data_t * const rc_commands,
-								uint16_t * const motor_commands)
+	void computeControlCommands(const vec_int16_3_t *rpy_quad,
+							    const RC_data_t *rc_commands,
+								uint16_t *motor_commands)
 	{
 		// Get control commands for roll, pitch and yaw
 		uint16_t u_roll  = (uint16_t)controller_roll.computeU(rpy_quad->x,  (rc_commands->aileron -  RC_IDDLE_IN) * TILT_MAX_DEG);

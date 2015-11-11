@@ -82,7 +82,7 @@ typedef struct
 	
 	// State estimation
 	quaternion_t attitude;
-	vec_float_3_t attitude_rpy;
+	vec_int16_3_t attitude_rpy;
 
 	// Control input
 	uint16_t motors[4];

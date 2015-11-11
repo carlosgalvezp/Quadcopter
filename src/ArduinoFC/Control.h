@@ -13,9 +13,9 @@
 
 namespace Control
 {
-	void computeControlCommands(const vec_float_3_t * const rpy_quad,
-								const RC_data_t * const rc_commands,
-								uint16_t * const motor_commands);
+	void computeControlCommands(const vec_int16_3_t *rpy_quad,
+								const RC_data_t *rc_commands,
+								uint16_t *motor_commands);
 
 	void boundControlCommands(uint16_t * const motor_commands);
 

@@ -19,13 +19,13 @@ void Test::run()
 	//Test::testOutput();
 	//Test::testGPS();
 	//Test::Unit::testAtan2();
-	//Test::Unit::testAtan2Full();
+	Test::Unit::testAtan2Full();
 	//Test::Unit::testQuaternionToRPY();
 	//Test::Unit::testEEPROM();
 	//Test::Unit::testCos();
 	//Test::Unit::testSin();
 	//Test::Unit::testAsin();
-	Test::Unit::testAcos();
+	//Test::Unit::testAcos();
 
 	//Test::Performance::testSin();
 	//Test::Performance::testAsin();
@@ -121,7 +121,7 @@ void Test::testStateEstimation()
 	// Read sensor data
 	Sensor_data_t sensor_data;
 	quaternion_t q;
-	vec_float_3_t rpy;
+	vec_int16_3_t rpy;
 	IMU::getData(&sensor_data.imu);
 	
 	// Estimate attitude
@@ -227,33 +227,27 @@ void Test::testGPS()
 
 void Test::Unit::testAtan2Full()
 {
+	Serial.println("Testing atan2...");
 	// Define x-y limits
-	float res = 0.01;
-	float x_min = -1, x_max = 1, y_min = x_min, y_max = x_max;
-
-	float x = x_min;
-	float y = y_min;
-
+	float res = 0.01;	
 	float maxError = 0;
 
-	while (x <= x_max)
+	for (float x = -1.0f; x <= 1.0f; x += res)
 	{
-		while (y <= y_max)
+		for (float y = -1.0f; y <= 1.0f; y += res)
 		{
 			float result = RAD_TO_DEG_F * atan2(y, x);
-			float resultFast = Utils::FastMath::atan2(y, x);
+			float resultFast = 0.01f * Utils::FastMath::atan2(y, x);
 
-			float error = fabs(result - resultFast);
+			float error = 100.0f*fabs(result - resultFast);
 			if (error > maxError)
 			{
 				maxError = error;
 			}
-			y += res;
 		}
-		x += res;
 	}
 
-	Serial.println("Atan2 Unit Test. Max error: " + String(maxError) + " deg");
+	Serial.println("Atan2 Unit Test. Max error: " + String(maxError) + " (x 0.01) deg");
 }
 
 void Test::Unit::testAtan2()
@@ -386,7 +380,7 @@ void Test::Unit::testAcos()
 void Test::Unit::testQuaternionToRPY()
 {
 	quaternion_t q;
-	vec_float_3_t rpy;
+	vec_int16_3_t rpy;
 
 	for (int i = 0; i < 100; ++i)
 	{

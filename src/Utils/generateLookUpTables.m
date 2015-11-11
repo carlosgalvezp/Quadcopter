@@ -27,21 +27,17 @@ end
 
 fprintf('Minimum input resolution: %.10f, Theta res = %.10f',res, out_res);
 
-T_RESOLUTION = 0.000125;
-LUT_CONVERSION_FACTOR = 0.001;
-
-t = (0 : T_RESOLUTION : 1);
-N_VALS = length(t);
+N_VALS = 8096;
+t = (0 : 1/N_VALS : 1);
 
 fileID = fopen('atanLUT.h','w');
-fprintf(fileID, '#define LUT_ATAN2_RESOLUTION_DEG %.5ff\n',LUT_CONVERSION_FACTOR);
 fprintf(fileID, '#define LUT_ATAN2_TABLE_SIZE %d\n',N_VALS);
 fprintf(fileID, 'const uint16_t LUT_atan [%d] PROGMEM = {', N_VALS);
 for i = 1:N_VALS
     if i < N_VALS
-        fprintf(fileID,'%u, ', uint16((180/pi)*atan(t(i))/LUT_CONVERSION_FACTOR));
+        fprintf(fileID,'%u, ', uint16((18000/pi)*atan(t(i))));
     else
-        fprintf(fileID,'%u};', uint16((180/pi)*atan(t(i))/LUT_CONVERSION_FACTOR));
+        fprintf(fileID,'%u};', uint16((18000/pi)*atan(t(i))));
     end
 end
 fclose(fileID);

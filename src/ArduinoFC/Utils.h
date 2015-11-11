@@ -20,19 +20,18 @@
 
 namespace Utils
 {
-	void quaternionToRPY(const quaternion_t * q, vec_float_3_t * const rpy);
-	//static float normalizeAngle(float x);
+	void quaternionToRPY(const quaternion_t *q, vec_int16_3_t *rpy);
 
 	namespace FastMath
 	{
 		float invSqrt(float x);
-		float atan2(float x, float y);
+		int16_t atan2(float x, float y);
 		float cos(int16_t x);
 		float sin(int16_t x);
 		int16_t acos(float x);
 		int16_t asin(float x);
 
-		float atanFP(float x);
+		uint16_t atanFP(float x);
 
 	}
 
