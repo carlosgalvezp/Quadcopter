@@ -4,29 +4,36 @@
 
 #include "Arduino.h"
 #include <stdint.h>
-
+#include "GPIO.h"
 
 // Used to generate PWM signals on digital pins, especially when no timers
 // are available or the desired frequency is too low
+class GPIO_Digital;
+
 class SoftPWM
 {
 public:
 	SoftPWM();	
-	SoftPWM(uint8_t pin, unsigned long period_ms);
-	SoftPWM(uint8_t pin, unsigned long high_time_ms, unsigned long period_ms);
+	SoftPWM(GPIO_Digital *digitalPin);
+	SoftPWM(GPIO_Digital *digitalPin, unsigned long period_ms);
+	SoftPWM(GPIO_Digital *digitalPin, unsigned long period_ms, unsigned long highTime_ms);
 	~SoftPWM();
+
+	void run();
+	void run(unsigned long period_ms);
+	void run(unsigned long period_ms, unsigned long highTime_ms);
 
 	void setPeriod(unsigned long period_ms);
 	void setParameters(unsigned long high_time_ms, unsigned long period_ms);
-	void init();
-	void run();
 private:
-	uint8_t pin_;
+	GPIO_Digital *digitalPin;
 	unsigned long high_time_us_;
 	unsigned long period_us_;
 	unsigned long t_start_;
 	uint8_t duty_cycle_;
 	bool outHigh_, doChange_;
+
+	void init(GPIO_Digital *digitalPin, unsigned long period_ms, unsigned long highTime_ms);
 };
 
 #endif

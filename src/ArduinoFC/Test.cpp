@@ -15,11 +15,11 @@ void Test::run()
 	//Test::testStateEstimation();
 	//Test::testTelemetry(state_, config_);
 	//Test::testADC();
-	//Test::testSoftPWM();
+	Test::testSoftPWM();
 	//Test::testOutput();
 	//Test::testGPS();
 	//Test::Unit::testAtan2();
-	Test::Unit::testAtan2Full();
+	//Test::Unit::testAtan2Full();
 	//Test::Unit::testQuaternionToRPY();
 	//Test::Unit::testEEPROM();
 	//Test::Unit::testCos();
@@ -415,7 +415,9 @@ void Test::Unit::testEEPROM()
 
 void Test::testSoftPWM()
 {
-	GPIO::getBodyLEDs().run();
+	GPIO::getLedBlue().blink(1000, 500);
+	GPIO::getLedGreen().blink(500, 250);
+	GPIO::getLedRed().blink(250, 125);
 }
 
 void Test::Performance::testSin()

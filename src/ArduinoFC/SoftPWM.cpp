@@ -10,31 +10,30 @@ SoftPWM::~SoftPWM()
 {
 }
 
-SoftPWM::SoftPWM(uint8_t pin, unsigned long period_ms) :
-pin_(pin),
-high_time_us_(period_ms * 1000 / 2),
-period_us_(period_ms * 1000),
-duty_cycle_(50)
+SoftPWM::SoftPWM(GPIO_Digital *digitalPin) 
 {
+	this->init(digitalPin, 0, 0);
 }
 
-SoftPWM::SoftPWM(uint8_t pin, unsigned long high_time_ms, unsigned long period_ms) :
-pin_(pin),
-high_time_us_(high_time_ms*1000),
-period_us_(period_ms*1000),
-duty_cycle_(100*high_time_ms/period_ms)
+SoftPWM::SoftPWM(GPIO_Digital *digitalPin, unsigned long period_ms) 
 {
+	this->init(digitalPin, period_ms, period_ms / 2);
 }
 
-void SoftPWM::init()
+SoftPWM::SoftPWM(GPIO_Digital *digitalPin, unsigned long period_ms, unsigned long highTime_ms)
 {
-	// Init variables
-	t_start_ = micros();
-	outHigh_ = false;
-	doChange_ = false;
+	this->init(digitalPin, period_ms, highTime_ms);
+}
 
-	// Set pin as output
-	pinMode(pin_, OUTPUT);
+void SoftPWM::init(GPIO_Digital *digitalPin, unsigned long period_ms, unsigned long highTime_ms)
+{
+	this->digitalPin = digitalPin;
+	this->period_us_ = period_ms * 1000;
+	this->high_time_us_ = highTime_ms * 1000;
+	this->duty_cycle_ = 100 * period_ms / highTime_ms;
+	this->t_start_ = micros();
+	this->outHigh_ = false;
+	this->doChange_ = false;
 }
 
 void SoftPWM::setParameters(unsigned long high_time_ms, unsigned long period_ms)
@@ -67,8 +66,7 @@ void SoftPWM::run()
 	// Toggle output if required
 	if (doChange_)
 	{	
-		Serial.println("ASD");
-		digitalWrite(A6, outHigh_);
+		this->digitalPin->setState(outHigh_);
 		doChange_ = false;
 	}
 }
