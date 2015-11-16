@@ -24,7 +24,7 @@ public:
 	void run(unsigned long period_ms, unsigned long highTime_ms);
 
 	void setPeriod(unsigned long period_ms);
-	void setParameters(unsigned long high_time_ms, unsigned long period_ms);
+	void setParameters(unsigned long period_ms, unsigned long high_time_ms);
 private:
 	GPIO_Digital *digitalPin;
 	unsigned long high_time_us_;

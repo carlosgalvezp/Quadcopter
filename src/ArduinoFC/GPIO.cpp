@@ -35,9 +35,9 @@ void GPIO_Digital::blink(uint16_t period_ms, uint16_t t_high_ms)
 {
 	if (this->period_ms_ != period_ms || this->t_high_ms_ != t_high_ms)
 	{
-		this->softPWM->setParameters(t_high_ms, period_ms);
 		this->period_ms_ = period_ms;
 		this->t_high_ms_ = t_high_ms;
+		this->softPWM->setParameters(period_ms, t_high_ms);
 	}
 
 	this->softPWM->run();

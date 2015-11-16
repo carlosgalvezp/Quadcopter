@@ -36,11 +36,13 @@ void SoftPWM::init(GPIO_Digital *digitalPin, unsigned long period_ms, unsigned l
 	this->doChange_ = false;
 }
 
-void SoftPWM::setParameters(unsigned long high_time_ms, unsigned long period_ms)
+void SoftPWM::setParameters(unsigned long period_ms, unsigned long high_time_ms)
 {
-	this->high_time_us_ = high_time_ms * 1000;
 	this->period_us_ = period_ms * 1000;
+	this->high_time_us_ = high_time_ms == 0? this->period_us_ / 2 : high_time_ms * 1000;	
 	this->t_start_ = micros();
+	this->outHigh_ = false;
+	this->doChange_ = false;
 }
 
 void SoftPWM::run()

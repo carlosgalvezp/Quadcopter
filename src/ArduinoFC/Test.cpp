@@ -415,11 +415,10 @@ void Test::Unit::testEEPROM()
 
 void Test::testSoftPWM()
 {
-	GPIO::getLedBlue().blink(1000, 500);
-	GPIO::getLedGreen().blink(500, 250);
-	GPIO::getLedRed().blink(250, 125);
+	GPIO::getLedRed().blink(250);
+	GPIO::getLedBlue().blink(500);
+	GPIO::getLedGreen().blink(1000);
 }
-
 void Test::Performance::testSin()
 {
 	Serial.println("Timing sin...");
