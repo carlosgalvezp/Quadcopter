@@ -1,18 +1,19 @@
 #include "TelemetryOSD.h"
 
-#define LED_PIN		13
 
 void setup() {
-	// put your setup code here, to run once:
-	pinMode(LED_PIN, OUTPUT);
+	Serial.begin(115200);
+	pinMode(PIN_MAX7456_SS, OUTPUT);
+	digitalWrite(PIN_MAX7456_SS, HIGH);
+
+	SPI::init();
 }
 
 void loop() {
 	// put your main code here, to run repeatedly:
-	digitalWrite(LED_PIN, HIGH);
-	delay(500);
-	digitalWrite(LED_PIN, LOW);
-	delay(500);
+	Test::testReadStatus();
+
+	delay(1000);
 
 	// ** Request data update
 

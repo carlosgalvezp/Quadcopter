@@ -2,7 +2,12 @@
 #ifndef MAX7456_H
 #define MAX7456_H
 
+#define PIN_MAX7456_SS			6
+#define PIN_MAX7456_VSYNC		2
+
 #include <stdint.h>
+
+#include "SPI.h"
 
 #define NVM_SIZE		256
 
@@ -75,9 +80,9 @@
 #define RB15_R		0x9F
 #define OSDBL_R		0xEC
 
-#define STAT_R		0x0A
-#define DMDO_R		0x0B
-#define CMDO_R		0x0C
+#define STAT_R		0xA0
+#define DMDO_R		0xB0
+#define CMDO_R		0xC0
 
 // ---> To avoid artifacts, it's good to write to image when VSYNC = 0(interrupt)
 class MAX7456
@@ -92,6 +97,8 @@ public:
 	void displayArtificialHorizon();
 
 private:
+	uint8_t ssPin_;
+
 	void init();
 	void displaySymbol(uint8_t symbolID, uint16_t posX, uint16_t posY);
 
