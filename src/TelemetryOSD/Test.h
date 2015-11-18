@@ -8,6 +8,7 @@
 namespace Test
 {
 	void testReadStatus();
+	void testReadCharacter();
 }
 
 #endif // TEST_H

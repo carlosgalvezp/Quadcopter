@@ -11,6 +11,8 @@
 #define SPI_PIN_MISO	12
 #define SPI_PIN_SCK		13
 
+#define SPI_STUFFING_BYTE	0xFF
+
 namespace SPI
 {
 	void init();

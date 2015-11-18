@@ -11,9 +11,8 @@ void setup() {
 
 void loop() {
 	// put your main code here, to run repeatedly:
-	Test::testReadStatus();
+	Test::testReadCharacter();
 
-	delay(1000);
 
 	// ** Request data update
 

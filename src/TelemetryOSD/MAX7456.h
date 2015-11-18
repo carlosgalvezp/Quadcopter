@@ -17,6 +17,9 @@
 #define SCREEN_SIZE_ROWS		16
 #define SCREEN_SIZE_COLS		30
 
+// NVM
+#define OSD_CHAR_SIZE_BYTES		54
+
 // ** Registers (_W stands for Write, _R for read)
 #define VM0_W		0x00
 #define VM1_W		0x01
@@ -91,19 +94,23 @@ public:
 	MAX7456();
 	~MAX7456();
 
-	void displayStaticData();
-	void displayStatus();
-	void displayGPS();
-	void displayArtificialHorizon();
+	void enableOSD();
+	void disableOSD();
 
+	void updateCharSet(uint8_t *data);
+	void setChar(uint8_t charAddr, const uint8_t *data);
+	void getChar(uint8_t charAddr, uint8_t *data);
 private:
-	uint8_t ssPin_;
 
 	void init();
 	void displaySymbol(uint8_t symbolID, uint16_t posX, uint16_t posY);
 
+	bool isBusy();
+
 	void readSymbolFromNVM(uint8_t symboldID, uint8_t *data);
 	void writeSymbolToNVM(uint8_t symbolID, const uint8_t *data);
+
+	uint8_t transferRegister(uint8_t addr, uint8_t data);
 };
 
 
