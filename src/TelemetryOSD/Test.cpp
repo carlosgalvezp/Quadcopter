@@ -54,6 +54,64 @@ void Test::testReadCharacter()
 			}
 			Serial.println();
 		}
-		delay(1000);
+		delay(2000);
 	}
+}
+
+void Test::testDisplayText()
+{		
+	MAX7456 osdDriver;
+	uint8_t x0 = 5;
+	uint8_t y0 = 10;
+
+	//osdDriver.displayCharacter(x0++, y0, CHAR_ADDR_D_BIG);
+	//osdDriver.displayCharacter(x0++, y0, CHAR_ADDR_O_BIG);
+	//osdDriver.displayCharacter(x0++, y0, CHAR_ADDR_N_BIG);
+	//osdDriver.displayCharacter(x0++, y0, 39);
+	//osdDriver.displayCharacter(x0++, y0, CHAR_ADDR_T_BIG);
+	//
+	//osdDriver.displayCharacter(x0++, y0, 0);
+
+	//osdDriver.displayCharacter(x0++, y0, CHAR_ADDR_J_BIG);
+	//osdDriver.displayCharacter(x0++, y0, CHAR_ADDR_U_BIG);
+	//osdDriver.displayCharacter(x0++, y0, CHAR_ADDR_D_BIG);
+	//osdDriver.displayCharacter(x0++, y0, CHAR_ADDR_G_BIG);
+	//osdDriver.displayCharacter(x0++, y0, CHAR_ADDR_E_BIG);
+
+	//osdDriver.displayCharacter(x0++, y0, 0);
+
+	//osdDriver.displayCharacter(x0++, y0, CHAR_ADDR_M_BIG);
+	//osdDriver.displayCharacter(x0++, y0, CHAR_ADDR_E_BIG);
+
+	//osdDriver.displayCharacter(x0++, y0, CHAR_ADDR_C_BIG);
+	//osdDriver.displayCharacter(x0++, y0, CHAR_ADDR_A_BIG);
+	//osdDriver.displayCharacter(x0++, y0, CHAR_ADDR_L_BIG);
+	//osdDriver.displayCharacter(x0++, y0, CHAR_ADDR_I_BIG);
+
+	//osdDriver.displayCharacter(x0++, y0, 0);
+
+	//osdDriver.displayCharacter(x0++, y0, CHAR_ADDR_C_BIG);
+	//osdDriver.displayCharacter(x0++, y0, CHAR_ADDR_A_BIG);
+	//osdDriver.displayCharacter(x0++, y0, CHAR_ADDR_L_BIG);
+	//osdDriver.displayCharacter(x0++, y0, CHAR_ADDR_I_BIG);
+
+	//osdDriver.displayCharacter(x0++, y0, 0);
+
+	//osdDriver.displayCharacter(x0++, y0, CHAR_ADDR_C_BIG);
+	//osdDriver.displayCharacter(x0++, y0, CHAR_ADDR_O_BIG);
+	//osdDriver.displayCharacter(x0++, y0, CHAR_ADDR_O_BIG);
+	//osdDriver.displayCharacter(x0++, y0, CHAR_ADDR_P_BIG);
+	//osdDriver.displayCharacter(x0++, y0, CHAR_ADDR_O_BIG);
+	//osdDriver.displayCharacter(x0++, y0, CHAR_ADDR_N_BIG);
+
+	osdDriver.displayCharacter(x0++, y0, CHAR_ADDR_G_BIG);
+	osdDriver.displayCharacter(x0++, y0, CHAR_ADDR_I_BIG);
+	osdDriver.displayCharacter(x0++, y0, CHAR_ADDR_T_BIG);
+	osdDriver.displayCharacter(x0++, y0, CHAR_ADDR_A_BIG);
+	osdDriver.displayCharacter(x0++, y0, CHAR_ADDR_A_BIG);
+	osdDriver.displayCharacter(x0++, y0, CHAR_ADDR_A_BIG);
+	osdDriver.displayCharacter(x0++, y0, CHAR_ADDR_N_BIG);
+	osdDriver.displayCharacter(x0++, y0, CHAR_ADDR_O_BIG);
+	
+	delay(1000);	
 }
