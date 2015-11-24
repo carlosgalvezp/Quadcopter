@@ -15,18 +15,11 @@ void SPI::init()
 	SPCR = (1 << SPE) | (1 << MSTR);
 
 	// Read junk data from registers
-	uint8_t dummy;
-	dummy = SPSR;
-	dummy = SPDR;
+	//uint8_t dummy;
+	//dummy = SPSR;
+	//dummy = SPDR;
 }
 
-void SPI::write(const uint8_t *data, unsigned long dataLength)
-{
-	for (unsigned long i = 0; i < dataLength; ++i)
-	{
-		SPI::writeByte(data[i]);
-	}
-}
 
 void SPI::writeByte(uint8_t data)
 {
@@ -39,28 +32,12 @@ void SPI::writeByte(uint8_t data)
 
 uint8_t SPI::readByte()
 {
+	// Send dummy data to generate clock cycles
+	SPDR = SPI_STUFFING_BYTE;
+
 	// Wait until the data is completely received
 	while (!(SPSR & (1 << SPIF)));
 
+	// Read 
 	return SPDR;
-}
-
-uint8_t SPI::transferByte(uint8_t data)
-{
-	// Load data into register
-	SPDR = data;
-
-	// Wait until transmission is completed
-	while (!(SPSR & (1 << SPIF)));
-
-	// Return response from slave
-	return SPDR;
-}
-
-void SPI::read(uint8_t *data, unsigned long dataLength)
-{
-	for (unsigned long i = 0; i < dataLength; ++i)
-	{
-		data[i] = SPI::readByte();
-	}
 }

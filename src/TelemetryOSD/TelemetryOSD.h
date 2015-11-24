@@ -5,5 +5,6 @@
 #include "Arduino.h"
 #include "MAX7456.h"
 #include "Test.h"
+#include "TaskManager.h"
 
 #endif

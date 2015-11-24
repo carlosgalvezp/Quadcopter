@@ -2,15 +2,21 @@
 #ifndef TEST_H
 #define TEST_H
 
-#include "MAX7456.h"
+#include "OSD.h"
 #include "defines.h"
 
 namespace Test
 {
-	void testReadStatus();
-	void testReadCharacter();
+	void main(OSD &osd);
 
-	void testDisplayText();
+	namespace Internal
+	{
+		void testReadStatus();
+		void testReadCharacter(OSD &osd);
+		void testDisplayText(OSD &osd);
+
+		void displayOSDSymbol(const uint8_t *data);
+	}
 }
 
 #endif // TEST_H

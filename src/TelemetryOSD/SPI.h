@@ -16,10 +16,7 @@
 namespace SPI
 {
 	void init();
-	void write(const uint8_t *data, unsigned long dataLength);
-	void read(uint8_t *data, unsigned long dataLength);
 
-	uint8_t transferByte(uint8_t data);
 	uint8_t readByte();
 	void writeByte(uint8_t data);
 }

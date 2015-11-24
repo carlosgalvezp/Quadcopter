@@ -10,35 +10,35 @@ OSD::~OSD()
 {
 }
 
-void OSD::displayStaticData()
+void OSD::init()
 {
-	osdDriver_.displayCharacter(2, 2, CHAR_ADDR_H_BIG);
-	osdDriver_.displayCharacter(2, 3, CHAR_ADDR_E_BIG);
-	osdDriver_.displayCharacter(2, 4, CHAR_ADDR_L_BIG);
-	osdDriver_.displayCharacter(2, 5, CHAR_ADDR_L_BIG);
-	osdDriver_.displayCharacter(2, 6, CHAR_ADDR_O_BIG);
-
-	osdDriver_.displayCharacter(2, 8, CHAR_ADDR_W_BIG);
-	osdDriver_.displayCharacter(2, 9, CHAR_ADDR_O_BIG);
-	osdDriver_.displayCharacter(2, 10, CHAR_ADDR_R_BIG);
-	osdDriver_.displayCharacter(2, 11, CHAR_ADDR_L_BIG);
-	osdDriver_.displayCharacter(2, 12, CHAR_ADDR_D_BIG);
+	this->osdDriver_.init();
 }
 
-void OSD::displayFloat(float val, uint8_t digitsBeforeComma, uint8_t digitsAfterComma, uint8_t x, uint8_t y)
+void OSD::displayStaticData()
 {
-	//// Check sign
-	//bool isPositive = val > 0;
-
-	//// Extract digits before comma
-	//uint8_t nDigitsBeforeComma = 0;
-	//while (val >= 1.0f)
-	//{
-
-	//}
 }
 
 void OSD::enable()
 {
 	this->osdDriver_.enableOSD();
+}
+
+void OSD::print(uint8_t rowStart, uint8_t colStart, const char *format, ...)
+{
+	// Get a string representation using snprintf - a safe sprintf
+	char data[SCREEN_SIZE_COLS];
+	va_list arguments;
+
+	va_start(arguments, format); // Get the actual arguments by parsing the format and variable input
+	snprintf(data, SCREEN_SIZE_COLS, format, arguments);	// Create the string
+	va_end(arguments);										// Required when using va_start
+
+	// Display characters
+	uint8_t i = 0;
+	uint8_t cData;
+	while ( (i < SCREEN_SIZE_COLS) && ((cData = data[i++]) != '\0') )
+	{
+		this->osdDriver_.displayCharacter(rowStart, colStart++, cData);
+	}
 }
