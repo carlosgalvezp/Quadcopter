@@ -13,7 +13,7 @@ void MainLoop::run()
 	Internal::updateInternalState(state_);
 
 	// Update logical state in the state machine
-	Internal::updateStateMachineState(state_);
+	Internal::updateStateMachineState(config_, state_);
 
 	// Output
 	Internal::output(state_, config_);
@@ -48,18 +48,18 @@ void MainLoop::Internal::updateInternalState(State_t *state)
 	StateEstimation::estimateAttitude(&state->sensorData, &state->attitude, &state->attitude_rpy);
 }
 
-void MainLoop::Internal::updateStateMachineState(State_t *state)
+void MainLoop::Internal::updateStateMachineState(const Config_t *config, State_t *state)
 {
 	// Get current state
 	SM_State *currentSMState = stateMachine_->getCurrentState();
 
 	// Loop all over possible next states
-	for (uint8_t i = 0; i < currentSMState->nConnections; ++i)
+	for (uint8_t i = 0; i < currentSMState->nConnections_; ++i)
 	{
-		SM_Connection *c = currentSMState->connections[i];
+		SM_Connection *c = currentSMState->connections_[i];
 
 		// If the change condition is fulfilled, change state
-		if (c->condition(state))
+		if ( (currentSMState->*c->transitionCondition)(config,state))
 		{
 			stateMachine_->updateState(c->toState);
 			break;

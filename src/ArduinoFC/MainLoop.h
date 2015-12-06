@@ -23,7 +23,7 @@ namespace MainLoop
 	namespace Internal
 	{
 		void updateInternalState(State_t *state);
-		void updateStateMachineState(State_t *state);
+		void updateStateMachineState(const Config_t *config, State_t *state);
 		void output(State_t *state, Config_t *config);
 	}
 }
