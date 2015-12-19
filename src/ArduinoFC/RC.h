@@ -7,11 +7,11 @@
 #include "Types.h"
 #include "HAL.h"
 
-#define NUM_CHANNELS 8
-#define RC_MIN_IN	 1200
-#define RC_MAX_IN	 1800
-#define RC_IDDLE_IN  1500
-#define RC_EPS		 100
+#define NUM_CHANNELS	8
+#define RC_MIN_IN		1200
+#define RC_MAX_IN		1800
+#define RC_IDDLE_IN		1500
+#define RC_EPS			100
 #define RC_RANGE_MIN	900
 #define RC_RANGE_MAX    2100
 

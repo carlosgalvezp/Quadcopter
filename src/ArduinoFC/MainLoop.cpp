@@ -14,12 +14,12 @@ void MainLoop::run()
 
 	// Update logical state in the state machine
 	Internal::updateStateMachineState(config_, state_);
-
+	
 	// Output
 	Internal::output(state_, config_);
 
 	// Telemetry
-	Telemetry::main(state_, config_);
+	//Telemetry::main(state_, config_);
 
 	// Cycle time
 	state_->status.cycleTime = (uint16_t)(micros() - state_->status.timeStamp);
@@ -65,6 +65,7 @@ void MainLoop::Internal::updateStateMachineState(const Config_t *config, State_t
 			break;
 		}
 	}	
+	delay(100);
 }
 
 void MainLoop::Internal::output(State_t *state, Config_t *config)

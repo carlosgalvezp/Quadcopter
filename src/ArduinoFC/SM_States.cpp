@@ -25,128 +25,110 @@ void SM_State::addConnection(SM_State *toState, SMConditionFnc transitionConditi
 		c->toState = toState;
 		c->transitionCondition = transitionCondition;
 
-		this->connections_[this->nConnections_] = c;
+		this->connections_[this->nConnections_++] = c;
 	}
 }
 
+// ================================================================================
+
+SM_State_PowerOn::SM_State_PowerOn()
+{
+	this->tStart = micros();
+}
+
+SM_State_Disarmed::SM_State_Disarmed()
+	: readyToSwitchState(false) {}
+
+SM_State_Armed_Acro::SM_State_Armed_Acro()
+	: readyToSwitchState(false) {}
+
+// ================================================================================
+
 void SM_State_PowerOn::output(const Config_t *config, State_t *state)
 {
-	
+	HAL::boardLEDs(1, 1, 1);
 }
 
 void SM_State_PassThrough::output(const Config_t *config, State_t *state)
 {
-
+	// LEDs
+	HAL::boardLEDs(1, 1, 0);
+	
+	// Motors
+	for (uint8_t i = 0; i < N_MOTORS; ++i)
+	{
+		state->motors[i] = state->rc.throttle;
+	}
+	Output::writePWM(&state->motors[0]);
 }
 
 void SM_State_Disarmed::output(const Config_t *config, State_t *state)
 {
-
+	HAL::boardLEDs(0, 1, 0);
 }
 
 void SM_State_Armed_Acro::output(const Config_t *config, State_t *state)
 {
+	// LEDs
+	HAL::boardLEDs(1, 0, 0);
+	
+	// Control
+	Control::computeControlCommands(&state->attitude_rpy, &state->rc, &state->motors[0]);
+	
+	// Output
+	Output::writePWM(&state->motors[0]);
+}
 
+bool SM_State_PowerOn::conditionAny()
+{
+	return (micros() - this->tStart) > TIME_ON_POWER_CONFIGURATION_US;
 }
 
 bool SM_State_PowerOn::conditionDisarmed(const Config_t *config, State_t *state)
 {
-	return false;
+	return this->conditionAny();
 }
 
 bool SM_State_PowerOn::conditionPassThrough(const Config_t *config, State_t *state)
 {
-	return false;
+	return this->conditionAny()			  &&
+		   RC_isAtMax(state->rc.throttle) &&
+		   RC_isIddle(state->rc.aileron)  &&
+		   RC_isIddle(state->rc.elevator) &&
+		   RC_isIddle(state->rc.rudder);
 }
 
 bool SM_State_Disarmed::conditionArmed_Acro(const Config_t *config, State_t *state)
 {
+	if (RC_isIddle(state->rc.rudder))
+	{
+		this->readyToSwitchState = true;
+	}
+	
+	if (this->readyToSwitchState && this->conditionArmed(config, state)) 
+	{
+		this->readyToSwitchState = false;
+		return true;
+	}
 	return false;
+}
+
+bool SM_State_Disarmed::conditionArmed(const Config_t *config, State_t *state)
+{
+	return RC_isAtMin(state->rc.throttle) && RC_isAtMax(state->rc.rudder);
 }
 
 bool SM_State_Armed_Acro::conditionDisarmed(const Config_t *config, State_t *state)
 {
+	if (RC_isIddle(state->rc.rudder))
+	{
+		this->readyToSwitchState = true;
+	}
+
+	if (this->readyToSwitchState && RC_isAtMin(state->rc.throttle) && RC_isAtMax(state->rc.rudder))
+	{
+		this->readyToSwitchState = false;
+		return true;
+	}
 	return false;
 }
-//
-//// ===================== OUTPUT FUNCTIONS ===============================
-//void SM_Outputs::dummyOutput(const Config_t *config, State_t *state)
-//{
-//}
-//
-//void SM_Outputs::powerOn(const Config_t *config, State_t *state)
-//{
-//	HAL::boardLEDs(1, 1, 1);
-//}
-//
-//void SM_Outputs::disarmed(const Config_t *config, State_t *state)
-//{
-//	// LEDs
-//	HAL::boardLEDs(0, 1, 0);
-//}
-//
-//void SM_Outputs::passThrough(const Config_t *config, State_t *state)
-//{
-//	// LEDs
-//	HAL::boardLEDs(1, 0, 1);
-//
-//	// Motors
-//	for (uint8_t i = 0; i < N_MOTORS; ++i)
-//	{
-//		state->motors[i] = state->rc.throttle;
-//	}
-//	Output::writePWM(&state->motors[0]);
-//}
-//
-//void SM_Outputs::armedAcro(const Config_t *config, State_t *state)
-//{
-//	// LEDs
-//	HAL::boardLEDs(1, 0, 0);
-//
-//	// Control
-//	Control::computeControlCommands(&state->attitude_rpy, &state->rc, &state->motors[0]);
-//
-//	// Output
-//	Output::writePWM(&state->motors[0]);
-//}
-//
-//// ==================== CONDITIONS ======================================
-//namespace SM_Conditions
-//{
-//	bool disarmedToArmedReady(false);
-//}
-//bool SM_Conditions::dummyCondition(const State_t *state)
-//{
-//	return false;
-//}
-//
-//
-//bool SM_Conditions::powerOn_Disarmed(const State_t *state)
-//{
-//	static unsigned long tStart = micros();
-//	return (micros() - tStart) > TIME_ON_POWER_CONFIGURATION_US;
-//}
-//
-//bool SM_Conditions::powerOn_PassThrough(const State_t *state)
-//{
-//	return RC_isAtMax(state->rc.throttle) &&
-//		RC_isIddle(state->rc.aileron) &&
-//		RC_isIddle(state->rc.elevator) &&
-//		RC_isIddle(state->rc.rudder);
-//}
-//
-//bool SM_Conditions::disarmed_Armed(const State_t *state)
-//{
-//	if (RC_isIddle(state->rc.rudder))
-//	{
-//		SM_Conditions::disarmedToArmedReady = true;
-//	}
-//
-//	if (SM_Conditions::disarmedToArmedReady && RC_isAtMin(state->rc.throttle) && RC_isAtMax(state->rc.rudder))
-//	{
-//		SM_Conditions::disarmedToArmedReady = false;
-//		return true;
-//	}
-//	return false;
-//}
-

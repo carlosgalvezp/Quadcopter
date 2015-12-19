@@ -4,6 +4,9 @@
 
 #include "Config.h"
 #include "Types.h"
+#include "HAL.h"
+#include "Output.h"
+#include "Control.h"
 
 #define TIME_ON_POWER_CONFIGURATION_US		1000000  // Time in us after power-on to be able to configure something
 
@@ -43,88 +46,97 @@ struct SM_Connection
 class SM_State_PowerOn : public SM_State
 {
 public: 
-	void output(const Config_t *config, State_t *state);
+	SM_State_PowerOn();
+	virtual void output(const Config_t *config, State_t *state);
 	bool conditionPassThrough(const Config_t *config, State_t *state);
 	bool conditionDisarmed(const Config_t *config, State_t *state);
 private:
+	bool conditionAny();
+	unsigned long tStart;
 };
 
 class SM_State_PassThrough : public SM_State
 {
 public:
-	void output(const Config_t *config, State_t *state);
+	virtual void output(const Config_t *config, State_t *state);
 private:
 };
 
 class SM_State_RCCalibration : public SM_State
 {
 public:
-	void output(const Config_t *config, State_t *state);
+	virtual void output(const Config_t *config, State_t *state);
 private:
 };
 
 class SM_State_Disarmed : public SM_State
 {
 public:
-	void output(const Config_t *config, State_t *state);
+	SM_State_Disarmed();
+	virtual void output(const Config_t *config, State_t *state);
 	bool conditionArmed_Acro(const Config_t *config, State_t *state);
 private:
+	bool conditionArmed(const Config_t *config, State_t *state);
+
+	bool readyToSwitchState;
 };
 
 class SM_State_Armed_Acro : public SM_State
 {
 public:
-	void output(const Config_t *config, State_t *state);
+	SM_State_Armed_Acro();
+	virtual void output(const Config_t *config, State_t *state);
 	bool conditionDisarmed(const Config_t *config, State_t *state);
 private:
+	bool readyToSwitchState;
 };
 
 class SM_State_Armed_SelfLevel : public SM_State
 {
 public:
-	void output(const Config_t *config, State_t *state);
+	virtual void output(const Config_t *config, State_t *state);
 private:
 };
 
 class SM_State_Armed_HeadFree : public SM_State
 {
 public:
-	void output(const Config_t *config, State_t *state);
+	virtual void output(const Config_t *config, State_t *state);
 private:
 };
 
 class SM_State_Armed_Hold_Z : public SM_State
 {
 public:
-	void output(const Config_t *config, State_t *state);
+	virtual void output(const Config_t *config, State_t *state);
 private:
 };
 
 class SM_State_Armed_Hold_XY : public SM_State
 {
 public:
-	void output(const Config_t *config, State_t *state);
+	virtual void output(const Config_t *config, State_t *state);
 private:
 };
 
 class SM_State_Armed_Hold_XYZ : public SM_State
 {
 public:
-	void output(const Config_t *config, State_t *state);
+	virtual void output(const Config_t *config, State_t *state);
 private:
 };
 
 class SM_State_ReturnHome : public SM_State
 {
 public:
-	void output(const Config_t *config, State_t *state);
+	virtual void output(const Config_t *config, State_t *state);
 private:
 };
 
 class SM_State_FailSafe : public SM_State
 {
 public:
-	void output(const Config_t *config, State_t *state);
+	virtual void output(const Config_t *config, State_t *state);
 private:
 };
 
