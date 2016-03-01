@@ -113,4 +113,10 @@ typedef struct
 	vec_int32_3_t position_ecef;
 	vec_int32_3_t velocity_ecef;
 }GPS_Data_t;
+
+typedef union
+{
+	float xf;
+	uint32_t xu;
+}u_float_u32;
 #endif

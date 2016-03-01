@@ -31,10 +31,7 @@ void HAL::init()
 
 	// Init Serial ports
 	Serial_Telemetry.begin(TELEMETRY_BAUDRATE);
-
-#ifdef DEBUG
 	Serial_Debug.begin(TELEMETRY_BAUDRATE);
-#endif
 
 	// Init GPS
 	GPS::init();

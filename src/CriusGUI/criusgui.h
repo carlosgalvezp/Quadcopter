@@ -45,7 +45,6 @@ signals:
     void sendSerialDisconnect();
 
 private slots:
-    void on_pushButton_clicked();
     void on_PushButton_Config_Load_clicked();
     void on_PushButton_Config_Send_clicked();
     void on_pushButton_Connect_clicked();

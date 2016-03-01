@@ -37,10 +37,12 @@ public:
 	static uint8_t		read  (uint16_t addr);
 	static uint16_t		read16(uint16_t addr);
 	static uint32_t		read32(uint16_t addr);
+	static float		readFloat(uint16_t addr);
+
 
 	static void			write  (uint16_t addr, uint8_t data);
-	static void			write16(uint16_t addr, uint16_t data);
-	static void			write32(uint16_t addr, uint32_t data);
+	static void			write16(uint16_t addr, uint16_t *data);
+	static void			write32(uint16_t addr, uint32_t *data);
 };
 
 #endif

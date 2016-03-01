@@ -173,7 +173,7 @@ bool SerialDecoder::decodeConfig(const QByteArray &data, GUIData &gui_data)
     gui_data.config.pid_roll.ki = (float) decode32(data, 11);
 
     gui_data.config.pid_pitch.kp = (float) decode32(data, 15);
-    gui_data.config.pid_pitch.kd = (float) decode32(data, 19);
+    gui_data.config.pid_pitch.kd = decodeFloat(data, 19);
     gui_data.config.pid_pitch.ki = (float) decode32(data, 23);
 
     gui_data.config.pid_yaw.kp = (float) decode32(data, 27);
@@ -197,4 +197,10 @@ uint32_t SerialDecoder::decode32(const QByteArray &data, int ptr)
             ((((uint32_t)data[ptr+1]) << 16) & 0x00FF0000) |
             ((((uint32_t)data[ptr+2]) << 8)  & 0x0000FF00) |
             ((((uint32_t)data[ptr+3]))       & 0x000000FF);
+}
+
+float SerialDecoder::decodeFloat(const QByteArray &data, int ptr)
+{
+    uint32_t dataU = SerialDecoder::decode32(data, ptr);
+    return *(float *)&dataU;
 }

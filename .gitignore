@@ -210,3 +210,9 @@ FakesAssemblies/
 
 # Visual Studio 6 workspace options file
 *.opt
+
+# Qt user
+*.pro.user*
+
+# VS Arduino stuff
+*__vm/

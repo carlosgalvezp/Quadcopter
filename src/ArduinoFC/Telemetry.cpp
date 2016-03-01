@@ -7,7 +7,7 @@ namespace Telemetry
 	uint8_t rx_data_buffer_[TELEMETRY_RX_BUFFER_SIZE];
 	uint8_t n_bytes_available_;
 	uint8_t cmd_;
-	uint8_t ptr_;
+	uint8_t ptr_ = 0;
 	uint8_t checksum_;
 }
 
@@ -15,78 +15,82 @@ void Telemetry::main(const State_t * const state, Config_t * const config)
 {
 	// Re-initialize variables
 	cmd_ = 0;
-	ptr_ = 0;
 	checksum_ = 0;
 
 	// Check whether we have a request available
 	if ((n_bytes_available_ = Serial_Telemetry.available()) > 0)
 	{
-		// Read all data
-		Serial_Telemetry.readBytes(rx_data_buffer_, n_bytes_available_);
-
-		// Check for the magic word
-		if (rx_data_buffer_[ptr_++] == magic_word_[0] && rx_data_buffer_[ptr_++] == magic_word_[1])
+		// Read all data to tmp buffer. It is possible that not all the data has arrived yet
+		Serial_Telemetry.readBytes(&(rx_data_buffer_[ptr_]), n_bytes_available_);
+		ptr_ += n_bytes_available_;
+	}
+	else	// No more data to receive 
+	{
+		if(ptr_ > 0)	// We have data to process
 		{
-			cmd_ = rx_data_buffer_[ptr_++];
-		}
-
-		if (cmd_ == TELEMETRY_CMD_IN_CONFIG)
-		{
-			Telemetry::receiveConfig(config);
-		}
-
-		else
-		{
-			// Send Magic Word
-			write8((uint8_t)magic_word_[0]);
-			write8((uint8_t)magic_word_[1]);
-
-			// Send cmd
-			write8(cmd_);
-
-			// Perform desired operation
-			switch (cmd_)
+			// Check for the magic word
+			if (rx_data_buffer_[0] == magic_word_[0] && rx_data_buffer_[1] == magic_word_[1])
 			{
-				case TELEMETRY_CMD_OUT_STATUS:
-					sendStatus(state);
-					break;
-				case TELEMETRY_CMD_OUT_IMU:
-					sendIMU(state);
-					break;
-				case TELEMETRY_CMD_OUT_MAG:
-					sendMagnetometer(state);
-					break;
-				case TELEMETRY_CMD_OUT_BARO:
-					sendBarometer(state);
-					break;
-				case TELEMETRY_CMD_OUT_TEMP:
-					sendTemperature(state);
-					break;
-				case TELEMETRY_CMD_OUT_RC:
-					sendRC(state);
-					break;
-				case TELEMETRY_CMD_OUT_BATTERY:
-					sendBattery(state);
-					break;
-				case TELEMETRY_CMD_OUT_GPS:
-					sendGPS(state);
-					break;
-				case TELEMETRY_CMD_OUT_SONAR:
-					sendSonar(state);
-					break;
-				case TELEMETRY_CMD_OUT_ATTITUDE:
-					sendAttitude(state);
-					break;
-				case TELEMETRY_CMD_OUT_CONTROL:
-					sendControl(state);
-					break;
-				case TELEMETRY_CMD_OUT_CONFIG:
-					sendConfig(config);
-					break;
+				cmd_ = rx_data_buffer_[2];
 			}
-			// Send checksum
-			sendCheckSum();
-		} // config_in
+
+			if (cmd_ == TELEMETRY_CMD_IN_CONFIG)
+			{
+				Telemetry::receiveConfig(config);
+			}
+			else
+			{
+				// Send Magic Word
+				write8((uint8_t)magic_word_[0]);
+				write8((uint8_t)magic_word_[1]);
+
+				// Send cmd
+				write8(cmd_);
+
+				// Perform desired operation
+				switch (cmd_)
+				{
+					case TELEMETRY_CMD_OUT_STATUS:
+						sendStatus(state);
+						break;
+					case TELEMETRY_CMD_OUT_IMU:
+						sendIMU(state);
+						break;
+					case TELEMETRY_CMD_OUT_MAG:
+						sendMagnetometer(state);
+						break;
+					case TELEMETRY_CMD_OUT_BARO:
+						sendBarometer(state);
+						break;
+					case TELEMETRY_CMD_OUT_TEMP:
+						sendTemperature(state);
+						break;
+					case TELEMETRY_CMD_OUT_RC:
+						sendRC(state);
+						break;
+					case TELEMETRY_CMD_OUT_BATTERY:
+						sendBattery(state);
+						break;
+					case TELEMETRY_CMD_OUT_GPS:
+						sendGPS(state);
+						break;
+					case TELEMETRY_CMD_OUT_SONAR:
+						sendSonar(state);
+						break;
+					case TELEMETRY_CMD_OUT_ATTITUDE:
+						sendAttitude(state);
+						break;
+					case TELEMETRY_CMD_OUT_CONTROL:
+						sendControl(state);
+						break;
+					case TELEMETRY_CMD_OUT_CONFIG:
+						sendConfig(config);
+						break;
+				} // switch cmd
+				sendCheckSum();
+			} // config_in
+			ptr_ = 0; // Prepare for next package
+		} // ptr_ > 0
 	} // n_bytes > 0
 }
 
@@ -159,7 +163,7 @@ void Telemetry::sendConfig(const Config_t * const config)
 	Telemetry::write32((uint32_t)config->pid_roll.ki);
 
 	Telemetry::write32((uint32_t)config->pid_pitch.kp);
-	Telemetry::write32((uint32_t)config->pid_pitch.kd);
+	Telemetry::writeFloat(config->pid_pitch.kd);
 	Telemetry::write32((uint32_t)config->pid_pitch.ki);
 
 	Telemetry::write32((uint32_t)config->pid_yaw.kp);
@@ -169,28 +173,28 @@ void Telemetry::sendConfig(const Config_t * const config)
 
 void Telemetry::receiveConfig(Config_t * const data)
 {		
-	checksum_ = 0;
+	checksum_ = 0; // why do I need this?
 	// Verify checksum
 	uint8_t checksum = 0;
-	for (uint8_t i = 0; i < n_bytes_available_; ++i)
+	for (uint8_t i = 0; i < ptr_; ++i)
 	{
 		checksum ^= rx_data_buffer_[i];
 	}
-
+	
 	if (checksum == 0)
 	{
 		// PID
-		data->pid_roll.kp = (float)Telemetry::read32(3);
-		data->pid_roll.kd = (float)Telemetry::read32(7);
-		data->pid_roll.ki = (float)Telemetry::read32(11);
+		data->pid_roll.kp = Telemetry::readFloat(3);
+		data->pid_roll.kd = Telemetry::readFloat(7);
+		data->pid_roll.ki = Telemetry::readFloat(11);
 
-		data->pid_pitch.kp = (float)Telemetry::read32(15);
-		data->pid_pitch.kd = (float)Telemetry::read32(19);
-		data->pid_pitch.ki = (float)Telemetry::read32(23);
-
-		data->pid_yaw.kp = (float)Telemetry::read32(27);
-		data->pid_yaw.kd = (float)Telemetry::read32(31);
-		data->pid_yaw.ki = (float)Telemetry::read32(35);
+		data->pid_pitch.kp = Telemetry::readFloat(15);
+		data->pid_pitch.kd = Telemetry::readFloat(19);
+		data->pid_pitch.ki = Telemetry::readFloat(23);
+		
+		data->pid_yaw.kp = Telemetry::readFloat(27);
+		data->pid_yaw.kd = Telemetry::readFloat(31);
+		data->pid_yaw.ki = Telemetry::readFloat(35);
 
 		// Store config
 		EEPROM::storeConfig(data);
@@ -230,6 +234,13 @@ void Telemetry::write32(uint32_t data)
 	write8((uint8_t)(( data & 0x000000FF)));						// LSB
 }
 
+void Telemetry::writeFloat(float data)
+{
+	u_float_u32 dataUnion;
+	dataUnion.xf = data;
+	Telemetry::write32(dataUnion.xu);
+}
+
 uint16_t Telemetry::read16(uint8_t ptr)
 {
 	return (((uint16_t)(rx_data_buffer_[ptr    ]) << 8) & 0xFF00) |
@@ -242,4 +253,11 @@ uint32_t Telemetry::read32(uint8_t ptr)
 		   (((uint32_t)(rx_data_buffer_[ptr + 1]) << 16) & 0x00FF0000) |
 		   (((uint32_t)(rx_data_buffer_[ptr + 2]) <<  8) & 0x0000FF00) |
 		   (((uint32_t)(rx_data_buffer_[ptr + 3])      ) & 0x000000FF);
+}
+
+float Telemetry::readFloat(uint8_t ptr)
+{
+	u_float_u32 dataUnion;
+	dataUnion.xu = Telemetry::read32(ptr);
+	return dataUnion.xf;
 }

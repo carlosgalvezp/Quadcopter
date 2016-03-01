@@ -50,20 +50,6 @@ void CriusGUI::getSerialData(const QByteArray &data)
     this->updateGUI();
 }
 
-void CriusGUI::on_pushButton_clicked()
-{
-    // Toggle active and change button text
-    this->active_ = !this->active_;
-    if(this->active_)
-    {
-        ui->pushButton->setText("Stop");
-    }
-    else
-    {
-        ui->pushButton->setText("Start");
-    }
-}
-
 void CriusGUI::updateGUI()
 {
     // Status

@@ -61,19 +61,25 @@ struct Config
     {
         data.resize(sizeof(Config));
 
-        Utils::serializeUint32((uint32_t) pid_roll.kp, data, 0);
-        Utils::serializeUint32((uint32_t) pid_roll.kd, data, 4);
-        Utils::serializeUint32((uint32_t) pid_roll.ki, data, 8);
+        Utils::serializeFloat(pid_roll.kp, data, 0);
+        Utils::serializeFloat(pid_roll.kd, data, 4);
+        Utils::serializeFloat(pid_roll.ki, data, 8);
 
-        Utils::serializeUint32((uint32_t) pid_pitch.kp, data, 12);
-        Utils::serializeUint32((uint32_t) pid_pitch.kd, data, 16);
-        Utils::serializeUint32((uint32_t) pid_pitch.ki, data, 20);
+        Utils::serializeFloat(pid_pitch.kp, data, 12);
+        Utils::serializeFloat(pid_pitch.kd, data, 16);
+        Utils::serializeFloat(pid_pitch.ki, data, 20);
 
-        Utils::serializeUint32((uint32_t) pid_yaw.kp, data, 24);
-        Utils::serializeUint32((uint32_t) pid_yaw.kd, data, 28);
-        Utils::serializeUint32((uint32_t) pid_yaw.ki, data, 32);
+        Utils::serializeFloat(pid_yaw.kp, data, 24);
+        Utils::serializeFloat(pid_yaw.kd, data, 28);
+        Utils::serializeFloat(pid_yaw.ki, data, 32);
     }
 };
+
+typedef union
+{
+    float xf;
+    uint8_t xu[4];
+}u_float_char;
 
 
 #endif // TYPES

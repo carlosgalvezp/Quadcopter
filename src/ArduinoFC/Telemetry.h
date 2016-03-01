@@ -2,7 +2,7 @@
 #define TELEMETRY_H
 
 #include "Arduino.h"
-#include "ArduinoFC.h"
+#include "ArduinoFC_2.h"
 #include "Telemetry_Protocol.h"
 #include "Config.h"
 #include "HAL.h"
@@ -37,8 +37,10 @@ namespace Telemetry
 
 	void write16(uint16_t data);
 	void write32(uint32_t data);
+	void writeFloat(float data);
 
 	uint16_t read16(uint8_t ptr);
 	uint32_t read32(uint8_t ptr);
+	float readFloat(uint8_t ptr);
 }
 #endif

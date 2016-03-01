@@ -111,7 +111,7 @@ void SerialCommThread::requestConfig()
 void SerialCommThread::sendConfig(const QByteArray &data)
 {
     // Define package size
-    uint8_t data_size = 4 + data.size(); // Header + data + checksum
+    uint8_t data_size = 4 + data.size(); // Header(3) + data + checksum(1)
     uint8_t checksum = 0;
 
     // Fill header
@@ -129,6 +129,7 @@ void SerialCommThread::sendConfig(const QByteArray &data)
     this->dataOut[data_size - 1] = checksum;
 
     // Send
+    std::cout << "Sending " << (std::size_t)data_size << " bytes to Arduino" << std::endl;
     this->serialPort_->write(this->dataOut, data_size);
 }
 

@@ -33,6 +33,7 @@ private:
 
     uint16_t decode16(const QByteArray &data, int ptr);
     uint32_t decode32(const QByteArray &data, int ptr);
+    float decodeFloat(const QByteArray &data, int ptr);
 
 };
 

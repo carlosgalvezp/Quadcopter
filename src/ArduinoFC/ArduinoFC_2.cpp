@@ -1,8 +1,6 @@
-#include "ArduinoFC.h"
+#include "ArduinoFC_2.h"
 
-unsigned long cycleTime;
-
-void setup() 
+void setup()
 {
 	// Init hardware
 	HAL::init();
@@ -14,8 +12,8 @@ void setup()
 	GlobalVariables::init();
 }
 
-void loop() 
+void loop()
 {
 	//Test::run();
-	MainLoop::run();	
+	MainLoop::run();
 }
