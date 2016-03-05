@@ -158,17 +158,17 @@ void Telemetry::sendSonar(const State_t * const data){}
 void Telemetry::sendConfig(const Config_t * const config)
 {
 	// PID
-	Telemetry::write32((uint32_t)config->pid_roll.kp);
-	Telemetry::write32((uint32_t)config->pid_roll.kd);
-	Telemetry::write32((uint32_t)config->pid_roll.ki);
+	Telemetry::writeFloat(config->pid_roll.kp);
+	Telemetry::writeFloat(config->pid_roll.kd);
+	Telemetry::writeFloat(config->pid_roll.ki);
 
-	Telemetry::write32((uint32_t)config->pid_pitch.kp);
+	Telemetry::writeFloat(config->pid_pitch.kp);
 	Telemetry::writeFloat(config->pid_pitch.kd);
-	Telemetry::write32((uint32_t)config->pid_pitch.ki);
+	Telemetry::writeFloat(config->pid_pitch.ki);
 
-	Telemetry::write32((uint32_t)config->pid_yaw.kp);
-	Telemetry::write32((uint32_t)config->pid_yaw.kd);
-	Telemetry::write32((uint32_t)config->pid_yaw.ki);
+	Telemetry::writeFloat(config->pid_yaw.kp);
+	Telemetry::writeFloat(config->pid_yaw.kd);
+	Telemetry::writeFloat(config->pid_yaw.ki);
 }
 
 void Telemetry::receiveConfig(Config_t * const data)
