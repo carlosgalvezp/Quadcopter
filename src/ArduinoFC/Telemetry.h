@@ -30,6 +30,7 @@ namespace Telemetry
 	void sendControl(const State_t * const data);
 	void sendConfig(const Config_t * const data);
 
+	void sendACK();
 
 	void receiveConfig(Config_t * const config);
 

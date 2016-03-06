@@ -29,6 +29,7 @@ struct GUIData
     Config config;
     bool new_config;
 
+    bool gotACK;
 };
 
 #endif // GUIDATA_H

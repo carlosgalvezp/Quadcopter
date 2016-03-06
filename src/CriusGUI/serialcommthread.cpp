@@ -108,6 +108,19 @@ void SerialCommThread::requestConfig()
     this->requestCmd(TELEMETRY_CMD_OUT_CONFIG);
 }
 
+void SerialCommThread::receiveACK()
+{
+    this->reSendConfig_ = false;
+}
+
+void SerialCommThread::reSendConfig()
+{
+    if(reSendConfig_)
+    {
+        sendConfig(configToReSend_);
+    }
+}
+
 void SerialCommThread::sendConfig(const QByteArray &data)
 {
     // Define package size
@@ -129,8 +142,12 @@ void SerialCommThread::sendConfig(const QByteArray &data)
     this->dataOut[data_size - 1] = checksum;
 
     // Send
-    std::cout << "Sending " << (std::size_t)data_size << " bytes to Arduino" << std::endl;
     this->serialPort_->write(this->dataOut, data_size);
+
+    // Start timer: if we don't receive an ACK, re-send the data
+    configToReSend_ = data;
+    reSendConfig_ = true;
+    QTimer::singleShot(T_CONFIG_ACK_WAIT_MS, this, SLOT(reSendConfig()));
 }
 
 void SerialCommThread::requestCmd(uint8_t cmd)

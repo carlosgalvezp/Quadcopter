@@ -173,7 +173,6 @@ void Telemetry::sendConfig(const Config_t * const config)
 
 void Telemetry::receiveConfig(Config_t * const data)
 {		
-	checksum_ = 0; // why do I need this?
 	// Verify checksum
 	uint8_t checksum = 0;
 	for (uint8_t i = 0; i < ptr_; ++i)
@@ -198,21 +197,21 @@ void Telemetry::receiveConfig(Config_t * const data)
 
 		// Store config
 		EEPROM::storeConfig(data);
+
+		// Send ACK
+		sendACK();
 	}
-	//	// Send ACK
-	//	write8((uint8_t)magic_word_[0]);
-	//	write8((uint8_t)magic_word_[1]);
-	//	write8(TELEMETRY_ACK);
-	//}
-	//else
-	//{
-	//	// Send NACK so that we the app will send data again
-	//	write8((uint8_t)magic_word_[0]);
-	//	write8((uint8_t)magic_word_[1]);
-	//	write8(TELEMETRY_NACK);
-	//}
-	//// Write checksum
-	//sendCheckSum();
+}
+
+void Telemetry::sendACK()
+{
+	checksum_ = 0;
+	write8((uint8_t)magic_word_[0]);
+	write8((uint8_t)magic_word_[1]);
+	write8(TELEMETRY_ACK);
+
+	// Write checksum
+	sendCheckSum();
 }
 
 void Telemetry::sendCheckSum()

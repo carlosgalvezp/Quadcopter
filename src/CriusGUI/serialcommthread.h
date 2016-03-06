@@ -23,7 +23,7 @@
 #define UPDATE_RATE_ATTITUDE        50      // Hz
 #define UPDATE_RATE_CONTROL         50      // Hz
 
-#define T_REQUEST_WAIT_MS    5
+#define T_CONFIG_ACK_WAIT_MS        500     // ms
 
 #define my_sleep_ms(t) std::this_thread::sleep_for(std::chrono::milliseconds(t))
 
@@ -42,6 +42,7 @@ public slots:
     void disconnectSerial();
     void requestConfig();
     void sendConfig(const QByteArray &data);
+    void receiveACK();
 
 signals:
     void sendSerialPortInfo(const QStringList &port_names);
@@ -53,6 +54,7 @@ private slots:
     void requestIMU();
     void requestAttitude();
     void requestMotors();
+    void reSendConfig();
 
     void readData();
 private:
@@ -79,6 +81,8 @@ private:
 
     const char * magic_word_ = TELEMETRY_MAGIC_WORD;
 
+    bool reSendConfig_ = false;
+    QByteArray configToReSend_;
 };
 
 #endif // SERIALCOMMTHREAD_H

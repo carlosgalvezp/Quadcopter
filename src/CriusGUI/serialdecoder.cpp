@@ -89,7 +89,9 @@ bool SerialDecoder::decodeData(const QByteArray &data, GUIData &gui_data)
 
             case TELEMETRY_CMD_OUT_CONFIG:
                 return this->decodeConfig(data, gui_data);
-
+            case TELEMETRY_ACK:
+                gui_data.gotACK = true;
+                return true;
         }
     }
     return false; // Failed to detect the magic word
@@ -168,17 +170,17 @@ bool SerialDecoder::decodeMotors(const QByteArray &data, GUIData &gui_data)
 
 bool SerialDecoder::decodeConfig(const QByteArray &data, GUIData &gui_data)
 {
-    gui_data.config.pid_roll.kp = (float) decode32(data, 3);
-    gui_data.config.pid_roll.kd = (float) decode32(data, 7);
-    gui_data.config.pid_roll.ki = (float) decode32(data, 11);
+    gui_data.config.pid_roll.kp = decodeFloat(data, 3);
+    gui_data.config.pid_roll.kd = decodeFloat(data, 7);
+    gui_data.config.pid_roll.ki = decodeFloat(data, 11);
 
-    gui_data.config.pid_pitch.kp = (float) decode32(data, 15);
+    gui_data.config.pid_pitch.kp = decodeFloat(data, 15);
     gui_data.config.pid_pitch.kd = decodeFloat(data, 19);
-    gui_data.config.pid_pitch.ki = (float) decode32(data, 23);
+    gui_data.config.pid_pitch.ki = decodeFloat(data, 23);
 
-    gui_data.config.pid_yaw.kp = (float) decode32(data, 27);
-    gui_data.config.pid_yaw.kd = (float) decode32(data, 31);
-    gui_data.config.pid_yaw.ki = (float) decode32(data, 35);
+    gui_data.config.pid_yaw.kp = decodeFloat(data, 27);
+    gui_data.config.pid_yaw.kd = decodeFloat(data, 31);
+    gui_data.config.pid_yaw.ki = decodeFloat(data, 35);
 
     gui_data.new_config = true;
 

@@ -22,6 +22,7 @@ CriusGUI::CriusGUI(QWidget *parent) :
 
     connect(serial_thread, SIGNAL(sendData(QByteArray)), this, SLOT(getSerialData(QByteArray)));
     connect(serial_thread, SIGNAL(sendSerialPortInfo(QStringList)), this, SLOT(receiveSerialPortInfo(QStringList)));
+    connect(this, SIGNAL(sendGotACK()), serial_thread, SLOT(receiveACK()));
 
     thread->start();
 
@@ -134,6 +135,22 @@ void CriusGUI::updateGUI()
 
         this->gui_data_.new_config = false;
     }
+
+    // Received ACK
+    if(this->gui_data_.gotACK)
+    {
+        // Tell serial thread not to reSend config
+        emit sendGotACK();
+
+        // Set button to green to inform the user
+        QPalette pal = this->ui->PushButton_Config_Send->palette();
+        pal.setColor(QPalette::Button, QColor(Qt::green));
+        this->ui->PushButton_Config_Send->setAutoFillBackground(true);
+        this->ui->PushButton_Config_Send->setPalette(pal);
+        this->ui->PushButton_Config_Send->update();
+
+        this->gui_data_.gotACK = false;
+    }
 }
 
 void CriusGUI::on_PushButton_Config_Load_clicked()
@@ -143,6 +160,13 @@ void CriusGUI::on_PushButton_Config_Load_clicked()
 
 void CriusGUI::on_PushButton_Config_Send_clicked()
 {
+    // Set default color on the button
+    QPalette pal = this->ui->PushButton_Config_Send->palette();
+    pal.setColor(QPalette::Button, QColor(Qt::white));
+    this->ui->PushButton_Config_Send->setAutoFillBackground(true);
+    this->ui->PushButton_Config_Send->setPalette(pal);
+    this->ui->PushButton_Config_Send->update();
+
     // Update gui_data with the lastest configuration
     this->gui_data_.config.pid_roll.kp = this->ui->Config_PID_Roll_KP->toPlainText().toFloat();
     this->gui_data_.config.pid_roll.kd = this->ui->Config_PID_Roll_KD->toPlainText().toFloat();

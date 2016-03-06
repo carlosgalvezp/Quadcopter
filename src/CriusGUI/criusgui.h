@@ -43,6 +43,7 @@ signals:
     void sendFCConfig(const QByteArray &data);
     void sendSerialConfig(const QString &port_name, const QString &baud_rate);
     void sendSerialDisconnect();
+    void sendGotACK();
 
 private slots:
     void on_PushButton_Config_Load_clicked();
