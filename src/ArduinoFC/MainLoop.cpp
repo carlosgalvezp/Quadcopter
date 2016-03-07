@@ -36,6 +36,10 @@ void MainLoop::Internal::updateInternalState(State_t *state)
 	// Get timeStamp
 	state->status.timeStamp = micros();
 
+	// Read battery
+	Adc::Power::readVoltage(&state->status.battery.voltage);
+	Adc::Power::readCurrent(&state->status.battery.current);
+
 	// RC
 	RC::getReadings(&state->rc);
 

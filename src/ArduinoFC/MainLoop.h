@@ -5,6 +5,7 @@
 #include "Arduino.h"
 
 #include "RC.h"
+#include "ADC.h"
 #include "StateEstimation.h"
 #include "Control.h"
 #include "Output.h"

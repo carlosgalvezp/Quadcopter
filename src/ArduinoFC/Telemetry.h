@@ -22,7 +22,6 @@ namespace Telemetry
 	void sendBarometer(const State_t * const data);
 	void sendTemperature(const State_t * const data);
 	void sendRC(const State_t * const data);
-	void sendBattery(const State_t * const data);
 	void sendGPS(const State_t * const data);
 	void sendSonar(const State_t * const data);
 

@@ -113,6 +113,9 @@ bool SerialDecoder::decodeStatus(const QByteArray &data, GUIData &gui_data)
     gui_data.status.timeStamp = decode32(data, 3);
     gui_data.status.cycleTime = decode16(data, 7);
 
+    gui_data.status.battery.voltage = ((float) decode16(data,  9)) * K_VOLTAGE_TO_VOLTS;
+    gui_data.status.battery.current = ((float) decode16(data, 11)) * K_CURRENT_TO_AMPS;
+
     gui_data.new_status = true;
     return true;
 }

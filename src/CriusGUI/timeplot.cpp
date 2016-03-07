@@ -42,7 +42,7 @@ TimePlot::~TimePlot()
 void TimePlot::addPoint(const std::vector<double> &x)
 {
     // Update each graph
-    for(int i = 0; i < x.size(); ++i)
+    for(std::size_t i = 0; i < x.size(); ++i)
     {
         // Remove first point
         this->plot_->graph(i)->removeData(t0);

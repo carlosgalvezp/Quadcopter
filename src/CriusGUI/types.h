@@ -20,10 +20,17 @@ struct Quaternion
     double q3;
 };
 
+struct BatteryData
+{
+    float voltage;
+    float current;
+};
+
 struct StatusData
 {
     uint32_t timeStamp;
     uint16_t cycleTime;
+    BatteryData battery;
 };
 
 struct RCData

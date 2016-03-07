@@ -19,6 +19,9 @@ private:
     const char * magic_word_ = TELEMETRY_MAGIC_WORD;
     uint8_t checkSum_;
 
+    const float K_VOLTAGE_TO_VOLTS =       10.0f  * (5.0f / 1023.0f);
+    const float K_CURRENT_TO_AMPS  = (1.0f/0.05f) * (5.0f / 1023.0f);
+
     bool decodeData(const QByteArray &data, GUIData &gui_data);
     void extractCompleteFrames(QQueue<unsigned char> &buffer, std::vector<QByteArray> &packages);
 

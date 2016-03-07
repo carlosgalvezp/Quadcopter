@@ -59,6 +59,9 @@ void CriusGUI::updateGUI()
         this->ui->data_in_timeStamp->setText(QString::number(this->gui_data_.status.timeStamp));
         this->ui->data_in_cycleTime->setText(QString::number(this->gui_data_.status.cycleTime));
 
+        this->ui->data_in_battery_voltage->setText(QString::number(this->gui_data_.status.battery.voltage));
+        this->ui->data_in_battery_current->setText(QString::number(this->gui_data_.status.battery.current));
+
         this->gui_data_.new_status = false;
     }
 

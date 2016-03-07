@@ -68,9 +68,6 @@ void Telemetry::main(const State_t * const state, Config_t * const config)
 					case TELEMETRY_CMD_OUT_RC:
 						sendRC(state);
 						break;
-					case TELEMETRY_CMD_OUT_BATTERY:
-						sendBattery(state);
-						break;
 					case TELEMETRY_CMD_OUT_GPS:
 						sendGPS(state);
 						break;
@@ -101,6 +98,10 @@ void Telemetry::sendStatus(const State_t * const data)
 
 	// Cycle time
 	Telemetry::write16(data->status.cycleTime);
+
+	// Battery
+	Telemetry::write16(data->status.battery.voltage);
+	Telemetry::write16(data->status.battery.current);
 }
 
 void Telemetry::sendRC(const State_t * const data)
@@ -151,7 +152,6 @@ void Telemetry::sendControl(const State_t * const data)
 void Telemetry::sendMagnetometer(const State_t * const data){}
 void Telemetry::sendBarometer(const State_t * const data){}
 void Telemetry::sendTemperature(const State_t * const data){}
-void Telemetry::sendBattery(const State_t * const data){}
 void Telemetry::sendGPS(const State_t * const data){}
 void Telemetry::sendSonar(const State_t * const data){}
 

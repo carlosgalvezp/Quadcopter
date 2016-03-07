@@ -48,6 +48,12 @@ typedef struct
 
 typedef struct
 {
+	uint16_t voltage;
+	uint16_t current;
+}Battery_data_t;
+
+typedef struct
+{
 	vec_float_3_t acc;
 	vec_int16_3_t acc_raw;
 	vec_float_3_t gyro;
@@ -67,6 +73,7 @@ typedef struct
 {
 	uint32_t timeStamp;
 	uint16_t cycleTime;
+	Battery_data_t battery;
 }Status_t;
 
 typedef struct
