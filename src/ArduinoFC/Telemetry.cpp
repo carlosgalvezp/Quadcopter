@@ -205,7 +205,6 @@ void Telemetry::receiveConfig(Config_t * const data)
 
 void Telemetry::sendACK()
 {
-    Serial_Debug.println("Sending ACK...");
 	checksum_ = 0;
 	write8((uint8_t)magic_word_[0]);
 	write8((uint8_t)magic_word_[1]);
