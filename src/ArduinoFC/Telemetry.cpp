@@ -102,6 +102,9 @@ void Telemetry::sendStatus(const State_t * const data)
 	// Battery
 	Telemetry::write16(data->status.battery.voltage);
 	Telemetry::write16(data->status.battery.current);
+
+	// Flight mode
+	write8(data->status.flightMode);
 }
 
 void Telemetry::sendRC(const State_t * const data)

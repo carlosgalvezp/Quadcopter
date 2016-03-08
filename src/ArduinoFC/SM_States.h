@@ -12,7 +12,6 @@
 
 #define N_MAX_CONNECTIONS_STATE				5
 
-
 struct SM_Connection;
 class SM_State;
 typedef bool(SM_State::*SMConditionFnc)(const Config_t *config, State_t *state);
@@ -25,6 +24,7 @@ public:
 	virtual ~SM_State();
 	SM_Connection **connections_;
 	uint8_t nConnections_;
+	FlightMode id_;
 
 	void addConnection(SM_State *toState, SMConditionFnc transitionCondition);
 protected:

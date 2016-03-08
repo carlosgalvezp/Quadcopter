@@ -56,7 +56,7 @@ void MainLoop::Internal::updateStateMachineState(const Config_t *config, State_t
 {
 	// Get current state
 	SM_State *currentSMState = stateMachine_->getCurrentState();
-
+	
 	// Loop all over possible next states
 	for (uint8_t i = 0; i < currentSMState->nConnections_; ++i)
 	{
@@ -69,6 +69,10 @@ void MainLoop::Internal::updateStateMachineState(const Config_t *config, State_t
 			break;
 		}
 	}	
+
+	// Update flight mode to display in telemtry
+	currentSMState = stateMachine_->getCurrentState();
+	state->status.flightMode = currentSMState->id_;
 }
 
 void MainLoop::Internal::output(State_t *state, Config_t *config)

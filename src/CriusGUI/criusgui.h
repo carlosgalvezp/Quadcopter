@@ -7,6 +7,8 @@
 
 #include <time.h>
 #include <unistd.h>
+#include <map>
+#include <utility>
 
 #include "timeplot.h"
 #include "utils.h"
@@ -62,6 +64,13 @@ private:
     QQueue<unsigned char> rx_data_buffer_;
 
     void updateGUI();
+
+    std::map<uint8_t, const char *> flightModeMap_ =
+    {
+        std::make_pair(0, "POWER ON"),
+        std::make_pair(1, "DISARMED"),
+        std::make_pair(2, "ARMED ACRO")
+    };
 };
 
 #endif // CRIUSGUI_H

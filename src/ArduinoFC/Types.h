@@ -69,11 +69,26 @@ typedef struct
 	float temperature;
 }Sensor_data_t;
 
+enum FlightMode
+{
+	STATE_POWER_ON = 0,
+	STATE_DISARMED,
+	STATE_ARMED_ACRO,
+	FAILSAFE,
+	ACRO,
+	SELF_LEVEL,
+	HEADFREE,
+	HOLD_Z,
+	HOLD_XYZ,
+};
+
+
 typedef struct
 {
 	uint32_t timeStamp;
 	uint16_t cycleTime;
 	Battery_data_t battery;
+	FlightMode flightMode;
 }Status_t;
 
 typedef struct
@@ -102,16 +117,6 @@ typedef struct
 	float kd;
 	float ki;
 }PID_Params_t;
-
-enum FlightMode
-{
-	FAILSAFE = 0,
-	ACRO,
-	SELF_LEVEL,
-	HEADFREE,
-	HOLD_Z,
-	HOLD_XYZ,	
-};
 
 typedef struct
 {

@@ -31,16 +31,23 @@ void SM_State::addConnection(SM_State *toState, SMConditionFnc transitionConditi
 
 // ================================================================================
 
-SM_State_PowerOn::SM_State_PowerOn()
+SM_State_PowerOn::SM_State_PowerOn()	
 {
+	this->id_ = STATE_POWER_ON;
 	this->tStart = micros();
 }
 
 SM_State_Disarmed::SM_State_Disarmed()
-	: readyToSwitchState(false) {}
+	: readyToSwitchState(false) 
+{
+	this->id_ = STATE_DISARMED;
+}
 
 SM_State_Armed_Acro::SM_State_Armed_Acro()
-	: readyToSwitchState(false) {}
+	: readyToSwitchState(false) 
+{
+	this->id_ = STATE_ARMED_ACRO;
+}
 
 // ================================================================================
 

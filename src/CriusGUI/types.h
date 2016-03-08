@@ -31,6 +31,7 @@ struct StatusData
     uint32_t timeStamp;
     uint16_t cycleTime;
     BatteryData battery;
+    uint8_t flightMode;
 };
 
 struct RCData
