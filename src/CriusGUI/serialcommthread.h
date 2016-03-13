@@ -64,17 +64,17 @@ private:
 
     QSerialPort* serialPort_;
     std::vector<QTimer *> timers_;
-    const std::vector<uint8_t> timer_frequencies = { UPDATE_RATE_STATUS,
-                                                     UPDATE_RATE_RC,
-                                                     UPDATE_RATE_IMU,
-                                                     UPDATE_RATE_ATTITUDE,
-                                                     UPDATE_RATE_CONTROL};
-    std::vector<const char*> timer_fncs = {SLOT(requestStatus()),
-                                           SLOT(requestRC()),
-                                           SLOT(requestIMU()),
-                                           SLOT(requestAttitude()),
-                                           SLOT(requestMotors())};
-    const std::vector<bool> timer_on = {1, 0, 0, 0, 0};
+    const std::vector<uint8_t> timer_frequencies_ = { UPDATE_RATE_STATUS,
+                                                      UPDATE_RATE_RC,
+                                                      UPDATE_RATE_IMU,
+                                                      UPDATE_RATE_ATTITUDE,
+                                                      UPDATE_RATE_CONTROL};
+    std::vector<const char*> timer_fncs_ = {SLOT(requestStatus()),
+                                            SLOT(requestRC()),
+                                            SLOT(requestIMU()),
+                                            SLOT(requestAttitude()),
+                                            SLOT(requestMotors())};
+    const std::vector<bool> timer_on_ = {1, 0, 0, 0, 1};
 
 
     char dataOut[TX_BUFFER_SIZE];

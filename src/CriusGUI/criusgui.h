@@ -69,7 +69,8 @@ private:
     {
         std::make_pair(0, "POWER ON"),
         std::make_pair(1, "DISARMED"),
-        std::make_pair(2, "ARMED ACRO")
+        std::make_pair(2, "ARMED ACRO"),
+        std::make_pair(3, "PASS_THROUGH")
     };
 };
 

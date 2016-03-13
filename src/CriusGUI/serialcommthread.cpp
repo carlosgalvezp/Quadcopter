@@ -47,15 +47,15 @@ void SerialCommThread::connectSerial(const QString &portName, const QString &bau
 
 
     // ** Initialize timers
-    for (std::size_t i = 0; i < timer_on.size(); ++i)
+    for (std::size_t i = 0; i < timer_on_.size(); ++i)
     {
-        if (timer_on[i])
+        if (timer_on_[i])
         {
             QTimer* timer = new QTimer(this);
             this->timers_.push_back(timer);
 
-            connect(timer, SIGNAL(timeout()), this, this->timer_fncs[i]);
-            timer->start(1000.0 / timer_frequencies[i]);
+            connect(timer, SIGNAL(timeout()), this, this->timer_fncs_[i]);
+            timer->start(1000.0 / timer_frequencies_[i]);
         }
     }
 

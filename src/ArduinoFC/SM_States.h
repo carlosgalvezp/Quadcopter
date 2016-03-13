@@ -58,6 +58,7 @@ private:
 class SM_State_PassThrough : public SM_State
 {
 public:
+	SM_State_PassThrough();
 	virtual void output(const Config_t *config, State_t *state);
 private:
 };

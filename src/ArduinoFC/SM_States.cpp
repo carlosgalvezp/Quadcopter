@@ -49,6 +49,10 @@ SM_State_Armed_Acro::SM_State_Armed_Acro()
 	this->id_ = STATE_ARMED_ACRO;
 }
 
+SM_State_PassThrough::SM_State_PassThrough()	
+{
+	this->id_ = STATE_PASSTHROUGH;
+}
 // ================================================================================
 
 void SM_State_PowerOn::output(const Config_t *config, State_t *state)
