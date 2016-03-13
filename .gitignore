@@ -216,3 +216,6 @@ FakesAssemblies/
 
 # VS Arduino stuff
 *__vm/
+
+# Other
+*.autosave
