@@ -25,7 +25,6 @@ void SerialCommThread::init()
 
 void SerialCommThread::connectSerial(const QString &portName, const QString &baud_rate)
 {
-    std::cout << "Connecting to serial port " << portName.toStdString()<<std::endl;
     // Create Serial Port object
     serialPort_ = new QSerialPort(portName, this);
 
@@ -35,6 +34,7 @@ void SerialCommThread::connectSerial(const QString &portName, const QString &bau
     if(!serialPort_->isOpen())
     {
         std::cout << "Can't open the port" << std::endl;
+        delete serialPort_;
         return;
     }
 
@@ -51,8 +51,8 @@ void SerialCommThread::connectSerial(const QString &portName, const QString &bau
     {
         if (timer_on[i])
         {
-            this->timers_.push_back(new QTimer(this));
-            QTimer* timer = this->timers_.back();
+            QTimer* timer = new QTimer(this);
+            this->timers_.push_back(timer);
 
             connect(timer, SIGNAL(timeout()), this, this->timer_fncs[i]);
             timer->start(1000.0 / timer_frequencies[i]);
@@ -69,13 +69,18 @@ void SerialCommThread::connectSerial(const QString &portName, const QString &bau
 void SerialCommThread::disconnectSerial()
 {
     // Delete serial port
+    this->serialPort_->close();
     delete this->serialPort_;
 
     // Delete timers
     for (QTimer * t : this->timers_)
     {
+        t->stop();
         delete t;
     }
+
+    // Clear timer vector
+    this->timers_.clear();
 }
 
 void SerialCommThread::requestStatus()
