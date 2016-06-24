@@ -8,7 +8,7 @@ namespace RC
 	uint8_t prevPortK;
 }
 
-void RC::getReadings(RC_data_t * const readings)
+void RC::getReadings(RCData* const readings)
 {
 	readings->throttle = RC_readings[2];
 	readings->aileron  = RC_readings[0];

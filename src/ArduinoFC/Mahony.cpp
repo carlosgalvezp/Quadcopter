@@ -198,7 +198,7 @@ namespace Mahony
 	}
 
 
-	void getQuaternion(quaternion_t * const q)
+	void getQuaternion(Quaternion* const q)
 	{
 		q->q0 = q0;
 		q->q1 = q1;

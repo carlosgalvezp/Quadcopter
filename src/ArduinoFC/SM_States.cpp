@@ -55,12 +55,12 @@ SM_State_PassThrough::SM_State_PassThrough()
 }
 // ================================================================================
 
-void SM_State_PowerOn::output(const Config_t *config, State_t *state)
+void SM_State_PowerOn::output(const Config* config, State* state)
 {
 	HAL::boardLEDs(1, 1, 1);
 }
 
-void SM_State_PassThrough::output(const Config_t *config, State_t *state)
+void SM_State_PassThrough::output(const Config* config, State* state)
 {
 	// LEDs
 	HAL::boardLEDs(1, 1, 0);
@@ -73,12 +73,12 @@ void SM_State_PassThrough::output(const Config_t *config, State_t *state)
 	Output::writePWM(&state->motors[0]);
 }
 
-void SM_State_Disarmed::output(const Config_t *config, State_t *state)
+void SM_State_Disarmed::output(const Config* config, State* state)
 {
 	HAL::boardLEDs(0, 1, 0);
 }
 
-void SM_State_Armed_Acro::output(const Config_t *config, State_t *state)
+void SM_State_Armed_Acro::output(const Config* config, State* state)
 {
 	// LEDs
 	HAL::boardLEDs(1, 0, 0);
@@ -95,12 +95,12 @@ bool SM_State_PowerOn::conditionAny()
 	return (micros() - this->tStart) > TIME_ON_POWER_CONFIGURATION_US;
 }
 
-bool SM_State_PowerOn::conditionDisarmed(const Config_t *config, State_t *state)
+bool SM_State_PowerOn::conditionDisarmed(const Config* config, State* state)
 {
 	return this->conditionAny();
 }
 
-bool SM_State_PowerOn::conditionPassThrough(const Config_t *config, State_t *state)
+bool SM_State_PowerOn::conditionPassThrough(const Config* config, State* state)
 {
 	return this->conditionAny()			  &&
 		   RC_isAtMax(state->rc.throttle) &&
@@ -109,7 +109,7 @@ bool SM_State_PowerOn::conditionPassThrough(const Config_t *config, State_t *sta
 		   RC_isIddle(state->rc.rudder);
 }
 
-bool SM_State_Disarmed::conditionArmed_Acro(const Config_t *config, State_t *state)
+bool SM_State_Disarmed::conditionArmed_Acro(const Config* config, State* state)
 {
 	if (RC_isIddle(state->rc.rudder))
 	{
@@ -124,12 +124,12 @@ bool SM_State_Disarmed::conditionArmed_Acro(const Config_t *config, State_t *sta
 	return false;
 }
 
-bool SM_State_Disarmed::conditionArmed(const Config_t *config, State_t *state)
+bool SM_State_Disarmed::conditionArmed(const Config* config, State* state)
 {
 	return RC_isAtMin(state->rc.throttle) && RC_isAtMax(state->rc.rudder);
 }
 
-bool SM_State_Armed_Acro::conditionDisarmed(const Config_t *config, State_t *state)
+bool SM_State_Armed_Acro::conditionDisarmed(const Config* config, State* state)
 {
 	if (RC_isIddle(state->rc.rudder))
 	{

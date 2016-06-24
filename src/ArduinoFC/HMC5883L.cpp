@@ -23,7 +23,7 @@ namespace Magnetometer
 		return 0;
 	}
 
-	uint8_t getData(vec_float_3_t * const data)
+	uint8_t getData(Vector3<float>* const data)
 	{
 		// Burst-read all the registers, starting from X_MSB
 		if (I2C::readReg(MAGNETOMETER_DEV_ADDR, MAGNETOMETER_REG_DATA, rawData, MAGNETOMETER_N_READ_BYTES)) return 1;

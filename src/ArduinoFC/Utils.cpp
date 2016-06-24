@@ -17,7 +17,7 @@ float Utils::FastMath::invSqrt(float x)
 	return y.f * (1.68191409f - 0.703952253f * x * y.f * y.f);
 }
 
-void Utils::quaternionToRPY(const quaternion_t *q, vec_int16_3_t *rpy)
+void Utils::quaternionToRPY(const Quaternion* q, Vector3<int16_t>* rpy)
 {
 	rpy->x = Utils::FastMath::atan2(2.0f * (q->q0 * q->q1 + q->q2 * q->q3), 1.0f - 2.0f * (q->q1 * q->q1 + q->q2 * q->q2));
 	rpy->y = Utils::FastMath::asin(2.0f * (q->q0 * q->q2 - q->q3 * q->q1));

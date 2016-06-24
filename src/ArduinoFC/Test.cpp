@@ -2,8 +2,8 @@
 
 namespace Test
 {
-	State_t *state_ = GlobalVariables::getState();
-	Config_t *config_ = GlobalVariables::getConfig();
+	State* state_ = GlobalVariables::getState();
+	Config* config_ = GlobalVariables::getConfig();
 }
 
 void Test::run()
@@ -34,7 +34,7 @@ void Test::run()
 
 void Test::testRC()
 {
-	RC_data_t rc_;
+	RCData rc_;
 
 	// Get readings
 	RC::getReadings(&rc_);
@@ -68,7 +68,7 @@ void Test::testI2CScan()
 void Test::testCompass()
 {
 	// Read magnetometer
-	vec_float_3_t dataMag;
+	Vector3<float> dataMag;
 	if (!Magnetometer::getData(&dataMag))
 	{
 		// Compute heading
@@ -80,7 +80,7 @@ void Test::testCompass()
 
 void Test::testSensorRead()
 {
-	IMU_data_t data;
+	IMUData data;
 	if (!IMU::getData(&data)){}
 	{
 		String s = "Acc.x: " + String(data.acc.x) + " Acc.y: " + String(data.acc.y) + String(" Acc.z: ") + String(data.acc.z) + " [m/s^2]";
@@ -89,7 +89,7 @@ void Test::testSensorRead()
 		Serial.println(s);
 	}
 	// Read magnetometer
-	vec_float_3_t dataMag;
+	Vector3<float> dataMag;
 	if (!Magnetometer::getData(&dataMag))
 	{
 		String s = "Mag.x: " + String(dataMag.x) + " Mag.y: " + String(dataMag.y) + String(" Mag.z: ") + String(dataMag.z) + " [G]";
@@ -107,10 +107,10 @@ void Test::testSensorRead()
 	Serial.println("--------------------");
 }
 
-void Test::testTelemetry(State_t * const state, Config_t * const config)
+void Test::testTelemetry(State* const state, Config* const config)
 {
 	// Get timeStamp
-	state->status.timeStamp = micros();
+	state->status.timestamp = micros();
 
 	// Send data
 	Telemetry::main(state, config);	
@@ -119,9 +119,9 @@ void Test::testTelemetry(State_t * const state, Config_t * const config)
 void Test::testStateEstimation()
 {
 	// Read sensor data
-	Sensor_data_t sensor_data;
-	quaternion_t q;
-	vec_int16_3_t rpy;
+	SensorData sensor_data;
+	Quaternion q;
+	Vector3<int16_t> rpy;
 	IMU::getData(&sensor_data.imu);
 	
 	// Estimate attitude
@@ -144,7 +144,7 @@ matches
 void Test::testOutput()
 {
 	
-	RC_data_t rc_;
+	RCData rc_;
 	uint16_t pwm_us[4];
 	bool toggled = false;
 	// Get readings
@@ -198,7 +198,7 @@ namespace Test
 }
 void Test::testGPS()
 {
-	GPS_Data_t gps_data;
+	GPSData gps_data;
 	unsigned long t1 = micros();
 	if (GPS::getGPSData(&gps_data))
 	{
@@ -209,7 +209,7 @@ void Test::testGPS()
 		Serial.print(gps_data.position_ecef.y);
 		Serial.print(",");
 		Serial.print(gps_data.position_ecef.z);
-		Serial.print("; Sat: " + String(gps_data.nSatellites) + "\n");
+		Serial.print("; Sat: " + String(gps_data.n_satellites) + "\n");
 	}
 	unsigned long t2 = micros();
 	unsigned long delta = t2 - t1;
@@ -378,8 +378,8 @@ void Test::Unit::testAcos()
 
 void Test::Unit::testQuaternionToRPY()
 {
-	quaternion_t q;
-	vec_int16_3_t rpy;
+	Quaternion q;
+	Vector3<int16_t> rpy;
 
 	for (int i = 0; i < 100; ++i)
 	{

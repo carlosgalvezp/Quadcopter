@@ -25,7 +25,7 @@ namespace IMU
 		return 0;
 	}
 
-	uint8_t getData(IMU_data_t * const data)
+	uint8_t getData(IMUData* const data)
 	{
 		// Burst read all the registers, starting from ACC_X_MSB
 		if (I2C::readReg(IMU_DEV_ADDR, IMU_REG_ACC_X_MSB, rawData, N_BYTES_BURST_READ)) return 1;
