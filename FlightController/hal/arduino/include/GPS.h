@@ -21,6 +21,7 @@ namespace GPS
 {
 	void init();
 	bool getGPSData(GPSData& data);
+
 	namespace Internal
 	{
 		bool receiveSerialData();

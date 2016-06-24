@@ -1,6 +1,5 @@
 #include "EEPROM.h"
 
-
 void EEPROM::loadConfig(Config& config)
 {
 	config.pid_roll.kp = EEPROM::readFloat(EEPROM_ADDR_PID_ROLL_KP);

@@ -136,7 +136,7 @@ bool GPS::Internal::Decode::decodeNavSol(GPSData& data)
 
 		// Number of satellites
 		data.n_satellites = gps_payload_buffer[47];
-
+		
 		// Position
 		data.position_ecef.x = (int32_t)GPS::Internal::Decode::decode32LittleEndian(&gps_payload_buffer[12]);
 		data.position_ecef.y = (int32_t)GPS::Internal::Decode::decode32LittleEndian(&gps_payload_buffer[16]);
