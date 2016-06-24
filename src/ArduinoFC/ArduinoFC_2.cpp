@@ -5,8 +5,8 @@ void setup()
 	// Init hardware
 	HAL::init();
 
-	// Load configuration
-	EEPROM::loadConfig(GlobalVariables::getConfig());
+	// Load configuration	
+	EEPROM::loadConfig(*GlobalVariables::getConfig());
 
 	// Init global variables
 	GlobalVariables::init();
