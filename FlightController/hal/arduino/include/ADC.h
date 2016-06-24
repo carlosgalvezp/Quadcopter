@@ -14,8 +14,8 @@ namespace Adc
 {
 	namespace Power
 	{
-		void readVoltage(uint16_t *voltage);
-		void readCurrent(uint16_t *current);
+		uint16_t readVoltage();
+		uint16_t readCurrent();
 	}
 
     void init();

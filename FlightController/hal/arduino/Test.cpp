@@ -187,8 +187,7 @@ void Test::testSonar()
 
 void Test::testADC()
 {
-	uint16_t voltage;
-	Adc::Power::readVoltage(&voltage);
+	uint16_t voltage = Adc::Power::readVoltage();
 	Serial.println("Voltage: " + String(voltage));	
 	delay(100);
 }
