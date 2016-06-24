@@ -11,7 +11,7 @@ namespace Telemetry
 	uint8_t checksum_;
 }
 
-void Telemetry::main(const State* const state, Config* const config)
+void Telemetry::main(const State& state, Config& config)
 {
 	// Re-initialize variables
 	cmd_ = 0;
@@ -91,90 +91,90 @@ void Telemetry::main(const State* const state, Config* const config)
 	} // n_bytes > 0
 }
 
-void Telemetry::sendStatus(const State* const data)
+void Telemetry::sendStatus(const State& data)
 {
 	// TimeStamp
-	Telemetry::write32(data->status.timestamp);
+	Telemetry::write32(data.status.timestamp);
 
 	// Cycle time
-	Telemetry::write16(data->status.cycle_time);
+	Telemetry::write16(data.status.cycle_time);
 
 	// Battery
-	Telemetry::write16(data->status.battery.voltage);
-	Telemetry::write16(data->status.battery.current);
+	Telemetry::write16(data.status.battery.voltage);
+	Telemetry::write16(data.status.battery.current);
 
 	// Flight mode
-	write8(data->status.flight_mode);
+	write8(data.status.flight_mode);
 }
 
-void Telemetry::sendRC(const State* const data)
+void Telemetry::sendRC(const State& data)
 {
-	Telemetry::write16(data->rc.throttle);
-	Telemetry::write16(data->rc.rudder);
-	Telemetry::write16(data->rc.elevator);
-	Telemetry::write16(data->rc.aileron);
-	Telemetry::write16(data->rc.aux1);
-	Telemetry::write16(data->rc.aux2);
-	Telemetry::write16(data->rc.aux3);
-	Telemetry::write16(data->rc.aux4);
+	Telemetry::write16(data.rc.throttle);
+	Telemetry::write16(data.rc.rudder);
+	Telemetry::write16(data.rc.elevator);
+	Telemetry::write16(data.rc.aileron);
+	Telemetry::write16(data.rc.aux1);
+	Telemetry::write16(data.rc.aux2);
+	Telemetry::write16(data.rc.aux3);
+	Telemetry::write16(data.rc.aux4);
 }
 
 
-void Telemetry::sendIMU(const State* const data)
+void Telemetry::sendIMU(const State& data)
 {
 	// Acc
-	Telemetry::write16(data->sensor_data.imu.acc_raw.x);
-	Telemetry::write16(data->sensor_data.imu.acc_raw.y);
-	Telemetry::write16(data->sensor_data.imu.acc_raw.z);
+	Telemetry::write16(data.sensor_data.imu.acc_raw.x);
+	Telemetry::write16(data.sensor_data.imu.acc_raw.y);
+	Telemetry::write16(data.sensor_data.imu.acc_raw.z);
 
 	// Gyro
-	Telemetry::write16(data->sensor_data.imu.gyro_raw.x);
-	Telemetry::write16(data->sensor_data.imu.gyro_raw.y);
-	Telemetry::write16(data->sensor_data.imu.gyro_raw.z);
+	Telemetry::write16(data.sensor_data.imu.gyro_raw.x);
+	Telemetry::write16(data.sensor_data.imu.gyro_raw.y);
+	Telemetry::write16(data.sensor_data.imu.gyro_raw.z);
 }
 
-void Telemetry::sendAttitude(const State* const data)
+void Telemetry::sendAttitude(const State& data)
 {
 	// Send each component as int16_t, so maximum is +- 32768.
 	// Multiply by 10000, since we have normalized quaternion
-	Telemetry::write16((int16_t)(10000 * data->attitude.q0));
-	Telemetry::write16((int16_t)(10000 * data->attitude.q1));
-	Telemetry::write16((int16_t)(10000 * data->attitude.q2));
-	Telemetry::write16((int16_t)(10000 * data->attitude.q3));
+	Telemetry::write16((int16_t)(10000 * data.attitude.q0));
+	Telemetry::write16((int16_t)(10000 * data.attitude.q1));
+	Telemetry::write16((int16_t)(10000 * data.attitude.q2));
+	Telemetry::write16((int16_t)(10000 * data.attitude.q3));
 }
 
-void Telemetry::sendControl(const State* const data)
+void Telemetry::sendControl(const State& data)
 {
-	Telemetry::write16(data->motors[0]);
-	Telemetry::write16(data->motors[1]);
-	Telemetry::write16(data->motors[2]);
-	Telemetry::write16(data->motors[3]);
+	Telemetry::write16(data.motors[0]);
+	Telemetry::write16(data.motors[1]);
+	Telemetry::write16(data.motors[2]);
+	Telemetry::write16(data.motors[3]);
 }
 
 
-void Telemetry::sendMagnetometer(const State* const data){}
-void Telemetry::sendBarometer(const State* const data){}
-void Telemetry::sendTemperature(const State* const data){}
-void Telemetry::sendGPS(const State* const data){}
-void Telemetry::sendSonar(const State* const data){}
+void Telemetry::sendMagnetometer(const State& data){}
+void Telemetry::sendBarometer(const State& data){}
+void Telemetry::sendTemperature(const State& data){}
+void Telemetry::sendGPS(const State& data){}
+void Telemetry::sendSonar(const State& data){}
 
-void Telemetry::sendConfig(const Config* const config)
+void Telemetry::sendConfig(const Config& config)
 {
 	// PID
-	Telemetry::writeFloat(config->pid_roll.kp);
-	Telemetry::writeFloat(config->pid_roll.kd);
-	Telemetry::writeFloat(config->pid_roll.ki);
+	Telemetry::writeFloat(config.pid_roll.kp);
+	Telemetry::writeFloat(config.pid_roll.kd);
+	Telemetry::writeFloat(config.pid_roll.ki);
 
-	Telemetry::writeFloat(config->pid_pitch.kp);
-	Telemetry::writeFloat(config->pid_pitch.kd);
-	Telemetry::writeFloat(config->pid_pitch.ki);
+	Telemetry::writeFloat(config.pid_pitch.kp);
+	Telemetry::writeFloat(config.pid_pitch.kd);
+	Telemetry::writeFloat(config.pid_pitch.ki);
 
-	Telemetry::writeFloat(config->pid_yaw.kp);
-	Telemetry::writeFloat(config->pid_yaw.kd);
-	Telemetry::writeFloat(config->pid_yaw.ki);
+	Telemetry::writeFloat(config.pid_yaw.kp);
+	Telemetry::writeFloat(config.pid_yaw.kd);
+	Telemetry::writeFloat(config.pid_yaw.ki);
 }
 
-void Telemetry::receiveConfig(Config* const data)
+void Telemetry::receiveConfig(Config& data)
 {		
 	// Verify checksum
 	uint8_t checksum = 0;
@@ -186,20 +186,20 @@ void Telemetry::receiveConfig(Config* const data)
 	if (checksum == 0)
 	{
 		// PID
-		data->pid_roll.kp = Telemetry::readFloat(3);
-		data->pid_roll.kd = Telemetry::readFloat(7);
-		data->pid_roll.ki = Telemetry::readFloat(11);
+		data.pid_roll.kp = Telemetry::readFloat(3);
+		data.pid_roll.kd = Telemetry::readFloat(7);
+		data.pid_roll.ki = Telemetry::readFloat(11);
 
-		data->pid_pitch.kp = Telemetry::readFloat(15);
-		data->pid_pitch.kd = Telemetry::readFloat(19);
-		data->pid_pitch.ki = Telemetry::readFloat(23);
+		data.pid_pitch.kp = Telemetry::readFloat(15);
+		data.pid_pitch.kd = Telemetry::readFloat(19);
+		data.pid_pitch.ki = Telemetry::readFloat(23);
 		
-		data->pid_yaw.kp = Telemetry::readFloat(27);
-		data->pid_yaw.kd = Telemetry::readFloat(31);
-		data->pid_yaw.ki = Telemetry::readFloat(35);
+		data.pid_yaw.kp = Telemetry::readFloat(27);
+		data.pid_yaw.kd = Telemetry::readFloat(31);
+		data.pid_yaw.ki = Telemetry::readFloat(35);
 
 		// Store config
-		EEPROM::storeConfig(*data);
+		EEPROM::storeConfig(data);
 
 		// Send ACK
 		sendACK();
