@@ -37,7 +37,7 @@ void Test::testRC()
 	RCData rc_;
 
 	// Get readings
-	RC::getReadings(&rc_);
+	RC::getReadings(rc_);
 
 	// Print
 	String s = "Throttle: " + String(rc_.throttle) +
@@ -81,7 +81,7 @@ void Test::testCompass()
 void Test::testSensorRead()
 {
 	IMUData data;
-	if (!IMU::getData(&data)){}
+	if (!IMU::getData(data)){}
 	{
 		String s = "Acc.x: " + String(data.acc.x) + " Acc.y: " + String(data.acc.y) + String(" Acc.z: ") + String(data.acc.z) + " [m/s^2]";
 		Serial.println(s);
@@ -97,7 +97,7 @@ void Test::testSensorRead()
 	}
 	// Read barometer
 	float pressure, temperature;
-	if (!Barometer::getData(&pressure, &temperature))
+	if (!Barometer::getData(pressure, temperature))
 	{
 		String s = "Pressure: " + String(pressure) + " [mbar]";
 		Serial.println(s);
@@ -122,7 +122,7 @@ void Test::testStateEstimation()
 	SensorData sensor_data;
 	Quaternion q;
 	Vector3<int16_t> rpy;
-	IMU::getData(&sensor_data.imu);
+	IMU::getData(sensor_data.imu);
 	
 	// Estimate attitude
 	StateEstimation::estimateAttitude(sensor_data, q, rpy);
@@ -148,7 +148,7 @@ void Test::testOutput()
 	uint16_t pwm_us[4];
 	bool toggled = false;
 	// Get readings
-	RC::getReadings(&rc_);
+	RC::getReadings(rc_);
 
 	//if (rc_.rudder < 1200 && rc_.rudder > 0 && rc_.throttle < 1200 && rc_.throttle > 0)
 	//{ armed_ = !armed_; 

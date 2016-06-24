@@ -41,10 +41,10 @@ void MainLoop::Internal::updateInternalState(State& state)
 	state.status.battery.current = Adc::Power::readCurrent();
 
 	// RC
-	RC::getReadings(&state.rc);
+	RC::getReadings(state.rc);
 
 	// Get sensor data
-	IMU::getData(&state.sensor_data.imu);
+	IMU::getData(state.sensor_data.imu);
 	//Magnetometer::getData(&state_->sensorData.mag);
 	//Barometer::getData(&state_->sensorData.pressure, &state_->sensorData.temperature);
 

@@ -8,16 +8,16 @@ namespace RC
 	uint8_t prevPortK;
 }
 
-void RC::getReadings(RCData* const readings)
+void RC::getReadings(RCData& readings)
 {
-	readings->throttle = RC_readings[2];
-	readings->aileron  = RC_readings[0];
-	readings->elevator = RC_readings[1];
-	readings->rudder   = RC_readings[3];
-	readings->aux1     = RC_readings[4];
-	readings->aux2     = RC_readings[5];
-	readings->aux3     = RC_readings[6];
-	readings->aux4     = RC_readings[7];
+	readings.throttle = RC_readings[2];
+	readings.aileron  = RC_readings[0];
+	readings.elevator = RC_readings[1];
+	readings.rudder   = RC_readings[3];
+	readings.aux1     = RC_readings[4];
+	readings.aux2     = RC_readings[5];
+	readings.aux3     = RC_readings[6];
+	readings.aux4     = RC_readings[7];
 }
 
 /* Interruption Service Routine for RX channels */

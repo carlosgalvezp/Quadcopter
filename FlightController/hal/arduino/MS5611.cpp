@@ -28,10 +28,10 @@ uint8_t Barometer::init()
 	return 0;
 }
 
-uint8_t Barometer::getData(float * const pressure, float * const temperature)
+uint8_t Barometer::getData(float& pressure, float& temperature)
 {
-	*pressure = old_pressure;
-	*temperature = old_temperature;
+	pressure = old_pressure;
+	temperature = old_temperature;
 	
 	// State machine in order to avoid active wait when reading the sensor registers
 	switch (state)
@@ -63,8 +63,8 @@ uint8_t Barometer::getData(float * const pressure, float * const temperature)
 
 				// After reading all the data, we can compute
 				computeValues(pressure, temperature);
-				old_pressure = *pressure;
-				old_temperature = *temperature;
+				old_pressure = pressure;
+				old_temperature = temperature;
 				state = BARO_STATE_IDLE;
 				return 0; 
 			}
@@ -74,15 +74,15 @@ uint8_t Barometer::getData(float * const pressure, float * const temperature)
 	}
 }
 
-void Barometer::computeValues(float * const pressure, float * const temperature)
+void Barometer::computeValues(float& pressure, float& temperature)
 {
 	// Compute pressure and temperature according to datasheet
 	int32_t dT = (int32_t)d2 - ((int32_t)prom_coefficients[4] << 8);
 	//*temperature = 0.01f * (2000 + ((dT * (int32_t)prom_coefficients[5]) >> 23));
-	*temperature = 0; // Not interested in computing temperature, let's save some CPU cycles!
+	temperature = 0; // Not interested in computing temperature, let's save some CPU cycles!
 
 	int64_t off = ((int64_t)prom_coefficients[1] << 16) + (((int64_t)prom_coefficients[3] * dT) >> 7);
 	int64_t sens = ((int64_t)prom_coefficients[0] << 15) + (((int64_t)prom_coefficients[2] * dT) >> 8);
 
-	*pressure = 0.01f * (((((int64_t)d1 * sens) >> 21) - off) >> 15);
+	pressure = 0.01f * (((((int64_t)d1 * sens) >> 21) - off) >> 15);
 }
