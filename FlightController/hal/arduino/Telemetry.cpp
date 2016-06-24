@@ -199,7 +199,7 @@ void Telemetry::receiveConfig(Config* const data)
 		data->pid_yaw.ki = Telemetry::readFloat(35);
 
 		// Store config
-		EEPROM::storeConfig(data);
+		EEPROM::storeConfig(*data);
 
 		// Send ACK
 		sendACK();
