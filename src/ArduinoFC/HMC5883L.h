@@ -18,6 +18,6 @@
 namespace Magnetometer
 {
 	uint8_t init();
-	uint8_t getData(Vector3<float>* const data);
+	uint8_t getData(Vector3<float>& data);
 }
 #endif

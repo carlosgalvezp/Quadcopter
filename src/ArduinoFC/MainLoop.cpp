@@ -49,7 +49,7 @@ void MainLoop::Internal::updateInternalState(State& state)
 	//Barometer::getData(&state_->sensorData.pressure, &state_->sensorData.temperature);
 
 	// State estimation
-	StateEstimation::estimateAttitude(&state.sensor_data, &state.attitude, &state.attitude_rpy);
+	StateEstimation::estimateAttitude(state.sensor_data, state.attitude, state.attitude_rpy);
 }
 
 void MainLoop::Internal::updateStateMachineState(const Config& config, State& state)
