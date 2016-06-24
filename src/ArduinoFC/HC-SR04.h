@@ -14,7 +14,7 @@
 
 namespace Sonar
 {
-	bool getDistance(float *distance);
+	bool getDistance(float& distance);
 }
 
 #endif

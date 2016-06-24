@@ -15,7 +15,7 @@ namespace Mahony
 	void IMUupdate(float gx, float gy, float gz, float ax, float ay, float az);
 	void getRPY(Vector3<float>* const rpy);
 	
-	void getQuaternion(Quaternion* const q);
+	void getQuaternion(Quaternion& q);
 }
 
 #endif

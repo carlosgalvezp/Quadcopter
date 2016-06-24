@@ -69,7 +69,7 @@ void Test::testCompass()
 {
 	// Read magnetometer
 	Vector3<float> dataMag;
-	if (!Magnetometer::getData(&dataMag))
+	if (!Magnetometer::getData(dataMag))
 	{
 		// Compute heading
 		float heading = atan2(dataMag.y, dataMag.x) * RAD_TO_DEG;
@@ -90,7 +90,7 @@ void Test::testSensorRead()
 	}
 	// Read magnetometer
 	Vector3<float> dataMag;
-	if (!Magnetometer::getData(&dataMag))
+	if (!Magnetometer::getData(dataMag))
 	{
 		String s = "Mag.x: " + String(dataMag.x) + " Mag.y: " + String(dataMag.y) + String(" Mag.z: ") + String(dataMag.z) + " [G]";
 		Serial.println(s);
@@ -125,7 +125,7 @@ void Test::testStateEstimation()
 	IMU::getData(&sensor_data.imu);
 	
 	// Estimate attitude
-	StateEstimation::estimateAttitude(&sensor_data, &q, &rpy);
+	StateEstimation::estimateAttitude(sensor_data, q, rpy);
 
 	// Send over telemetry
 	//Telemetry::sendAttitude(&q);	
@@ -178,7 +178,7 @@ void Test::testOutput()
 void Test::testSonar()
 {
 	float distance;
-	if (Sonar::getDistance(&distance))
+	if (Sonar::getDistance(distance))
 	{
 		Serial.println("Distance: " + String(distance) + " cm");
 	}
@@ -200,7 +200,7 @@ void Test::testGPS()
 {
 	GPSData gps_data;
 	unsigned long t1 = micros();
-	if (GPS::getGPSData(&gps_data))
+	if (GPS::getGPSData(gps_data))
 	{
 		Serial.print("Fix: " + String(gps_data.fix));
 		Serial.print("; Pos: ");
@@ -388,7 +388,7 @@ void Test::Unit::testQuaternionToRPY()
 		q.q2 = 0.1f*(micros() % 10);
 		q.q3 = 0.1f*(micros() % 10);
 		unsigned long t1 = micros();
-		Utils::quaternionToRPY(&q, &rpy);
+		Utils::quaternionToRPY(q, rpy);
 		Serial.println("Q->RPY Conversion time: " + String(micros() - t1));
 	}
 }
