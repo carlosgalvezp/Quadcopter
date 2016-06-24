@@ -1,33 +1,21 @@
 #include "SoftPWM.h"
 
+SoftPWM::SoftPWM(GPIO_Digital& digital_pin)
+	: SoftPWM(digital_pin, 0U, 0U)
+{}
 
-SoftPWM::SoftPWM()
+SoftPWM::SoftPWM(GPIO_Digital& digital_pin, unsigned long period_ms) 
+	: SoftPWM(digital_pin, period_ms, period_ms / 2U)
+{}
+
+SoftPWM::SoftPWM(GPIO_Digital& digital_pin, unsigned long period_ms, unsigned long highTime_ms)
+	: digital_pin_(digital_pin)
 {
+	this->init(period_ms, highTime_ms);
 }
 
-
-SoftPWM::~SoftPWM()
+void SoftPWM::init(unsigned long period_ms, unsigned long highTime_ms)
 {
-}
-
-SoftPWM::SoftPWM(GPIO_Digital *digitalPin) 
-{
-	this->init(digitalPin, 0, 0);
-}
-
-SoftPWM::SoftPWM(GPIO_Digital *digitalPin, unsigned long period_ms) 
-{
-	this->init(digitalPin, period_ms, period_ms / 2);
-}
-
-SoftPWM::SoftPWM(GPIO_Digital *digitalPin, unsigned long period_ms, unsigned long highTime_ms)
-{
-	this->init(digitalPin, period_ms, highTime_ms);
-}
-
-void SoftPWM::init(GPIO_Digital *digitalPin, unsigned long period_ms, unsigned long highTime_ms)
-{
-	this->digitalPin = digitalPin;
 	this->period_us_ = period_ms * 1000;
 	this->high_time_us_ = highTime_ms * 1000;
 	this->duty_cycle_ = 100 * period_ms / highTime_ms;
@@ -68,7 +56,7 @@ void SoftPWM::run()
 	// Toggle output if required
 	if (doChange_)
 	{	
-		this->digitalPin->setState(outHigh_);
+		this->digital_pin_.setState(outHigh_);
 		doChange_ = false;
 	}
 }
