@@ -6,14 +6,14 @@ namespace Adc
 	volatile uint8_t currentChannel(0);
 }
 
-void Adc::Power::readVoltage(uint16_t *voltage)
+uint16_t Adc::Power::readVoltage()
 {
-	*voltage = readings[ADC_CHANNEL_VOLTAGE];
+	return readings[ADC_CHANNEL_VOLTAGE];
 }
 
-void Adc::Power::readCurrent(uint16_t *current)
+uint16_t Adc::Power::readCurrent()
 {
-	*current = readings[ADC_CHANNEL_CURRENT];
+	return readings[ADC_CHANNEL_CURRENT];
 }
 
 ISR(ADC_vect)
