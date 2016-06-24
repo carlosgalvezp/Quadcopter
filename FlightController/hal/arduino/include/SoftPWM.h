@@ -13,11 +13,9 @@ class GPIO_Digital;
 class SoftPWM
 {
 public:
-	SoftPWM();	
-	SoftPWM(GPIO_Digital *digitalPin);
-	SoftPWM(GPIO_Digital *digitalPin, unsigned long period_ms);
-	SoftPWM(GPIO_Digital *digitalPin, unsigned long period_ms, unsigned long highTime_ms);
-	~SoftPWM();
+	explicit SoftPWM(GPIO_Digital& digital_pin);
+	SoftPWM(GPIO_Digital& digital_pin, unsigned long period_ms);
+	SoftPWM(GPIO_Digital& digital_pin, unsigned long period_ms, unsigned long highTime_ms);
 
 	void run();
 	void run(unsigned long period_ms);
@@ -26,14 +24,14 @@ public:
 	void setPeriod(unsigned long period_ms);
 	void setParameters(unsigned long period_ms, unsigned long high_time_ms);
 private:
-	GPIO_Digital *digitalPin;
+	GPIO_Digital& digital_pin_;
 	unsigned long high_time_us_;
 	unsigned long period_us_;
 	unsigned long t_start_;
 	uint8_t duty_cycle_;
 	bool outHigh_, doChange_;
 
-	void init(GPIO_Digital *digitalPin, unsigned long period_ms, unsigned long highTime_ms);
+	void init(unsigned long period_ms, unsigned long highTime_ms);
 };
 
 #endif
