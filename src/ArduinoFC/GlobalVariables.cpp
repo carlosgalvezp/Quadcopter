@@ -7,19 +7,19 @@ namespace GlobalVariables
 	StateMachine stateMachine_;
 }
 
-State* GlobalVariables::getState()
+State& GlobalVariables::getState()
 {
-	return &state_;
+	return state_;
 }
 
-Config* GlobalVariables::getConfig()
+Config& GlobalVariables::getConfig()
 {
-	return &config_;
+	return config_;
 }
 
-StateMachine* GlobalVariables::getStateMachine()
+StateMachine& GlobalVariables::getStateMachine()
 {
-	return &stateMachine_;
+	return stateMachine_;
 }
 
 void GlobalVariables::init()

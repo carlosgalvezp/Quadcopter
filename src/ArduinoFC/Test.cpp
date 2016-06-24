@@ -2,8 +2,8 @@
 
 namespace Test
 {
-	State* state_ = GlobalVariables::getState();
-	Config* config_ = GlobalVariables::getConfig();
+	State& state_ = GlobalVariables::getState();
+	Config& config_ = GlobalVariables::getConfig();
 }
 
 void Test::run()
@@ -107,10 +107,10 @@ void Test::testSensorRead()
 	Serial.println("--------------------");
 }
 
-void Test::testTelemetry(State* const state, Config* const config)
+void Test::testTelemetry(State& state, Config& config)
 {
 	// Get timeStamp
-	state->status.timestamp = micros();
+	state.status.timestamp = micros();
 
 	// Send data
 	Telemetry::main(state, config);	
