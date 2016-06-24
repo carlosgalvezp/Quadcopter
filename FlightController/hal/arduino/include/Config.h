@@ -7,12 +7,11 @@
 
 #include "Types.h"
 
-typedef struct
+struct Config
 {
-	PID_Params_t pid_roll;
-	PID_Params_t pid_pitch;
-	PID_Params_t pid_yaw;
-
-}Config_t;
+	PIDParams pid_roll;
+	PIDParams pid_pitch;
+	PIDParams pid_yaw;
+};
 
 #endif

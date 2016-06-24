@@ -1,7 +1,7 @@
 #include "StateEstimation.h"
 
 
-uint8_t StateEstimation::estimateAttitude(const Sensor_data_t *sensorData, quaternion_t *q, vec_int16_3_t *rpy)
+uint8_t StateEstimation::estimateAttitude(const SensorData* sensorData, Quaternion* q, Vector3<int16_t>* rpy)
 {
 	// Mahony filter
 	Mahony::IMUupdate(sensorData->imu.gyro.x,    sensorData->imu.gyro.y,    sensorData->imu.gyro.z,

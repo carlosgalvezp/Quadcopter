@@ -13,9 +13,9 @@ namespace Mahony
 {
 	void MARGupdate(float gx, float gy, float gz, float ax, float ay, float az, float mx, float my, float mz);
 	void IMUupdate(float gx, float gy, float gz, float ax, float ay, float az);
-	void getRPY(vec_float_3_t * const rpy);
+	void getRPY(Vector3<float>* const rpy);
 	
-	void getQuaternion(quaternion_t * const q);
+	void getQuaternion(Quaternion* const q);
 }
 
 #endif

@@ -31,8 +31,8 @@ class EEPROM
 public:
 	static void clear();
 
-	static void loadConfig(Config_t *config);
-	static void storeConfig(const Config_t *config);
+	static void loadConfig(Config* config);
+	static void storeConfig(const Config* config);
 
 	static uint8_t		read  (uint16_t addr);
 	static uint16_t		read16(uint16_t addr);

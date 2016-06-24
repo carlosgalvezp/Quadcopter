@@ -10,8 +10,8 @@ namespace Control
 					motor_commands outputs value in microseconds between [CONTROL_U_MIN, CONTROL_U_MAX]
 
 	*/
-	void computeControlCommands(const vec_int16_3_t *rpy_quad,
-							    const RC_data_t *rc_commands,
+	void computeControlCommands(const Vector3<int16_t>* rpy_quad,
+							    const RCData* rc_commands,
 								uint16_t *motor_commands)
 	{
 		// Get control commands for roll, pitch and yaw

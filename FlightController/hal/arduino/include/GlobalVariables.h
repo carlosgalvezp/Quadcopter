@@ -8,9 +8,9 @@
 
 namespace GlobalVariables
 {
-	Config_t *getConfig();
-	State_t *getState();
-	StateMachine *getStateMachine();
+	Config* getConfig();
+	State* getState();
+	StateMachine* getStateMachine();
 
 	void init();
 }
