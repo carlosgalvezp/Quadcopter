@@ -84,7 +84,7 @@ void SM_State_Armed_Acro::output(const Config* config, State* state)
 	HAL::boardLEDs(1, 0, 0);
 	
 	// Control
-	Control::computeControlCommands(&state->attitude_rpy, &state->rc, &state->motors[0]);
+	Control::computeControlCommands(state->attitude_rpy, state->rc, &state->motors[0]);
 	
 	// Output
 	Output::writePWM(&state->motors[0]);
