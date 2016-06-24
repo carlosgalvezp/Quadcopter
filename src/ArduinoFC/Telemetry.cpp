@@ -11,7 +11,7 @@ namespace Telemetry
 	uint8_t checksum_;
 }
 
-void Telemetry::main(const State_t * const state, Config_t * const config)
+void Telemetry::main(const State* const state, Config* const config)
 {
 	// Re-initialize variables
 	cmd_ = 0;
@@ -91,23 +91,23 @@ void Telemetry::main(const State_t * const state, Config_t * const config)
 	} // n_bytes > 0
 }
 
-void Telemetry::sendStatus(const State_t * const data)
+void Telemetry::sendStatus(const State* const data)
 {
 	// TimeStamp
-	Telemetry::write32(data->status.timeStamp);
+	Telemetry::write32(data->status.timestamp);
 
 	// Cycle time
-	Telemetry::write16(data->status.cycleTime);
+	Telemetry::write16(data->status.cycle_time);
 
 	// Battery
 	Telemetry::write16(data->status.battery.voltage);
 	Telemetry::write16(data->status.battery.current);
 
 	// Flight mode
-	write8(data->status.flightMode);
+	write8(data->status.flight_mode);
 }
 
-void Telemetry::sendRC(const State_t * const data)
+void Telemetry::sendRC(const State* const data)
 {
 	Telemetry::write16(data->rc.throttle);
 	Telemetry::write16(data->rc.rudder);
@@ -120,20 +120,20 @@ void Telemetry::sendRC(const State_t * const data)
 }
 
 
-void Telemetry::sendIMU(const State_t * const data)
+void Telemetry::sendIMU(const State* const data)
 {
 	// Acc
-	Telemetry::write16(data->sensorData.imu.acc_raw.x);
-	Telemetry::write16(data->sensorData.imu.acc_raw.y);
-	Telemetry::write16(data->sensorData.imu.acc_raw.z);
+	Telemetry::write16(data->sensor_data.imu.acc_raw.x);
+	Telemetry::write16(data->sensor_data.imu.acc_raw.y);
+	Telemetry::write16(data->sensor_data.imu.acc_raw.z);
 
 	// Gyro
-	Telemetry::write16(data->sensorData.imu.gyro_raw.x);
-	Telemetry::write16(data->sensorData.imu.gyro_raw.y);
-	Telemetry::write16(data->sensorData.imu.gyro_raw.z);
+	Telemetry::write16(data->sensor_data.imu.gyro_raw.x);
+	Telemetry::write16(data->sensor_data.imu.gyro_raw.y);
+	Telemetry::write16(data->sensor_data.imu.gyro_raw.z);
 }
 
-void Telemetry::sendAttitude(const State_t * const data)
+void Telemetry::sendAttitude(const State* const data)
 {
 	// Send each component as int16_t, so maximum is +- 32768.
 	// Multiply by 10000, since we have normalized quaternion
@@ -143,7 +143,7 @@ void Telemetry::sendAttitude(const State_t * const data)
 	Telemetry::write16((int16_t)(10000 * data->attitude.q3));
 }
 
-void Telemetry::sendControl(const State_t * const data)
+void Telemetry::sendControl(const State* const data)
 {
 	Telemetry::write16(data->motors[0]);
 	Telemetry::write16(data->motors[1]);
@@ -152,13 +152,13 @@ void Telemetry::sendControl(const State_t * const data)
 }
 
 
-void Telemetry::sendMagnetometer(const State_t * const data){}
-void Telemetry::sendBarometer(const State_t * const data){}
-void Telemetry::sendTemperature(const State_t * const data){}
-void Telemetry::sendGPS(const State_t * const data){}
-void Telemetry::sendSonar(const State_t * const data){}
+void Telemetry::sendMagnetometer(const State* const data){}
+void Telemetry::sendBarometer(const State* const data){}
+void Telemetry::sendTemperature(const State* const data){}
+void Telemetry::sendGPS(const State* const data){}
+void Telemetry::sendSonar(const State* const data){}
 
-void Telemetry::sendConfig(const Config_t * const config)
+void Telemetry::sendConfig(const Config* const config)
 {
 	// PID
 	Telemetry::writeFloat(config->pid_roll.kp);
@@ -174,7 +174,7 @@ void Telemetry::sendConfig(const Config_t * const config)
 	Telemetry::writeFloat(config->pid_yaw.ki);
 }
 
-void Telemetry::receiveConfig(Config_t * const data)
+void Telemetry::receiveConfig(Config* const data)
 {		
 	// Verify checksum
 	uint8_t checksum = 0;

@@ -19,7 +19,7 @@ void GPS::init()
 	Serial_GPS.begin(GPS_SERIAL_BAUDRATE);
 }
 
-bool GPS::getGPSData(GPS_Data_t *data)
+bool GPS::getGPSData(GPSData* data)
 {
 	// Receive serial data
 	if (GPS::Internal::receiveSerialData())
@@ -126,7 +126,7 @@ bool GPS::Internal::readPayload(uint16_t payloadLength)
 	return gps_payload_buffer_ptr == payloadLength + 2; // Return true if we have read all the bytes: payload + checksum(2)
 }
 
-bool GPS::Internal::Decode::decodeNavSol(GPS_Data_t *data)
+bool GPS::Internal::Decode::decodeNavSol(GPSData* data)
 {
 	// Check if the GPS has a good fix by reading the "flags" byte, fixOK bit
 	if (gps_payload_buffer[11] & GPS_NAV_FIX_OK_MASK)
@@ -135,7 +135,7 @@ bool GPS::Internal::Decode::decodeNavSol(GPS_Data_t *data)
 		data->fix = gps_payload_buffer[10];
 
 		// Number of satellites
-		data->nSatellites = gps_payload_buffer[47];
+		data->n_satellites = gps_payload_buffer[47];
 
 		// Position
 		data->position_ecef.x = (int32_t)GPS::Internal::Decode::decode32LittleEndian(&gps_payload_buffer[12]);

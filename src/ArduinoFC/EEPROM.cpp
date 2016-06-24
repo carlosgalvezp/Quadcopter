@@ -1,7 +1,7 @@
 #include "EEPROM.h"
 
 
-void EEPROM::loadConfig(Config_t *config)
+void EEPROM::loadConfig(Config* config)
 {
 	config->pid_roll.kp = EEPROM::readFloat(EEPROM_ADDR_PID_ROLL_KP);
 	config->pid_roll.kd = (float)EEPROM::read32(EEPROM_ADDR_PID_ROLL_KD);
@@ -16,7 +16,7 @@ void EEPROM::loadConfig(Config_t *config)
 	config->pid_yaw.ki = (float)EEPROM::read32(EEPROM_ADDR_PID_YAW_KI);
 }
 
-void EEPROM::storeConfig(const Config_t *config)
+void EEPROM::storeConfig(const Config* config)
 {
 	// PID configuration
 	EEPROM::write32(EEPROM_ADDR_PID_ROLL_KP, (uint32_t *) &config->pid_roll.kp);

@@ -2,17 +2,17 @@
 
 namespace GlobalVariables
 {
-	State_t state_;
-	Config_t config_;
+	State state_;
+	Config config_;
 	StateMachine stateMachine_;
 }
 
-State_t* GlobalVariables::getState()
+State* GlobalVariables::getState()
 {
 	return &state_;
 }
 
-Config_t* GlobalVariables::getConfig()
+Config* GlobalVariables::getConfig()
 {
 	return &config_;
 }
