@@ -22,7 +22,7 @@
 
 namespace RC
 {
-	void getReadings(RCData* const readings);
+	void getReadings(RCData& readings);
 }
 
 #endif
