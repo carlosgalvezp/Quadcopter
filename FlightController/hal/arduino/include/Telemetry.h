@@ -13,25 +13,25 @@
 
 namespace Telemetry
 {
-	void main(const State* const state, Config* const config);
+	void main(const State& state, Config& config);
 
-	void sendStatus(const State* const data);
+	void sendStatus(const State& data);
 
-	void sendIMU(const State* const data);
-	void sendMagnetometer(const State* const data);
-	void sendBarometer(const State* const data);
-	void sendTemperature(const State* const data);
-	void sendRC(const State* const data);
-	void sendGPS(const State* const data);
-	void sendSonar(const State* const data);
+	void sendIMU(const State& data);
+	void sendMagnetometer(const State& data);
+	void sendBarometer(const State& data);
+	void sendTemperature(const State& data);
+	void sendRC(const State& data);
+	void sendGPS(const State& data);
+	void sendSonar(const State& data);
 
-	void sendAttitude(const State* const data);
-	void sendControl(const State* const data);
-	void sendConfig(const Config* const data);
+	void sendAttitude(const State& data);
+	void sendControl(const State& data);
+	void sendConfig(const Config& data);
 
 	void sendACK();
 
-	void receiveConfig(Config* const config);
+	void receiveConfig(Config& config);
 
 	void sendCheckSum();
 
