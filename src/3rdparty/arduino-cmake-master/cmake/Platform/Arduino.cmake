@@ -643,9 +643,20 @@ endfunction()
 # see documentation at top
 #=============================================================================#
 function(REGISTER_HARDWARE_PLATFORM PLATFORM_PATH)
-    string(REGEX REPLACE "/$" "" PLATFORM_PATH ${PLATFORM_PATH})
-    GET_FILENAME_COMPONENT(PLATFORM ${PLATFORM_PATH} NAME)
-
+	string(REGEX REPLACE "/$" "" PLATFORM_PATH ${PLATFORM_PATH})
+	GET_FILENAME_COMPONENT(PLATFORM_PATH ${PLATFORM_PATH} ABSOLUTE)
+	GET_FILENAME_COMPONENT(PLATFORM_ARCH ${PLATFORM_PATH} NAME)
+	
+	GET_FILENAME_COMPONENT(PLATFORM_PARENT_PATH ${PLATFORM_PATH} PATH)
+	GET_FILENAME_COMPONENT(PLATFORM ${PLATFORM_PARENT_PATH} NAME)	
+	
+	set(PLATFORM "arduino")
+	
+	if(NOT ARDUINO_1_5)
+		set(PLATFORM "${PLATFORM_ARCH}")
+		set(PLATFORM_ARCH "")
+	endif()
+	
     if(PLATFORM)
         string(TOUPPER ${PLATFORM} PLATFORM)
         list(FIND ARDUINO_PLATFORMS ${PLATFORM} platform_exists)
@@ -795,7 +806,7 @@ function(get_arduino_flags COMPILE_FLAGS_VAR LINK_FLAGS_VAR BOARD_ID MANUAL)
             if(CMAKE_MATCH_2 GREATER 10)
                 set(ARDUINO_VERSION_DEFINE "${ARDUINO_VERSION_DEFINE}${CMAKE_MATCH_2}")
             else()
-                set(ARDUINO_VERSION_DEFINE "${ARDUINO_VERSION_DEFINE}0${CMAKE_MATCH_2}")
+                set(ARDUINO_VERSION_DEFINE "${ARDUINO_VERSION_DEFINE}${CMAKE_MATCH_2}0")
             endif()
         else()
             message("Invalid Arduino SDK Version (${ARDUINO_SDK_VERSION})")
@@ -810,7 +821,10 @@ function(get_arduino_flags COMPILE_FLAGS_VAR LINK_FLAGS_VAR BOARD_ID MANUAL)
             set(COMPILE_FLAGS "${COMPILE_FLAGS} -DUSB_PID=${${BOARD_ID}.build.pid}")
         endif()
         if(NOT MANUAL)
-            set(COMPILE_FLAGS "${COMPILE_FLAGS} -I\"${${BOARD_CORE}.path}\" -I\"${ARDUINO_LIBRARIES_PATH}\"")
+			set(COMPILE_FLAGS "${COMPILE_FLAGS} -I\"${${BOARD_CORE}.path}\"")
+			foreach(LIBRARY_PATH ${ARDUINO_LIBRARIES_PATH})
+				set(COMPILE_FLAGS "${COMPILE_FLAGS} -I\"${LIBRARY_PATH}\"")
+			endforeach()
         endif()
         set(LINK_FLAGS "-mmcu=${${BOARD_ID}.build.mcu}")
         if(ARDUINO_SDK_VERSION VERSION_GREATER 1.0 OR ARDUINO_SDK_VERSION VERSION_EQUAL 1.0)
@@ -1830,14 +1844,13 @@ function(GENERATE_CPP_FROM_SKETCH MAIN_SKETCH_PATH SKETCH_SOURCES SKETCH_CPP)
             string(REPLACE "{" "" SKETCH_PROTOTYPE "${SKETCH_PROTOTYPE}")
             arduino_debug_msg("\tprototype: ${SKETCH_PROTOTYPE};")
             # " else if(var == other) {" shoudn't be listed as prototype
-            if(NOT SKETCH_PROTOTYPE MATCHES "(if[ ]?[\n]?[\t]*[ ]*[)])")
+            if(NOT SKETCH_PROTOTYPE MATCHES "(if[ ]?[\n]?[\t]*[ ]*[(])")
                 file(APPEND ${SKETCH_CPP} "${SKETCH_PROTOTYPE};\n")
             else()
                 arduino_debug_msg("\trejected prototype: ${SKETCH_PROTOTYPE};")
             endif()
-            file(APPEND ${SKETCH_CPP} "${SKETCH_PROTOTYPE};\n")
         endforeach()
-        file(APPEND ${SKETCH_CPP} "//=== END Forward: ${SKETCH_SOURCE_PATH}\n")
+		file(APPEND ${SKETCH_CPP} "//=== END Forward: ${SKETCH_SOURCE_PATH}\n")
     endforeach()
     
     # Write Sketch CPP source
@@ -2135,13 +2148,32 @@ set(ARDUINO_AVRDUDE_FLAGS -V                              CACHE STRING "")
 #                          Initialization                                     
 #=============================================================================#
 if(NOT ARDUINO_FOUND AND ARDUINO_SDK_PATH)
-    register_hardware_platform(${ARDUINO_SDK_PATH}/hardware/arduino/)
-
-    find_file(ARDUINO_LIBRARIES_PATH
+	if(ARDUINO_1_5)
+		if(ARDUINO_CORE_PATH)
+			register_hardware_platform(${ARDUINO_CORE_PATH})
+		else()
+			#default core
+			register_hardware_platform(${ARDUINO_SDK_PATH}/hardware/arduino/avr/)
+		endif()
+	else()
+		register_hardware_platform(${ARDUINO_SDK_PATH}/hardware/arduino/)
+	endif()
+	
+    find_file(TMP_ARDUINO_LIBRARIES_PATH
         NAMES libraries
         PATHS ${ARDUINO_SDK_PATH}
         DOC "Path to directory containing the Arduino libraries.")
 
+	set(ARDUINO_LIBRARIES_PATH "${TMP_ARDUINO_LIBRARIES_PATH}")
+	
+	if(ARDUINO_1_5)
+		find_file(TMP_ARDUINO_LIBRARIES_PATH2
+			NAMES libraries
+			PATHS ${ARDUINO_SDK_PATH}/hardware/arduino/avr
+			DOC "Path to directory containing the Arduino architecture specific libraries.")
+		set(ARDUINO_LIBRARIES_PATH "${TMP_ARDUINO_LIBRARIES_PATH}" "${TMP_ARDUINO_LIBRARIES_PATH2}")
+	endif()
+	
     find_file(ARDUINO_VERSION_PATH
         NAMES lib/version.txt
         PATHS ${ARDUINO_SDK_PATH}

@@ -738,6 +738,8 @@ The following options control how **Arduino CMake** is configured:
 +---------------------------------+-----------------------------------------------------+
 | **ARDUINO_SDK_PATH**            | Full path to the **Arduino SDK**                    |
 +---------------------------------+-----------------------------------------------------+
+| **ARDUINO_CORE_PATH**           | Relative path to the **Arduino Core**               |
++---------------------------------+-----------------------------------------------------+
 | **ARDUINO_AVRDUDE_PROGRAM**     | Full path to `avrdude` programmer                   |
 +---------------------------------+-----------------------------------------------------+
 | **ARDUINO_AVRDUDE_CONFIG_PATH** | Full path to `avrdude` configuration file           |
@@ -757,6 +759,8 @@ To force a specific version of **Arduino SDK**, configure the project like so::
 
 Note: You must create a new build system if you change **ARDUINO_SDK_PATH**.
 
+To force a specific core of **Arduino Core**, configure the project like so::
+	cmake -DARDUINO_CORE_PATH=../relative/path/to/arduino_core/from/path/to/sources ../path/to/sources
 
 When **Arduino CMake** is configured properly, these options are defined:
 
