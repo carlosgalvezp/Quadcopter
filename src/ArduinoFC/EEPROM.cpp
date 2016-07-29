@@ -11,7 +11,7 @@ void EEPROM::loadConfig(Config_t *config)
 	config->pid_pitch.kd = EEPROM::readFloat(EEPROM_ADDR_PID_PITCH_KD);
 	config->pid_pitch.ki = (float)EEPROM::read32(EEPROM_ADDR_PID_PITCH_KI);
 
-	config->pid_yaw.kp = (float)EEPROM::read32(EEPROM_ADDR_PID_YAW_KP);
+    config->pid_yaw.kp = (float)EEPROM::read32(EEPROM_ADDR_PID_YAW_KP);
 	config->pid_yaw.kd = (float)EEPROM::read32(EEPROM_ADDR_PID_YAW_KD);
 	config->pid_yaw.ki = (float)EEPROM::read32(EEPROM_ADDR_PID_YAW_KI);
 }
