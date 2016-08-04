@@ -22,7 +22,7 @@ set(LIBRARY_HDRS
 )
 
 # Search paths for the headers
-include_directories()
+include_directories(include)
 
 # Source code running my code
 set(CODE_SRCS
