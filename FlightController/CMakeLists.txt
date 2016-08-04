@@ -12,6 +12,7 @@ if (NOT CMAKE_TOOLCHAIN_FILE)
         set (gtest_disable_pthreads on)
     endif()
 
-	add_subdirectory(3rdparty/googletest-master)
+    add_subdirectory(../common/3rdparty/googletest-master
+        ${CMAKE_CURRENT_BINARY_DIR}/common/3rdparty/googletest-master)
 	add_subdirectory(test)
 endif()
