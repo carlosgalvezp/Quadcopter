@@ -1005,6 +1005,7 @@ function(setup_arduino_library VAR_NAME BOARD_ID LIB_PATH COMPILE_FLAGS LINK_FLA
 
 				# Do not link to this library. DEP_LIB_SRCS will always be only one entry
 				# if we are looking at the same library.
+				# https://github.com/queezythegreat/arduino-cmake/pull/143/files
                 if(NOT DEP_LIB_SRCS STREQUAL TARGET_LIB_NAME)
                     list(APPEND LIB_TARGETS ${DEP_LIB_SRCS})
                     list(APPEND LIB_INCLUDES ${DEP_LIB_SRCS_INCLUDES})
@@ -1884,7 +1885,7 @@ function(SETUP_ARDUINO_SIZE_SCRIPT OUTPUT_VAR)
     set(ARDUINO_SIZE_SCRIPT_PATH ${CMAKE_BINARY_DIR}/CMakeFiles/FirmwareSize.cmake)
 
     file(WRITE ${ARDUINO_SIZE_SCRIPT_PATH} "
-        set(AVRSIZE_PROGRAM ${AVRSIZE_PROGRAM})
+        set(AVRSIZE_PROGRAM \"${AVRSIZE_PROGRAM}\")
         set(AVRSIZE_FLAGS -C --mcu=\${MCU})
 
         execute_process(COMMAND \${AVRSIZE_PROGRAM} \${AVRSIZE_FLAGS} \${FIRMWARE_IMAGE} \${EEPROM_IMAGE}

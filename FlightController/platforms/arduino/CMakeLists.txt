@@ -27,7 +27,7 @@ include_directories()
 # Source code running my code
 set(CODE_SRCS
     ADC.cpp
-    ArduinoFC_2.cpp
+    ArduinoFC.cpp
     Control.cpp
     EEPROM.cpp
     GlobalVariables.cpp
