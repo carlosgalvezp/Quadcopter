@@ -4,7 +4,7 @@
 #define EEPROM_H
 
 #include <stdint.h>
-#include <avr\eeprom.h>
+#include <avr/eeprom.h>
 
 #include "Config.h"
 
