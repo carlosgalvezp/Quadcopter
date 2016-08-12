@@ -7,7 +7,7 @@ print_programmer_list()
 # The Arduino variant
 set(ARDUINO_DEFAULT_BOARD mega)
 # The ttyport for writing to the Arduino
-set(ARDUINO_DEFAULT_PORT /dev/tty.usbserial-A6024Z1X)
+set(ARDUINO_DEFAULT_PORT /dev/ttyUSB0)
 
 set(mega.build.mcu atmega2560)
 set(mega.upload.protocol wiring)

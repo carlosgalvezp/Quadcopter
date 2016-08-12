@@ -2,18 +2,18 @@
 
 void setup()
 {
-	// Init hardware
-	HAL::init();
+    // Init hardware
+    HAL::init();
 
-	// Load configuration
-	EEPROM::loadConfig(GlobalVariables::getConfig());
+    // Load configuration
+    EEPROM::loadConfig(GlobalVariables::getConfig());
 
-	// Init global variables
-	GlobalVariables::init();
+    // Init global variables
+    GlobalVariables::init();
 }
 
 void loop()
 {
-	//Test::run();
-	MainLoop::run();
+    //Test::run();
+    MainLoop::run();
 }
