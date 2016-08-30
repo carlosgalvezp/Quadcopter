@@ -25,9 +25,8 @@ set(LIBRARY_HDRS
 include_directories(include)
 
 # Source code running my code
-set(CODE_SRCS
+set(HAL_LIB_SRCS
     ADC.cpp
-    ArduinoFC.cpp
     Control.cpp
     EEPROM.cpp
     GlobalVariables.cpp
@@ -54,7 +53,11 @@ set(CODE_SRCS
     Utils.cpp
 )
 
+generate_arduino_library(hal_lib
+    SRCS ${HAL_LIB_SRCS}
+)
+
 generate_arduino_firmware(${CMAKE_PROJECT_NAME}
-      SRCS  ${CODE_SRCS}
-      HDRS  ${LIBRARY_HDRS}
+      SRCS  ArduinoFC.cpp
+      LIBS  hal_lib
       )

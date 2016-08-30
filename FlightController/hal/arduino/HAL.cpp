@@ -1,5 +1,5 @@
 #include "HAL.h"
-
+#include "ADC.h"
 void HAL::init()
 {
 	// Init RC
@@ -21,10 +21,10 @@ void HAL::init()
 	if (Barometer::init())	Serial.println("Failed to init Barometer");
 			
 	// Init Sonar
-	HAL::initSonar();
+//	HAL::initSonar();
 
 	// Init ADC to read voltage and current
-	HAL::initADC();
+    Adc::init();
 
 	// Init GPIO
 	GPIO::init();
@@ -110,20 +110,6 @@ void HAL::initSonar()
 
 	// Enable interrupt for Output Compare in Timer 1-A
 	TIMSK1 |= (1 << OCIE1A);
-}
-
-void HAL::initADC()
-{
-	// Disable power reduction for ADC
-	PRR0 &= ~(1 << PRADC);
-
-	// Select AVCC as source
-	ADMUX = (1 << REFS0);
-
-	// Enable ADC, NO Auto-Trigger, Prescaler=128 to keep ADC clock between 50 and 200 kHz, 
-	// Enable ADC interrupt. 
-	ADCSRA = (1 << ADEN) | (1 << ADSC) | (1 << ADIE) | 
-		    (1 << ADPS2) | (1 << ADPS1) | (1 << ADPS0);
 }
 
 void HAL::boardLEDs(bool r, bool g, bool b)

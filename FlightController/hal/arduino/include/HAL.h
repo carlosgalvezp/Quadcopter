@@ -68,7 +68,6 @@ namespace HAL
 	void initRC();
 	void initMotors();
 	void initSonar();
-	void initADC();
 
 	void boardLEDs(bool r, bool g, bool b);
 }
