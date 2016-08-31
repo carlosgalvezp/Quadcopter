@@ -3,8 +3,8 @@ cmake_minimum_required(VERSION 2.8)
 project(FlightController)
 
 # Compiler flags
-set(CMAKE_C_FLAGS   "${CMAKE_C_FLAGS}   -O2")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
+set(CMAKE_C_FLAGS   "${CMAKE_C_FLAGS}   -O2 -Wall -Wextra -Werror")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2 -Wall -Wextra -Werror")
 
 #add_subdirectory(core)
 add_subdirectory(hal)

@@ -106,7 +106,7 @@ bool GPS::Internal::readPayload(uint16_t payloadLength)
 		   Serial_GPS.available())
 	{
 		++nBytesRead;
-		if (gps_payload_buffer_ptr < 0 || gps_payload_buffer_ptr> GPS_RX_BUFFER_SIZE)
+        if (gps_payload_buffer_ptr> GPS_RX_BUFFER_SIZE)
 		{
 			Serial.println("================= EPIC FAIL ===============");
 			Serial.println(gps_payload_buffer_ptr);
