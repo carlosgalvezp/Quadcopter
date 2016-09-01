@@ -19,7 +19,7 @@ struct SM_Connection
 {
     SM_State *fromState;
     SM_State *toState;
-    bool(SM_State::* transitionCondition)(const Config& config, State& state);
+    SMConditionFnc transitionCondition;
 };
 
 class SM_State
