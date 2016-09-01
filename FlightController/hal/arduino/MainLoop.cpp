@@ -60,12 +60,12 @@ void MainLoop::Internal::updateStateMachineState(const Config& config, State& st
 	// Loop all over possible next states
 	for (uint8_t i = 0; i < currentSMState->nConnections_; ++i)
 	{
-		SM_Connection *c = currentSMState->connections_[i];
+        SM_Connection& c = currentSMState->connections_[i];
 
 		// If the change condition is fulfilled, change state
-		if ( (currentSMState->*c->transitionCondition)(config,state))
+        if ( (currentSMState->*c.transitionCondition)(config,state))
 		{
-			stateMachine_.updateState(c->toState);
+            stateMachine_.updateState(c.toState);
 			break;
 		}
 	}	

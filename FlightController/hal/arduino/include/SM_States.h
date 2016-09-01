@@ -12,9 +12,15 @@
 
 #define N_MAX_CONNECTIONS_STATE				5
 
-struct SM_Connection;
 class SM_State;
 typedef bool(SM_State::*SMConditionFnc)(const Config& config, State& state);
+
+struct SM_Connection
+{
+    SM_State *fromState;
+    SM_State *toState;
+    bool(SM_State::* transitionCondition)(const Config& config, State& state);
+};
 
 class SM_State
 {
@@ -22,7 +28,7 @@ public:
 	SM_State();
 	virtual void output(const Config& config, State& state) = 0;
 	virtual ~SM_State();
-	SM_Connection **connections_;
+    SM_Connection connections_[N_MAX_CONNECTIONS_STATE];
 	uint8_t nConnections_;
 	FlightMode id_;
 
@@ -31,12 +37,7 @@ protected:
 private:
 };
 
-struct SM_Connection
-{	
-	SM_State *fromState;
-	SM_State *toState;
-	bool(SM_State::* transitionCondition)(const Config& config, State& state);
-};
+
 
 // ========================================================================================
 // ================================= STATE MACHINE: STATES ================================

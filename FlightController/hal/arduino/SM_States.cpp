@@ -1,31 +1,25 @@
 #include "SM_States.h"
 
 SM_State::SM_State():
-nConnections_(0)
+    nConnections_(0),
+    connections_()
 {
-	this->connections_ = new SM_Connection*[N_MAX_CONNECTIONS_STATE];
 }
 
 SM_State::~SM_State()
 {
-	// Delete connections
-	for (uint8_t i = 0; i < N_MAX_CONNECTIONS_STATE; ++i)
-	{
-		delete this->connections_[i];
-	}
-	delete[] this->connections_;
 }
 
 void SM_State::addConnection(SM_State *toState, SMConditionFnc transitionCondition)
 {
 	if (this->nConnections_ < N_MAX_CONNECTIONS_STATE)
 	{
-		SM_Connection *c = new SM_Connection();
-		c->fromState = this;
-		c->toState = toState;
-		c->transitionCondition = transitionCondition;
+        SM_Connection& c = connections_[nConnections_];
+        c.fromState = this;
+        c.toState = toState;
+        c.transitionCondition = transitionCondition;
 
-		this->connections_[this->nConnections_++] = c;
+        ++nConnections_;
 	}
 }
 
