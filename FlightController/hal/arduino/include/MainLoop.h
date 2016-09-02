@@ -23,9 +23,9 @@ namespace MainLoop
 
 	namespace Internal
 	{
-		void updateInternalState(State_t *state);
-		void updateStateMachineState(const Config_t *config, State_t *state);
-		void output(State_t *state, Config_t *config);
+		void updateInternalState(State& state);
+		void updateStateMachineState(const Config& config, State& state);
+		void output(State& state, Config& config);
 	}
 }
 
