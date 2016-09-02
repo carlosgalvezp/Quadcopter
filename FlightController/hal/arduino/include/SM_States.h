@@ -28,6 +28,7 @@ public:
 	SM_State();
 	virtual void output(const Config& config, State& state) = 0;
 	virtual ~SM_State();
+    
     SM_Connection connections_[N_MAX_CONNECTIONS_STATE];
 	uint8_t nConnections_;
 	FlightMode id_;
