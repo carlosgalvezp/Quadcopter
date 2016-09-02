@@ -152,11 +152,11 @@ void Telemetry::sendControl(const State& data)
 }
 
 
-void Telemetry::sendMagnetometer(const State& data){}
-void Telemetry::sendBarometer(const State& data){}
-void Telemetry::sendTemperature(const State& data){}
-void Telemetry::sendGPS(const State& data){}
-void Telemetry::sendSonar(const State& data){}
+void Telemetry::sendMagnetometer(const State& /*data*/){}
+void Telemetry::sendBarometer(const State& /*data*/){}
+void Telemetry::sendTemperature(const State& /*data*/){}
+void Telemetry::sendGPS(const State& /*data*/){}
+void Telemetry::sendSonar(const State& /*data*/){}
 
 void Telemetry::sendConfig(const Config& config)
 {
