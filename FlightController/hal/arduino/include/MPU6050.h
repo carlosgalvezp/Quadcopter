@@ -22,6 +22,6 @@
 namespace IMU
 {
 	uint8_t init();
-	uint8_t getData(IMU_data_t * const data);
+	uint8_t getData(IMUData& data);
 }
 #endif

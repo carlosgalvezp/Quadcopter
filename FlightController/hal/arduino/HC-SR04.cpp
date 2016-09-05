@@ -6,11 +6,11 @@ unsigned long tEcho(0);
 float distance_(0);
 uint8_t prevPortB(0);
 
-bool Sonar::getDistance(float *distance)
+bool Sonar::getDistance(float& distance)
 {
 	if (measurementReady)
 	{
-		*distance = distance_;
+		distance = distance_;
 		return true;
 	}
 	return false;

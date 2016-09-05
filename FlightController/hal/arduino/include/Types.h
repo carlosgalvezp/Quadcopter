@@ -4,7 +4,7 @@
 #include <stdint.h>
 
 // ** This struct is returned by the RC module. Each value represents the stick position in us, 1000-2000
-typedef struct 
+struct RCData
 {
 	uint16_t throttle;
 	uint16_t rudder;
@@ -14,60 +14,46 @@ typedef struct
 	uint16_t aux2;
 	uint16_t aux3;
 	uint16_t aux4;
-}RC_data_t;
+};
 
-typedef struct
+template<class T>
+struct Vector3
 {
-	int16_t x;
-	int16_t y;
-	int16_t z;
-}vec_int16_3_t;
+	T x;
+	T y;
+	T z;
+};
 
-typedef struct
-{
-	int32_t x;
-	int32_t y;
-	int32_t z;
-}vec_int32_3_t;
-
-typedef struct
-{
-	float x;
-	float y;
-	float z;
-}vec_float_3_t;
-
-typedef struct
+struct Quaternion
 {
 	float q0;
 	float q1;
 	float q2;
 	float q3;
+};
 
-}quaternion_t;
-
-typedef struct
+struct BatteryData
 {
 	uint16_t voltage;
 	uint16_t current;
-}Battery_data_t;
+};
 
-typedef struct
+struct IMUData
 {
-	vec_float_3_t acc;
-	vec_int16_3_t acc_raw;
-	vec_float_3_t gyro;
-	vec_int16_3_t gyro_raw;
-}IMU_data_t;
+	Vector3<float> acc;
+	Vector3<float> gyro;
+	Vector3<int16_t> acc_raw;
+	Vector3<int16_t> gyro_raw;
+};
 
-typedef struct
+struct SensorData
 {
-	IMU_data_t imu;
-	vec_float_3_t mag;
-	vec_int16_3_t mag_raw;
+	IMUData imu;
+	Vector3<float> mag;
+	Vector3<int16_t> mag_raw;
 	float pressure;
 	float temperature;
-}Sensor_data_t;
+};
 
 enum FlightMode
 {
@@ -84,48 +70,38 @@ enum FlightMode
 };
 
 
-typedef struct
+struct Status
 {
-	uint32_t timeStamp;
-	uint16_t cycleTime;
-	Battery_data_t battery;
-	FlightMode flightMode;
-}Status_t;
+	uint32_t timestamp;
+	uint16_t cycle_time;
+	BatteryData battery;
+	FlightMode flight_mode;
+};
 
-typedef struct
+struct State
 {
-	// Status
-	Status_t status;
+	Status status;
+	RCData rc;
+	SensorData sensor_data;
+	Quaternion attitude;
+	Vector3<int16_t> attitude_rpy;
+	uint16_t motors[4];	
+};
 
-	// RC
-	RC_data_t rc;
-
-	// Sensors
-	Sensor_data_t sensorData;
-	
-	// State estimation
-	quaternion_t attitude;
-	vec_int16_3_t attitude_rpy;
-
-	// Control input
-	uint16_t motors[4];
-	
-}State_t;
-
-typedef struct
+struct PIDParams
 {
 	float kp;
 	float kd;
 	float ki;
-}PID_Params_t;
+};
 
-typedef struct
+struct GPSData
 {
 	uint8_t fix;
-	uint8_t nSatellites;
-	vec_int32_3_t position_ecef;
-	vec_int32_3_t velocity_ecef;
-}GPS_Data_t;
+	uint8_t n_satellites;
+	Vector3<int32_t> position_ecef;
+	Vector3<int32_t> velocity_ecef;
+};
 
 typedef union
 {

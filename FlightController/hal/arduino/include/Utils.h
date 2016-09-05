@@ -20,7 +20,7 @@
 
 namespace Utils
 {
-	void quaternionToRPY(const quaternion_t *q, vec_int16_3_t *rpy);
+	void quaternionToRPY(const Quaternion& q, Vector3<int16_t>& rpy);
 
 	namespace FastMath
 	{

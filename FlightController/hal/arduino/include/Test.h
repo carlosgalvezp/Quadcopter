@@ -22,7 +22,7 @@ namespace Test
 	void testRC();
 	void testI2CScan();
 	void testSensorRead();
-	void testTelemetry(State_t * const state, Config_t * const config);
+	void testTelemetry(State& state, Config& config);
 	void testCompass();
 	void testStateEstimation();
 	void testOutput();

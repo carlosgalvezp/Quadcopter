@@ -32,8 +32,8 @@
 namespace Barometer
 {
 	uint8_t init();
-	uint8_t getData(float * const pressure, float * const temperature);
+	uint8_t getData(float& pressure, float& temperature);
 
-	void computeValues(float * const pressure, float * const temperature);
+	void computeValues(float& pressure, float& temperature);
 }
 #endif

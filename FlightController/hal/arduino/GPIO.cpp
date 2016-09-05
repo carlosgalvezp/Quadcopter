@@ -22,7 +22,7 @@ GPIO_Digital::GPIO_Digital(uint8_t digitalPinNumber, bool isOutputPin)
 	else						pinMode(digitalPinNumber, INPUT);
 
 	// ** Create SoftPWM object, for blinking
-	this->softPWM = new SoftPWM(this);
+	this->softPWM = new SoftPWM(*this);
 }
 
 void GPIO_Digital::setState(bool on)

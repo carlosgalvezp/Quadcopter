@@ -23,15 +23,15 @@ namespace Magnetometer
 		return 0;
 	}
 
-	uint8_t getData(vec_float_3_t * const data)
+	uint8_t getData(Vector3<float>& data)
 	{
 		// Burst-read all the registers, starting from X_MSB
 		if (I2C::readReg(MAGNETOMETER_DEV_ADDR, MAGNETOMETER_REG_DATA, rawData, MAGNETOMETER_N_READ_BYTES)) return 1;
 
 		// Convert and output the data
-		data->x = MAGNETOMETER_SENSITIVITY * (float)((((int16_t)rawData[0]) << 8) | rawData[1]);
-		data->y = MAGNETOMETER_SENSITIVITY * (float)((((int16_t)rawData[4]) << 8) | rawData[5]);
-		data->z = MAGNETOMETER_SENSITIVITY * (float)((((int16_t)rawData[2]) << 8) | rawData[3]);
+		data.x = MAGNETOMETER_SENSITIVITY * (float)((((int16_t)rawData[0]) << 8) | rawData[1]);
+		data.y = MAGNETOMETER_SENSITIVITY * (float)((((int16_t)rawData[4]) << 8) | rawData[5]);
+		data.z = MAGNETOMETER_SENSITIVITY * (float)((((int16_t)rawData[2]) << 8) | rawData[3]);
 
 		return 0;
 	}

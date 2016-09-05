@@ -2,9 +2,9 @@
 
 namespace MainLoop
 {
-	State_t* state_ = GlobalVariables::getState();
-	Config_t* config_ = GlobalVariables::getConfig();
-	StateMachine *stateMachine_ = GlobalVariables::getStateMachine();
+	State& state_ = GlobalVariables::getState();
+	Config& config_ = GlobalVariables::getConfig();
+	StateMachine& stateMachine_ = GlobalVariables::getStateMachine();
 }
 
 void MainLoop::run()
@@ -22,63 +22,63 @@ void MainLoop::run()
 	Telemetry::main(state_, config_);
 
 	// Cycle time
-	state_->status.cycleTime = (uint16_t)(micros() - state_->status.timeStamp);
+	state_.status.cycle_time = (uint16_t)(micros() - state_.status.timestamp);
 
 	// Sleep if necessary
-	if (CYCLE_TIME_US > state_->status.cycleTime)
+	if (CYCLE_TIME_US > state_.status.cycle_time)
 	{
-		delayMicroseconds(CYCLE_TIME_US - state_->status.cycleTime);
+		delayMicroseconds(CYCLE_TIME_US - state_.status.cycle_time);
 	}
 }
 
-void MainLoop::Internal::updateInternalState(State_t *state)
+void MainLoop::Internal::updateInternalState(State& state)
 {
 	// Get timeStamp
-	state->status.timeStamp = micros();
+	state.status.timestamp = micros();
 
 	// Read battery
-	Adc::Power::readVoltage(&state->status.battery.voltage);
-	Adc::Power::readCurrent(&state->status.battery.current);
+	state.status.battery.voltage = Adc::Power::readVoltage();
+	state.status.battery.current = Adc::Power::readCurrent();
 
 	// RC
-	RC::getReadings(&state->rc);
+	RC::getReadings(state.rc);
 
 	// Get sensor data
-	IMU::getData(&state->sensorData.imu);
+	IMU::getData(state.sensor_data.imu);
 	//Magnetometer::getData(&state_->sensorData.mag);
 	//Barometer::getData(&state_->sensorData.pressure, &state_->sensorData.temperature);
 
 	// State estimation
-	StateEstimation::estimateAttitude(&state->sensorData, &state->attitude, &state->attitude_rpy);
+	StateEstimation::estimateAttitude(state.sensor_data, state.attitude, state.attitude_rpy);
 }
 
-void MainLoop::Internal::updateStateMachineState(const Config_t *config, State_t *state)
+void MainLoop::Internal::updateStateMachineState(const Config& config, State& state)
 {
 	// Get current state
-	SM_State *currentSMState = stateMachine_->getCurrentState();
+	SM_State *currentSMState = stateMachine_.getCurrentState();
 	
 	// Loop all over possible next states
 	for (uint8_t i = 0; i < currentSMState->nConnections_; ++i)
 	{
-		SM_Connection *c = currentSMState->connections_[i];
+        SM_Connection& c = currentSMState->connections_[i];
 
 		// If the change condition is fulfilled, change state
-		if ( (currentSMState->*c->transitionCondition)(config,state))
+        if ( (currentSMState->*c.transitionCondition)(config,state))
 		{
-			stateMachine_->updateState(c->toState);
+            stateMachine_.updateState(c.toState);
 			break;
 		}
 	}	
 
 	// Update flight mode to display in telemtry
-	currentSMState = stateMachine_->getCurrentState();
-	state->status.flightMode = currentSMState->id_;
+	currentSMState = stateMachine_.getCurrentState();
+	state.status.flight_mode = currentSMState->id_;
 }
 
-void MainLoop::Internal::output(State_t *state, Config_t *config)
+void MainLoop::Internal::output(State& state, Config& config)
 {
 	// Get current state
-	SM_State *currentState = stateMachine_->getCurrentState();
+	SM_State *currentState = stateMachine_.getCurrentState();
 
 	// Call its output function
 	currentState->output(config, state);

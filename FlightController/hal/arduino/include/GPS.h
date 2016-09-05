@@ -20,7 +20,8 @@
 namespace GPS
 {
 	void init();
-	bool getGPSData(GPS_Data_t *data);
+	bool getGPSData(GPSData& data);
+
 	namespace Internal
 	{
 		bool receiveSerialData();
@@ -31,7 +32,7 @@ namespace GPS
 
 		namespace Decode
 		{
-			bool decodeNavSol(GPS_Data_t *data);
+			bool decodeNavSol(GPSData& data);
 
 			uint16_t decode16LittleEndian(const uint8_t *buffer);
 			uint32_t decode32LittleEndian(const uint8_t *buffer);
