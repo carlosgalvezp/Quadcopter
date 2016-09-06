@@ -2,9 +2,8 @@
 #define TELEMETRY_H
 
 #include "Arduino.h"
-#include "ArduinoFC.h"
 #include "Telemetry_Protocol.h"
-#include "Config.h"
+#include "core/Config.h"
 #include "HAL.h"
 
 #define TELEMETRY_RX_BUFFER_SIZE 100

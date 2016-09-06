@@ -4,7 +4,7 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 
-#include "Types.h"
+#include "core/Types.h"
 #include "HAL.h"
 
 #define NUM_CHANNELS	8

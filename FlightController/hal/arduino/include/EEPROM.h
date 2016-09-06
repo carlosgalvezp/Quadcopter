@@ -6,7 +6,7 @@
 #include <stdint.h>
 #include <avr/eeprom.h>
 
-#include "Config.h"
+#include "core/Config.h"
 
 // Max EEEPROM SIZE
 #define EEPROM_MAX_SIZE_BYTES	4096

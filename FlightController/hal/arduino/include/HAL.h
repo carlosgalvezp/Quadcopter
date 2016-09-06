@@ -9,7 +9,7 @@
 #include "MS5611.h"
 #include "HC-SR04.h"
 #include "GPIO.h"
-#include "Config.h"
+#include "core/Config.h"
 #include "GPS.h"
 
 // ** Definitions ** 

@@ -2,7 +2,7 @@
 #define MPU6050_H
 
 #include "I2C.h"
-#include "Types.h"
+#include "core/Types.h"
 
 #define IMU_DEV_ADDR			0x68
 
