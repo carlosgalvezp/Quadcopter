@@ -1,6 +1,5 @@
 #ifndef _SM_STATES_H_
 #define _SM_STATES_H_
-#pragma once
 
 #include "Config.h"
 #include "Types.h"

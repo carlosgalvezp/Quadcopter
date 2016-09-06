@@ -1,7 +1,8 @@
 # Search paths for the headers
 include_directories(include
                     ../../modules/control/include
-                    ../../modules/state_estimation/include)
+                    ../../modules/state_estimation/include
+                    ../../modules/state_machine/include)
 
 # Source code running my code
 set(HAL_LIB_SRCS
@@ -19,9 +20,7 @@ set(HAL_LIB_SRCS
     MS5611.cpp
     Output.cpp
     RC.cpp
-    SM_States.cpp
     SoftPWM.cpp
-    StateMachine.cpp
     Telemetry.cpp
     Test.cpp
     Utils.cpp
@@ -33,5 +32,8 @@ generate_arduino_library(hal
 
 generate_arduino_firmware(${CMAKE_PROJECT_NAME}
       SRCS  ArduinoFC.cpp
-      LIBS  hal state_estimation control
+      LIBS  control
+            hal
+            state_estimation
+            state_machine
       )
