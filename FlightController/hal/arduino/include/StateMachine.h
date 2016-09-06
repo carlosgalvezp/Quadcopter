@@ -9,7 +9,7 @@
 #include "HAL.h"
 #include "RC.h"
 #include "Output.h"
-#include "Control.h"
+#include "control/Control.h"
 
 #define N_MAX_STATES			20
 

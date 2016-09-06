@@ -10,7 +10,7 @@
 #include "state_estimation/StateEstimation.h"
 #include "Telemetry.h"
 #include "Output.h"
-#include "Control.h"
+#include "control/Control.h"
 #include "EEPROM.h"
 #include "ADC.h"
 #include "SoftPWM.h"

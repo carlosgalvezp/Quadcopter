@@ -1,11 +1,11 @@
 # Search paths for the headers
 include_directories(include
+                    ../../modules/control/include
                     ../../modules/state_estimation/include)
 
 # Source code running my code
 set(HAL_LIB_SRCS
     ADC.cpp
-    Control.cpp
     EEPROM.cpp
     GlobalVariables.cpp
     GPIO.cpp
@@ -18,7 +18,6 @@ set(HAL_LIB_SRCS
     MPU6050.cpp
     MS5611.cpp
     Output.cpp
-    pid.cpp
     RC.cpp
     SM_States.cpp
     SoftPWM.cpp
@@ -34,5 +33,5 @@ generate_arduino_library(hal
 
 generate_arduino_firmware(${CMAKE_PROJECT_NAME}
       SRCS  ArduinoFC.cpp
-      LIBS  hal state_estimation
+      LIBS  hal state_estimation control
       )

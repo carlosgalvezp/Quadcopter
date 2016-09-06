@@ -2,7 +2,6 @@
 #define TELEMETRY_H
 
 #include "Arduino.h"
-#include "ArduinoFC.h"
 #include "Telemetry_Protocol.h"
 #include "Config.h"
 #include "HAL.h"

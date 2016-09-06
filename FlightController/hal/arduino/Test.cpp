@@ -1,4 +1,5 @@
 #include "Test.h"
+#include "GlobalVariables.h"
 
 namespace Test
 {

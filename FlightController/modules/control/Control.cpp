@@ -1,4 +1,5 @@
-#include "Control.h"
+#include "control/Control.h"
+#include "RC.h"
 
 namespace Control
 {

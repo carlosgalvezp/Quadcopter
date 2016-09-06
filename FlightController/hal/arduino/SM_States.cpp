@@ -1,4 +1,5 @@
 #include "SM_States.h"
+#include "RC.h"
 
 SM_State::SM_State():
     nConnections_(0U),

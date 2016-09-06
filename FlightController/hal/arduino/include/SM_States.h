@@ -6,7 +6,7 @@
 #include "Types.h"
 #include "HAL.h"
 #include "Output.h"
-#include "Control.h"
+#include "control/Control.h"
 
 #define TIME_ON_POWER_CONFIGURATION_US		1000000  // Time in us after power-on to be able to configure something
 
