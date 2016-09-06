@@ -1,8 +1,8 @@
 #ifndef _SM_STATES_H_
 #define _SM_STATES_H_
 
-#include "Config.h"
-#include "Types.h"
+#include "core/Config.h"
+#include "core/Types.h"
 #include "HAL.h"
 #include "Output.h"
 #include "control/Control.h"

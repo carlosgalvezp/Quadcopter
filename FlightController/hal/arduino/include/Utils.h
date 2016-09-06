@@ -4,7 +4,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <math.h>
-#include "Types.h"
+#include "core/Types.h"
 #include "Arduino.h"
 #include <avr/pgmspace.h>
 

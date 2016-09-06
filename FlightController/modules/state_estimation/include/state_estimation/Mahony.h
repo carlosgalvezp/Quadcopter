@@ -2,7 +2,7 @@
 #define MAHONY_H
 
 #include "Utils.h"
-#include "Types.h"
+#include "core/Types.h"
 #include "Arduino.h"
 #include <math.h>
 

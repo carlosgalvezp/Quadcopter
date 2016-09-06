@@ -4,8 +4,8 @@
 #include <stdint.h>
 
 #include "control/pid.h"
-#include "Types.h"
-#include "Config.h"
+#include "core/Types.h"
+#include "core/Config.h"
 
 #define CONTROL_U_MIN			1050
 #define CONTROL_U_MAX			1950

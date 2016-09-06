@@ -4,8 +4,8 @@
 #include <stdlib.h> // malloc()
 
 #include "SM_States.h"
-#include "Types.h"
-#include "Config.h"
+#include "core/Types.h"
+#include "core/Config.h"
 #include "HAL.h"
 #include "RC.h"
 #include "Output.h"

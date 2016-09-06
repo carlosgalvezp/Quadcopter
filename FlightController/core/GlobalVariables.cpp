@@ -1,4 +1,4 @@
-#include "GlobalVariables.h"
+#include "core/GlobalVariables.h"
 
 namespace GlobalVariables
 {

@@ -1,7 +1,7 @@
 #ifndef STATE_ESTIMATION_H
 #define STATE_ESTIMATION_H
 
-#include "Types.h"
+#include "core/Types.h"
 #include "Madgwick.h"
 #include "Mahony.h"
 
