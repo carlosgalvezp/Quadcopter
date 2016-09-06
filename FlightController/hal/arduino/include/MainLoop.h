@@ -6,7 +6,7 @@
 
 #include "RC.h"
 #include "ADC.h"
-#include "StateEstimation.h"
+#include "state_estimation/StateEstimation.h"
 #include "Control.h"
 #include "Output.h"
 #include "Telemetry.h"
