@@ -21,3 +21,14 @@ function(create_library lib_name)
         )
     endif()
 endfunction(create_library)
+
+function(create_executable executable_name)
+    cmake_parse_arguments(create_executable "" "" "SRCS;LIBS" ${ARGN})
+
+    if (DEFINED ARDUINO_1_5)
+        generate_arduino_firmware(${executable_name}
+            SRCS ${create_executable_SRCS}
+            LIBS ${create_executable_LIBS}
+        )
+    endif()
+endfunction(create_executable)

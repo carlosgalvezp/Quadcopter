@@ -10,6 +10,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2 -Wall -Wextra -Werror -std=c++11")
 
 add_subdirectory(core)
 add_subdirectory(hal)
+add_subdirectory(main)
 add_subdirectory(modules)
 
 # Build also tests if not compiling for Arduino

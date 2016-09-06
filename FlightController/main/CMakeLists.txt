@@ -1,15 +1,17 @@
 # Search paths for the headers
-include_directories(include
+include_directories(../core/include
                     ../hal/arduino/include
                     ../modules/control/include
                     ../modules/state_estimation/include
                     ../modules/state_machine/include)
 
-create_library(core
-      SRCS  ArduinoFC.cpp GlobalVariables.cpp MainLoop.cpp Test.cpp
-      LIBS  control
+create_executable(${CMAKE_PROJECT_NAME}
+      SRCS  main.cpp
+      LIBS  control 
+            core            
             hal
             state_estimation
             state_machine
       )
+
 
