@@ -12,7 +12,7 @@
 
 #include "Types.h"
 #include "Config.h"
-#include "StateMachine.h"
+#include "state_machine/StateMachine.h"
 
 #include "GlobalVariables.h"
 
