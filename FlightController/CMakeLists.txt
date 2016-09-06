@@ -8,7 +8,7 @@ include(cmake/utils.cmake)
 set(CMAKE_C_FLAGS   "${CMAKE_C_FLAGS}   -O2 -Wall -Wextra -Werror")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2 -Wall -Wextra -Werror -std=c++11")
 
-#add_subdirectory(core)
+add_subdirectory(core)
 add_subdirectory(hal)
 add_subdirectory(modules)
 

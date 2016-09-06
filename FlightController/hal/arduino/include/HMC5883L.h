@@ -1,7 +1,7 @@
 #ifndef HMC5883L_H
 #define HMC5883L_H
 
-#include "Types.h"
+#include "core/Types.h"
 #include "I2C.h"
 
 #define MAGNETOMETER_DEV_ADDR		0x1E

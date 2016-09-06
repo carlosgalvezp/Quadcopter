@@ -1,7 +1,7 @@
 #ifndef GPS_H
 #define GPS_H
 
-#include "Types.h"
+#include "core/Types.h"
 #include "HAL.h"
 
 #define GPS_RX_BUFFER_SIZE		100
