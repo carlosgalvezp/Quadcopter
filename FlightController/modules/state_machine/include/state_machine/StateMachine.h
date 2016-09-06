@@ -3,7 +3,7 @@
 
 #include <stdlib.h> // malloc()
 
-#include "SM_States.h"
+#include "state_machine/sm_state.h"
 #include "core/Types.h"
 #include "core/Config.h"
 #include "HAL.h"

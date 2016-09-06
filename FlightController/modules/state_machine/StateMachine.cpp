@@ -1,5 +1,10 @@
 #include "state_machine/StateMachine.h"
 
+#include "state_machine/sm_state_armedacro.h"
+#include "state_machine/sm_state_disarmed.h"
+#include "state_machine/sm_state_poweron.h"
+#include "state_machine/sm_state_passthrough.h"
+
 StateMachine::StateMachine():
 nStates_(0)
 {

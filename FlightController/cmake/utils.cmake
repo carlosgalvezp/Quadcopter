@@ -18,6 +18,7 @@ function(create_library lib_name)
         generate_arduino_library(${lib_name}
             SRCS ${create_library_SRCS}
             LIBS ${create_library_LIBS}
+            NO_AUTOLIBS
         )
     endif()
 endfunction(create_library)
@@ -29,6 +30,7 @@ function(create_executable executable_name)
         generate_arduino_firmware(${executable_name}
             SRCS ${create_executable_SRCS}
             LIBS ${create_executable_LIBS}
+            NO_AUTOLIBS
         )
     endif()
 endfunction(create_executable)
