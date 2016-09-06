@@ -3,8 +3,7 @@
 
 #include <stdint.h>
 
-#include "pid.h"
-#include "RC.h"
+#include "control/pid.h"
 #include "Types.h"
 #include "Config.h"
 

@@ -1,5 +1,4 @@
-#include "pid.h"
-
+#include "control/pid.h"
 
 PID::PID() :
 last_t(0),

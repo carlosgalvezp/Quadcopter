@@ -1,4 +1,3 @@
-#pragma once
 #ifndef MAIN_LOOP_H
 #define MAIN_LOOP_H
 
@@ -7,7 +6,7 @@
 #include "RC.h"
 #include "ADC.h"
 #include "state_estimation/StateEstimation.h"
-#include "Control.h"
+#include "control/Control.h"
 #include "Output.h"
 #include "Telemetry.h"
 

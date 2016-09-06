@@ -1,4 +1,5 @@
 #include "Telemetry.h"
+#include "EEPROM.h"
 
 // It takes around 9 us / byte transmitted
 namespace Telemetry
