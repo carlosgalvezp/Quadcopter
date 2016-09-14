@@ -7,8 +7,7 @@
 #include <QQueue>
 #include "guidata.h"
 
-#include "../ArduinoFC/Telemetry_Protocol.h"
-
+#include "Telemetry_Protocol.h"
 
 class SerialDecoder
 {

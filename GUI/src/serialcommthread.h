@@ -13,7 +13,7 @@
 #include <thread>
 #include <vector>
 
-#include "../ArduinoFC/Telemetry_Protocol.h"
+#include "Telemetry_Protocol.h"
 
 #define TX_BUFFER_SIZE  10
 #define RX_BUFFER_SIZE  100
@@ -39,7 +39,7 @@ public:
 
 public slots:
     void init();
-    void connectSerial(const QString &portName, const QString &baud_rate);
+    void connectSerial(const QString &portName, const QSerialPort::BaudRate &baud_rate);
     void disconnectSerial();
     void requestConfig();
     void sendConfig(const QByteArray &data);
