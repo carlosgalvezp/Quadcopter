@@ -44,8 +44,7 @@ signals:
 //    void toggleSerial();
     void loadFCConfig();
     void sendFCConfig(const QByteArray &data);
-    void sendSerialConfig(const QString &port_name,
-                          const QSerialPort::BaudRate &baud_rate);
+    void sendSerialConfig(const QString &port_name);
     void sendSerialDisconnect();
     void sendGotACK();
 

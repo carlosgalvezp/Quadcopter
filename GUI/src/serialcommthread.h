@@ -39,7 +39,7 @@ public:
 
 public slots:
     void init();
-    void connectSerial(const QString &portName, const QSerialPort::BaudRate &baud_rate);
+    void connectSerial(const QString &portName);
     void disconnectSerial();
     void requestConfig();
     void sendConfig(const QByteArray &data);

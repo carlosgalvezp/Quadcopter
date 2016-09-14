@@ -27,7 +27,6 @@ HEADERS  += criusgui.h                          \
             timeplot.h                          \
             utils.h                             \
             myglwidget.h                        \
-            ../ArduinoFC/Telemetry_Protocol.h   \
             serialcommthread.h                  \
             serialdecoder.h                     \
             guidata.h                           \

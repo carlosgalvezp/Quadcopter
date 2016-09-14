@@ -23,8 +23,7 @@ void SerialCommThread::init()
     emit sendSerialPortInfo(data_out);
 }
 
-void SerialCommThread::connectSerial(const QString &portName,
-                                     const QSerialPort::BaudRate &baud_rate)
+void SerialCommThread::connectSerial(const QString &portName)
 {
     // Create Serial Port object
     serialPort_ = new QSerialPort(portName, this);
@@ -40,7 +39,7 @@ void SerialCommThread::connectSerial(const QString &portName,
     }
 
     // Set port properties
-    serialPort_->setBaudRate(baud_rate);
+    serialPort_->setBaudRate(QSerialPort::Baud115200);
     serialPort_->setFlowControl(QSerialPort::NoFlowControl);
     serialPort_->setParity(QSerialPort::NoParity);
     serialPort_->setDataBits(QSerialPort::Data8);
