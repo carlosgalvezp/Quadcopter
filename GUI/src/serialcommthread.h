@@ -74,7 +74,7 @@ private:
                                             SLOT(requestIMU()),
                                             SLOT(requestAttitude()),
                                             SLOT(requestMotors())};
-    const std::vector<bool> timer_on_ = {1, 0, 0, 0, 1};
+    const std::vector<bool> timer_on_ = {1, 0, 0, 0, 0};
 
 
     char dataOut[TX_BUFFER_SIZE];

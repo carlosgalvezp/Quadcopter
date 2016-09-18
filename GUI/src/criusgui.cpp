@@ -217,7 +217,7 @@ void CriusGUI::receiveSerialPortInfo(const QStringList &port_names)
     // Set port names
     for (int i = 0; i < port_names.size(); ++i)
     {
-        this->ui->comboBox_PortName->insertItem(i, port_names[i]);
+        this->ui->comboBox_PortName->insertItem(i, port_names[port_names.size() - 1U - i]);
     }
 
     // Set baud rate (for now, fixed)
