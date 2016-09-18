@@ -29,7 +29,7 @@ private:
 	unsigned long period_us_;
 	unsigned long t_start_;
 	uint8_t duty_cycle_;
-	bool outHigh_, doChange_;
+	bool out_high_, do_change_;
 
 	void init(unsigned long period_ms, unsigned long highTime_ms);
 };

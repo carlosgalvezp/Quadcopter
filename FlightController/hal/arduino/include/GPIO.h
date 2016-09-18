@@ -15,10 +15,10 @@ public:
 	void setState(bool on);
 	void blink(uint16_t period_ms, uint16_t t_high_ms = 0);
 private:
-	uint8_t	port, bit;
-	volatile uint8_t *outReg;
+	uint8_t	port_, bit_;
+	volatile uint8_t *out_reg_;
 	uint16_t period_ms_, t_high_ms_;
-	SoftPWM *softPWM;
+	SoftPWM *soft_pwm_;
 };
 
 namespace GPIO

@@ -13,34 +13,34 @@ namespace GPIO
 GPIO_Digital::GPIO_Digital(uint8_t digitalPinNumber, bool isOutputPin)
 {
 	// ** Pre-compute output register for faster access
-	this->bit = digitalPinToBitMask(digitalPinNumber);
-	this->port = digitalPinToPort(digitalPinNumber);		
-	this->outReg = portOutputRegister(this->port);
+    bit_ = digitalPinToBitMask(digitalPinNumber);
+    port_ = digitalPinToPort(digitalPinNumber);
+    out_reg_ = portOutputRegister(port_);
 
 	// ** Configure pinmode
 	if (isOutputPin)			pinMode(digitalPinNumber, OUTPUT);
 	else						pinMode(digitalPinNumber, INPUT);
 
 	// ** Create SoftPWM object, for blinking
-	this->softPWM = new SoftPWM(*this);
+    soft_pwm_ = new SoftPWM(*this);
 }
 
 void GPIO_Digital::setState(bool on)
 {
-	if (on)			*this->outReg &= ~this->bit;	
-	else			*this->outReg |=  this->bit;
+    if (on)			*out_reg_ &= ~bit_;
+    else			*out_reg_ |=  bit_;
 }
 
 void GPIO_Digital::blink(uint16_t period_ms, uint16_t t_high_ms)
 {
-	if (this->period_ms_ != period_ms || this->t_high_ms_ != t_high_ms)
+    if ((period_ms_ != period_ms) || (t_high_ms_ != t_high_ms))
 	{
-		this->period_ms_ = period_ms;
-		this->t_high_ms_ = t_high_ms;
-		this->softPWM->setParameters(period_ms, t_high_ms);
+        period_ms_ = period_ms;
+        t_high_ms_ = t_high_ms;
+        soft_pwm_->setParameters(period_ms, t_high_ms);
 	}
 
-	this->softPWM->run();
+    soft_pwm_->run();
 }
 
 void GPIO::init()

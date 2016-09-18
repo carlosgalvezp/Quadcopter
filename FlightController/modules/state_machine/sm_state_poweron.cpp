@@ -9,8 +9,8 @@
 
 SM_State_PowerOn::SM_State_PowerOn()
 {
-    this->id_ = STATE_POWER_ON;
-    this->tStart = micros();
+    id_ = STATE_POWER_ON;
+    t_start_ = micros();
 }
 
 void SM_State_PowerOn::output(const Config& /*config*/, State& /*state*/)
@@ -20,17 +20,17 @@ void SM_State_PowerOn::output(const Config& /*config*/, State& /*state*/)
 
 bool SM_State_PowerOn::conditionAny()
 {
-    return (micros() - this->tStart) > TIME_ON_POWER_CONFIGURATION_US;
+    return (micros() - t_start_) > TIME_ON_POWER_CONFIGURATION_US;
 }
 
 bool SM_State_PowerOn::conditionDisarmed(const Config& /*config*/, State& /*state*/)
 {
-    return this->conditionAny();
+    return conditionAny();
 }
 
 bool SM_State_PowerOn::conditionPassThrough(const Config& /*config*/, State& state)
 {
-    return this->conditionAny()			  &&
+    return conditionAny()			     &&
            RC_isAtMax(state.rc.throttle) &&
            RC_isIddle(state.rc.aileron)  &&
            RC_isIddle(state.rc.elevator) &&

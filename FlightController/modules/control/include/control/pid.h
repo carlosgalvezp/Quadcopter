@@ -9,13 +9,13 @@ public:
 	~PID();
 
 	float computeU(float x, float reference);
-	void setParameters(float kp, float kd, float ki);
+	void setParameters(float kp_, float kd_, float ki_);
 
 private:
-	unsigned long last_t;
-	float kp, kd, ki;
+	unsigned long last_t_;
+	float kp_, kd_, ki_;
 	float last_e, e_sum;
-	float deltaT;
+	float delta_t_;
 	float u;
 };
 

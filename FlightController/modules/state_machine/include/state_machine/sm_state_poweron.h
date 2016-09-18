@@ -12,7 +12,7 @@ public:
     bool conditionDisarmed(const Config& config, State& state);
 private:
     bool conditionAny();
-    unsigned long tStart;
+    unsigned long t_start_;
 };
 
 #endif // SM_STATE_POWERON_H
