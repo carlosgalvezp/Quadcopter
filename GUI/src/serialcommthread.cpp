@@ -23,13 +23,14 @@ void SerialCommThread::init()
     emit sendSerialPortInfo(data_out);
 }
 
-void SerialCommThread::connectSerial(const QString &portName, const QString &baud_rate)
+void SerialCommThread::connectSerial(const QString &portName)
 {
     // Create Serial Port object
     serialPort_ = new QSerialPort(portName, this);
 
     // Open it
-    serialPort_->open(QIODevice::ReadWrite);
+    serialPort_->open(QIODevice::ReadWrite);  // Arduino resets now
+    my_sleep_ms(2000);  // To ensure Arduino has finished booting up!
 
     if(!serialPort_->isOpen())
     {

@@ -9,7 +9,7 @@ void Utils::quaternionToRPY(double q0, double q1, double q2, double q3,
     *yaw = atan2(2.0*(q0*q3 + q1*q2), 1.0 - 2.0*(q2*q2 + q3*q3)) * RAD_TO_DEG;
 }
 
-void Utils::serializeFloat(float val, QByteArray &out, std::size_t ptr)
+void Utils::serializeFloat(float val, QByteArray &out, unsigned int ptr)
 {
     u_float_char dataUnion;
     dataUnion.xf = val;

@@ -2,6 +2,7 @@
 #define CRIUSGUI_H
 
 #include <QMainWindow>
+#include <QSerialPort>
 #include <QTimer>
 #include <QQueue>
 
@@ -15,7 +16,7 @@
 #include "serialdecoder.h"
 #include "guidata.h"
 
-#include "../ArduinoFC/Telemetry_Protocol.h"
+#include "Telemetry_Protocol.h"
 
 #include <GL/glu.h>
 
@@ -43,7 +44,7 @@ signals:
 //    void toggleSerial();
     void loadFCConfig();
     void sendFCConfig(const QByteArray &data);
-    void sendSerialConfig(const QString &port_name, const QString &baud_rate);
+    void sendSerialConfig(const QString &port_name);
     void sendSerialDisconnect();
     void sendGotACK();
 

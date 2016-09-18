@@ -17,7 +17,9 @@ CriusGUI::CriusGUI(QWidget *parent) :
 
     connect(this, SIGNAL(loadFCConfig()), serial_thread, SLOT(requestConfig()));
     connect(this, SIGNAL(sendFCConfig(QByteArray)), serial_thread, SLOT(sendConfig(QByteArray)));
-    connect(this, SIGNAL(sendSerialConfig(QString,QString)), serial_thread, SLOT(connectSerial(QString,QString)));
+    connect(this, SIGNAL(sendSerialConfig(QString)),
+            serial_thread,
+            SLOT(connectSerial(QString)));
     connect(this, SIGNAL(sendSerialDisconnect()), serial_thread, SLOT(disconnectSerial()));
 
     connect(serial_thread, SIGNAL(sendData(QByteArray)), this, SLOT(getSerialData(QByteArray)));
@@ -199,7 +201,7 @@ void CriusGUI::on_pushButton_Connect_clicked()
         this->connected_ = true;
         this->ui->pushButton_Connect->setText("Disconnect");
 
-        emit sendSerialConfig(this->ui->comboBox_PortName->currentText(), this->ui->comboBox_BaudRate->currentText());
+        emit sendSerialConfig(this->ui->comboBox_PortName->currentText());
     }
     else
     {
@@ -215,7 +217,7 @@ void CriusGUI::receiveSerialPortInfo(const QStringList &port_names)
     // Set port names
     for (int i = 0; i < port_names.size(); ++i)
     {
-        this->ui->comboBox_PortName->insertItem(i, port_names[i]);
+        this->ui->comboBox_PortName->insertItem(i, port_names[port_names.size() - 1U - i]);
     }
 
     // Set baud rate (for now, fixed)

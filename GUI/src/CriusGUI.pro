@@ -12,25 +12,26 @@ CONFIG += c++11
 
 TARGET = CriusGUI
 TEMPLATE = app
-SOURCES += main.cpp\
-        criusgui.cpp \
-    qcustomplot.cpp \
-    timeplot.cpp \
-    utils.cpp \
-    myglwidget.cpp \
-    serialcommthread.cpp \
-    serialdecoder.cpp \
-    guidata.cpp
+SOURCES += main.cpp                 \
+           criusgui.cpp             \
+           qcustomplot.cpp          \
+           timeplot.cpp             \
+           utils.cpp                \
+           myglwidget.cpp           \
+           serialcommthread.cpp     \
+           serialdecoder.cpp        \
+           guidata.cpp
 
-HEADERS  += criusgui.h \
-    qcustomplot.h \
-    timeplot.h \
-    utils.h \
-    myglwidget.h \
-    ../ArduinoFC/Telemetry_Protocol.h \
-    serialcommthread.h \
-    serialdecoder.h \
-    guidata.h \
-    types.h
+HEADERS  += criusgui.h                          \
+            qcustomplot.h                       \
+            timeplot.h                          \
+            utils.h                             \
+            myglwidget.h                        \
+            serialcommthread.h                  \
+            serialdecoder.h                     \
+            guidata.h                           \
+            types.h
 
 FORMS    += criusgui.ui
+
+INCLUDEPATH += $$PWD/../../FlightController/hal/arduino/include
