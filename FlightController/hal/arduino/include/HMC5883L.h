@@ -4,19 +4,19 @@
 #include "core/Types.h"
 #include "I2C.h"
 
-#define MAGNETOMETER_DEV_ADDR		0x1E
-
-#define MAGNETOMETER_REG_CONF_A		0X00
-#define MAGNETOMETER_REG_CONF_B		0X01
-#define MAGNETOMETER_REG_MODE		0X02
-#define MAGNETOMETER_REG_DATA		0X03
-
-#define MAGNETOMETER_SENSITIVITY	0.91743119f // 1000/1090 mGa/LSB
-
-#define MAGNETOMETER_N_READ_BYTES	6 // 2 bytes per axis
-
 namespace Magnetometer
 {
+    const uint8_t kMagnetometerI2CAddr = 0x1EU;
+
+    const uint8_t kMagnetometerRegConfA = 0X00U;
+    const uint8_t kMagnetometerRegConfB	= 0X01U;
+    const uint8_t kMagnetometerRegMode  = 0X02U;
+    const uint8_t kMagnetometerRegData  = 0X03U;
+
+    const uint8_t kMagnetometerNBytesToRead	= 6U; // 2 bytes per axis
+
+    const float kMagnetometerSensitivity = 0.91743119F; // 1000/1090 mGa/LSB
+
 	uint8_t init();
 	uint8_t getData(Vector3<float>& data);
 }
