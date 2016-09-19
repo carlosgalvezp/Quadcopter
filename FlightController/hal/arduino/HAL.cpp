@@ -97,10 +97,10 @@ void HAL::initSonar()
 	TCCR1B = 0b00011011;
 
 	// Set TOP value to ICR1 to generate correct SONAR_FREQUENCY
-	ICR1 = CPU_FREQUENCY / (SONAR_CLOCK_PRESCALER * SONAR_FREQUENCY) - 1;
+    ICR1 = CPU_FREQUENCY / (SONAR_CLOCK_PRESCALER * Sonar::kSonarSampleFrequency) - 1;
 
 	// Set OCR1A to generate correct pulse width
-	OCR1A = (SONAR_T_TRIGGER_HIGH_US) / (1000000L/(CPU_FREQUENCY / SONAR_CLOCK_PRESCALER));
+    OCR1A = (Sonar::kSonarTriggerTHighUs) / (1000000L/(CPU_FREQUENCY / SONAR_CLOCK_PRESCALER));
 
 	// Enable interrupts PCIE0, since the sonar echo pin is connected to PCINT4
 	PCICR |= (1 << PCIE0);

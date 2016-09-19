@@ -41,7 +41,7 @@ ISR(PCINT0_vect)
 		}
 		else	// Falling edge
 		{
-			distance_ = SOUND_SPEED_CM_US_2 * (micros() - tEcho);
+            distance_ = Sonar::kSoundSpeedCmS_2 * (micros() - tEcho);
 			measurementReady = true;
 			sentTrigger = false;  // This way, we only read the first echo
 		}
