@@ -7,7 +7,7 @@ SerialCommThread::SerialCommThread():
 
 SerialCommThread::~SerialCommThread()
 {
-    delete this->serialPort_;
+    delete serialPort_;
 }
 
 void SerialCommThread::init()
@@ -53,70 +53,70 @@ void SerialCommThread::connectSerial(const QString &portName)
         if (timer_on_[i])
         {
             QTimer* timer = new QTimer(this);
-            this->timers_.push_back(timer);
+            timers_.push_back(timer);
 
-            connect(timer, SIGNAL(timeout()), this, this->timer_fncs_[i]);
+            connect(timer, SIGNAL(timeout()), this, timer_fncs_[i]);
             timer->start(1000.0 / timer_frequencies_[i]);
         }
     }
 
     // ** Read interruption
-    connect(this->serialPort_, SIGNAL(readyRead()), this, SLOT(readData()));
+    connect(serialPort_, SIGNAL(readyRead()), this, SLOT(readData()));
 
     // ** Request FC config
-    this->requestConfig();
+    requestConfig();
 }
 
 void SerialCommThread::disconnectSerial()
 {
     // Delete serial port
-    this->serialPort_->close();
-    delete this->serialPort_;
+    serialPort_->close();
+    delete serialPort_;
 
     // Delete timers
-    for (QTimer * t : this->timers_)
+    for (QTimer * t : timers_)
     {
         t->stop();
         delete t;
     }
 
     // Clear timer vector
-    this->timers_.clear();
+    timers_.clear();
 }
 
 void SerialCommThread::requestStatus()
 {
-    this->requestCmd(TELEMETRY_CMD_OUT_STATUS);
+    requestCmd(TELEMETRY_CMD_OUT_STATUS);
 }
 
 void SerialCommThread::requestRC()
 {
-    this->requestCmd(TELEMETRY_CMD_OUT_RC);
+    requestCmd(TELEMETRY_CMD_OUT_RC);
 }
 
 void SerialCommThread::requestIMU()
 {
-    this->requestCmd(TELEMETRY_CMD_OUT_IMU);
+    requestCmd(TELEMETRY_CMD_OUT_IMU);
 }
 
 void SerialCommThread::requestAttitude()
 {
-    this->requestCmd(TELEMETRY_CMD_OUT_ATTITUDE);
+    requestCmd(TELEMETRY_CMD_OUT_ATTITUDE);
 }
 
 void SerialCommThread::requestMotors()
 {
-    this->requestCmd(TELEMETRY_CMD_OUT_CONTROL);
+    requestCmd(TELEMETRY_CMD_OUT_CONTROL);
 }
 
 void SerialCommThread::requestConfig()
 {
-    this->requestCmd(TELEMETRY_CMD_OUT_CONFIG);
+    requestCmd(TELEMETRY_CMD_OUT_CONFIG);
 }
 
 void SerialCommThread::receiveACK()
 {
-    this->reSendConfig_ = false;
+    reSendConfig_ = false;
 }
 
 void SerialCommThread::reSendConfig()
@@ -134,21 +134,21 @@ void SerialCommThread::sendConfig(const QByteArray &data)
     uint8_t checksum = 0;
 
     // Fill header
-    this->dataOut[0] = this->magic_word_[0];     checksum ^= this->dataOut[0];
-    this->dataOut[1] = this->magic_word_[1];     checksum ^= this->dataOut[1];
-    this->dataOut[2] = TELEMETRY_CMD_IN_CONFIG;  checksum ^= this->dataOut[2];
+    dataOut[0] = magic_word_[0];     checksum ^= dataOut[0];
+    dataOut[1] = magic_word_[1];     checksum ^= dataOut[1];
+    dataOut[2] = TELEMETRY_CMD_IN_CONFIG;  checksum ^= dataOut[2];
 
     // Fill data
     for(int i = 0; i < data.size(); ++i)
     {
-        this->dataOut[3+i] = data[i];
+        dataOut[3+i] = data[i];
         checksum ^= data[i];
     }
 
-    this->dataOut[data_size - 1] = checksum;
+    dataOut[data_size - 1] = checksum;
 
     // Send
-    this->serialPort_->write(this->dataOut, data_size);
+    serialPort_->write(dataOut, data_size);
 
     // Start timer: if we don't receive an ACK, re-send the data
     configToReSend_ = data;
@@ -159,17 +159,17 @@ void SerialCommThread::sendConfig(const QByteArray &data)
 void SerialCommThread::requestCmd(uint8_t cmd)
 {
     // Fill data buffer
-    this->dataOut[0] = this->magic_word_[0];
-    this->dataOut[1] = this->magic_word_[1];
-    this->dataOut[2] = cmd;
+    dataOut[0] = magic_word_[0];
+    dataOut[1] = magic_word_[1];
+    dataOut[2] = cmd;
 
     // Write to serial port
-    this->serialPort_->write(this->dataOut, 3);
+    serialPort_->write(dataOut, 3);
 }
 
 void SerialCommThread::readData()
 {
-    emit sendData(this->serialPort_->readAll());
+    emit sendData(serialPort_->readAll());
 }
 
 

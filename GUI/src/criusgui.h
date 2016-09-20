@@ -54,9 +54,9 @@ private slots:
     void on_pushButton_Connect_clicked();
 
 private:
-    Ui::CriusGUI *ui;
+    Ui::CriusGUI *ui_;
 
-    TimePlot *imu_plot, *control_plot;
+    TimePlot *imu_plot_, *control_plot_;
 
     bool active_, connected_;
 
