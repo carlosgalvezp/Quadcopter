@@ -4,12 +4,12 @@ bool SerialDecoder::decodeBuffer(QQueue<unsigned char> &buffer, GUIData &gui_dat
 {
     // Extract complete packages
     std::vector<QByteArray> packages;
-    this->extractCompleteFrames(buffer, packages);
+    extractCompleteFrames(buffer, packages);
 
     // Decode each package
     for (const QByteArray &pkg : packages)
     {
-        this->decodeData(pkg, gui_data);
+        decodeData(pkg, gui_data);
     }
     return true;
 }
@@ -21,8 +21,8 @@ void SerialDecoder::extractCompleteFrames(QQueue<unsigned char> &buffer, std::ve
 
     for(int i  = 0; i < buffer.size() - 1; ++i)
     {
-        if(buffer[i]   == this->magic_word_[0] &&
-           buffer[i+1] == this->magic_word_[1]) // Found magic word
+        if(buffer[i]   == magic_word_[0] &&
+           buffer[i+1] == magic_word_[1]) // Found magic word
         {
             if(pkg_i.size() > 0) // This successfully ends the current package
             {
@@ -64,7 +64,7 @@ bool SerialDecoder::decodeData(const QByteArray &data, GUIData &gui_data)
 
 
     // Verify magic word
-    if (data[0] == this->magic_word_[0] && data[1] == this->magic_word_[1])
+    if (data[0] == magic_word_[0] && data[1] == magic_word_[1])
     {
         // Get command
         uint8_t cmd = (uint8_t)data[2];
@@ -73,22 +73,22 @@ bool SerialDecoder::decodeData(const QByteArray &data, GUIData &gui_data)
         switch(cmd)
         {
             case TELEMETRY_CMD_OUT_STATUS:
-                return this->decodeStatus(data, gui_data);
+                return decodeStatus(data, gui_data);
 
             case TELEMETRY_CMD_OUT_RC:
-                return this->decodeRC(data, gui_data);
+                return decodeRC(data, gui_data);
 
             case TELEMETRY_CMD_OUT_IMU:
-                return this->decodeIMU(data, gui_data);
+                return decodeIMU(data, gui_data);
 
             case TELEMETRY_CMD_OUT_ATTITUDE:
-                return this->decodeAttitude(data, gui_data);
+                return decodeAttitude(data, gui_data);
 
             case TELEMETRY_CMD_OUT_CONTROL:
-                return this->decodeMotors(data, gui_data);
+                return decodeMotors(data, gui_data);
 
             case TELEMETRY_CMD_OUT_CONFIG:
-                return this->decodeConfig(data, gui_data);
+                return decodeConfig(data, gui_data);
             case TELEMETRY_ACK:
                 gui_data.gotACK = true;
                 return true;

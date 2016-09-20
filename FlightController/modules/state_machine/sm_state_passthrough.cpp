@@ -5,7 +5,7 @@
 
 SM_State_PassThrough::SM_State_PassThrough()
 {
-    this->id_ = STATE_PASSTHROUGH;
+    id_ = STATE_PASSTHROUGH;
 }
 
 void SM_State_PassThrough::output(const Config& /*config*/, State& state)

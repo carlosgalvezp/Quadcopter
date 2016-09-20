@@ -6,9 +6,9 @@
 #include "control/Control.h"
 
 SM_State_Armed_Acro::SM_State_Armed_Acro()
-    : readyToSwitchState(false)
+    : ready_to_switch_state_(false)
 {
-    this->id_ = STATE_ARMED_ACRO;
+    id_ = STATE_ARMED_ACRO;
 }
 
 void SM_State_Armed_Acro::output(const Config& /*config*/, State& state)
@@ -27,12 +27,12 @@ bool SM_State_Armed_Acro::conditionDisarmed(const Config& /*config*/, State& sta
 {
     if (RC_isIddle(state.rc.rudder))
     {
-        this->readyToSwitchState = true;
+        ready_to_switch_state_ = true;
     }
 
-    if (this->readyToSwitchState && RC_isAtMin(state.rc.throttle) && RC_isAtMax(state.rc.rudder))
+    if (ready_to_switch_state_ && RC_isAtMin(state.rc.throttle) && RC_isAtMax(state.rc.rudder))
     {
-        this->readyToSwitchState = false;
+        ready_to_switch_state_ = false;
         return true;
     }
     return false;

@@ -10,7 +10,7 @@ public:
     virtual void output(const Config& config, State& state);
     bool conditionDisarmed(const Config& config, State& state);
 private:
-    bool readyToSwitchState;
+    bool ready_to_switch_state_;
 };
 
 

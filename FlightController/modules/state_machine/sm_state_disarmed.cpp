@@ -4,9 +4,9 @@
 #include "RC.h"
 
 SM_State_Disarmed::SM_State_Disarmed()
-    : readyToSwitchState(false)
+    : ready_to_switch_state_(false)
 {
-    this->id_ = STATE_DISARMED;
+    id_ = STATE_DISARMED;
 }
 
 void SM_State_Disarmed::output(const Config& /*config*/, State& /*state*/)
@@ -18,12 +18,12 @@ bool SM_State_Disarmed::conditionArmed_Acro(const Config& config, State& state)
 {
     if (RC_isIddle(state.rc.rudder))
     {
-        this->readyToSwitchState = true;
+        ready_to_switch_state_ = true;
     }
 
-    if (this->readyToSwitchState && this->conditionArmed(config, state))
+    if (ready_to_switch_state_ && conditionArmed(config, state))
     {
-        this->readyToSwitchState = false;
+        ready_to_switch_state_ = false;
         return true;
     }
     return false;

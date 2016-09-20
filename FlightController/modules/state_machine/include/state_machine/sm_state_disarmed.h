@@ -12,7 +12,7 @@ public:
 private:
     bool conditionArmed(const Config& config, State& state);
 
-    bool readyToSwitchState;
+    bool ready_to_switch_state_;
 };
 
 #endif // SM_STATE_DISARMED_H

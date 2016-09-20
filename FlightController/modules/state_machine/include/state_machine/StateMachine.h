@@ -21,18 +21,18 @@ public:
 
     inline SM_State *getCurrentState()
     {
-        return this->currentState_;
+        return current_state_;
     }
 
     inline void updateState(SM_State *newState)
     {
-        this->currentState_ = newState;
+        current_state_ = newState;
     }
 
 private:
-	uint8_t nStates_;
+	uint8_t n_states_;
     SM_State *states_[N_MAX_STATES];
-	SM_State *currentState_;
+	SM_State *current_state_;
 
 	void init();
 	void addState(SM_State *state);

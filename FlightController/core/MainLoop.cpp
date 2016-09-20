@@ -58,7 +58,7 @@ void MainLoop::Internal::updateStateMachineState(const Config& config, State& st
 	SM_State *currentSMState = stateMachine_.getCurrentState();
 	
 	// Loop all over possible next states
-	for (uint8_t i = 0; i < currentSMState->nConnections_; ++i)
+	for (uint8_t i = 0; i < currentSMState->n_connections_; ++i)
 	{
         SM_Connection& c = currentSMState->connections_[i];
 

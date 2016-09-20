@@ -6,9 +6,9 @@
 #include "state_machine/sm_state_passthrough.h"
 
 StateMachine::StateMachine():
-nStates_(0)
+n_states_(0)
 {
-	this->init();
+    init();
 }
 
 
@@ -24,10 +24,10 @@ StateMachine::~StateMachine()
 void StateMachine::init()
 {
 	// Create and states
-	SM_State *state_PowerOn		= new SM_State_PowerOn();			this->addState(state_PowerOn);
-	SM_State *state_PassThrough = new SM_State_PassThrough();		this->addState(state_PassThrough);
-	SM_State *state_Disarmed	= new SM_State_Disarmed();			this->addState(state_Disarmed);
-	SM_State *state_Armed_Acro	= new SM_State_Armed_Acro();		this->addState(state_Armed_Acro);
+    SM_State *state_PowerOn		= new SM_State_PowerOn();			addState(state_PowerOn);
+    SM_State *state_PassThrough = new SM_State_PassThrough();		addState(state_PassThrough);
+    SM_State *state_Disarmed	= new SM_State_Disarmed();			addState(state_Disarmed);
+    SM_State *state_Armed_Acro	= new SM_State_Armed_Acro();		addState(state_Armed_Acro);
 	
 	// Add connections
 	state_PowerOn->addConnection   (state_PassThrough,  static_cast<SMConditionFnc>(&SM_State_PowerOn::conditionPassThrough));
@@ -36,13 +36,13 @@ void StateMachine::init()
     state_Armed_Acro->addConnection(state_Disarmed,		static_cast<SMConditionFnc>(&SM_State_Armed_Acro::conditionDisarmed));
 
 	// Set initial state
-	this->currentState_ = state_PowerOn;
+    current_state_ = state_PowerOn;
 }
 
 void StateMachine::addState(SM_State *state)
 {
-	if (this->nStates_ < N_MAX_STATES)
+    if (n_states_ < N_MAX_STATES)
 	{
-		this->states_[this->nStates_++] = state;
+        states_[n_states_++] = state;
 	}
 }
