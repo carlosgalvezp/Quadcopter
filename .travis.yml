@@ -9,9 +9,4 @@ before_install:
   - sudo ln -s /usr/local/share/arduino/arduino /usr/local/bin/arduino
   - wget https://cmake.org/files/v3.3/cmake-3.3.2-Linux-x86_64.tar.gz
   - tar zxvf cmake-3.3.2-Linux-x86_64.tar.gz
-script:
-  - cd FlightController
-  - mkdir build
-  - cd build
-  - ../../cmake-3.3.2-Linux-x86_64/bin/cmake .. -DCMAKE_TOOLCHAIN_FILE=../cmake/ArduinoToolchain.cmake -DARDUINO_1_5=ON
-  - make
+script: cd FlightController && mkdir build && cd build && ../../cmake-3.3.2-Linux-x86_64/bin/cmake .. -DCMAKE_TOOLCHAIN_FILE=../cmake/ArduinoToolchain.cmake -DARDUINO_1_5=ON && make
