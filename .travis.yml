@@ -7,4 +7,9 @@ before_install:
   - tar xf arduino-1.6.10-linux64.tar.xz
   - sudo mv arduino-1.6.10 /usr/local/share/arduino
   - sudo ln -s /usr/local/share/arduino/arduino /usr/local/bin/arduino
+  - wget https://cmake.org/files/v3.3/cmake-3.3.2-Linux-x86_64.sh
+  - sudo cp cmake-3.3.2-Linux-x86_64.sh /opt
+  - sudo chmox +x /opt/cmake-3.3.2-Linux-x86_64.sh
+  - cd /opt
+  - sudo /opt/cmake-3.3.2-Linux-x86_64.sh
 script: ./target_build.sh
