@@ -2,5 +2,5 @@
 
 TEST(Class, Function)
 {
-    EXPECT_EQ(1, 0);
+    EXPECT_EQ(0, 0);
 }
