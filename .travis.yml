@@ -9,7 +9,7 @@ before_install:
   - sudo ln -s /usr/local/share/arduino/arduino /usr/local/bin/arduino
   - wget https://cmake.org/files/v3.3/cmake-3.3.2-Linux-x86_64.sh
   - sudo cp cmake-3.3.2-Linux-x86_64.sh /opt
-  - sudo chmox +x /opt/cmake-3.3.2-Linux-x86_64.sh
+  - sudo chmod +x /opt/cmake-3.3.2-Linux-x86_64.sh
   - cd /opt
   - sudo /opt/cmake-3.3.2-Linux-x86_64.sh
 script: ./target_build.sh
