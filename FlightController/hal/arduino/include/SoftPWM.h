@@ -1,4 +1,3 @@
-#pragma once
 #ifndef SOFTPWM_H
 #define SOFTPWM_H
 

@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef EEPROM_H
 #define EEPROM_H
 
