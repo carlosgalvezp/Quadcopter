@@ -1,29 +1,38 @@
-# Quadcopter [![Build Status](https://travis-ci.org/carlosgalvezp/Quadcopter.svg?branch=master)](https://travis-ci.org/carlosgalvezp/Quadcopter)
+Quadcopter [![Build Status](https://travis-ci.org/carlosgalvezp/Quadcopter.svg?branch=master)](https://travis-ci.org/carlosgalvezp/Quadcopter)
+==========
 Source code Quadcopter Flight Controller, based on Crius AIOP v2.0 (Atmega 2560)
 
-# Ubuntu Instructions
--Run tools/scripts/
--Download Arduino SDK and extract under /usr/share
+Ubuntu Instructions
+-------------------
+1. Run tools/scripts/setup_ubuntu.sh
+2. Download Arduino SDK and extract under:
 
-Build from QtCreator:
+		/usr/share
 
-cmake .. -DCMAKE_TOOLCHAIN_FILE=cmake/ArduinoToolchain.cmake -DARDUINO_1_5=ON
+3. Open CMakeLists.txt with QtCreator, with the following CMake arguments:
 
-make
+		-DCMAKE_TOOLCHAIN_FILE=cmake/ArduinoToolchain.cmake -DARDUINO_1_5=ON
 
-Permissions
+
+### Loading firmware to Crius board
 
 To upload the code or to read from serial, we need some permissions
 (http://playground.arduino.cc/Linux/All#Permission):
 
->> ls -l /dev/ttyUSB*
+1. With the board connected to the computer, run:
 
-Note the group it belongs to (after root). For example: dialout.
+		ls - /dev/ttyUSB*
 
->> sudo usermod -a -G <group_name> <username>
+2. Note the group it belongs to (after root). For example: dialout.
 
+3. Run the following command:
 
-# Windows Instructions
+		sudo usermod -a -G <group_name> <username>
+   Example:
+		sudo usermod -a -G dialout carlos
+
+Windows Instructions
+--------------------
 -Qt Creator + MinGW
 -Add the previous definitions
 -MinGW Makefiles

@@ -1,4 +1,9 @@
-Extra installation commands:
+Quadcopter GUI
+==============
 
-sudo apt-get install qt5-default
-sudo apt-get install libqt5serialport5-dev
+Setup
+-----
+Apart from installing Qt Creator, the following is required:
+
+		sudo apt-get install qt5-default libqt5serialport5-dev
+
