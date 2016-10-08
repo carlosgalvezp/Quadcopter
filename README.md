@@ -29,6 +29,7 @@ To upload the code or to read from serial, we need some permissions
 
 		sudo usermod -a -G <group_name> <username>
    Example:
+
 		sudo usermod -a -G dialout carlos
 
 Windows Instructions
