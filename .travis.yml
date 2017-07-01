@@ -1,9 +1,12 @@
 language: cpp
 compiler:
-    - gcc
+  - gcc
 
 sudo: required
-dist: trusty
+dist: xenial
+
+services:
+  - docker
 
 before_install:
   - "/sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_1.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :1 -ac -screen 0 1280x1024x16"
@@ -16,6 +19,6 @@ before_install:
   - wget https://cmake.org/files/v3.3/cmake-3.3.2-Linux-x86_64.tar.gz
   - tar zxvf cmake-3.3.2-Linux-x86_64.tar.gz
 script:
-  - ./tools/scripts/build_fc.sh
+  - ./run.py build-fc
   - ./tools/scripts/build_utest.sh
   - ./tools/scripts/run_utest.sh
