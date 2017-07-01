@@ -13,4 +13,4 @@ class DockerBuilder(object):
 
         cmd = ['docker', 'build', '-t', self._tag, dockerfile_path]
         print('Building docker image...\n{}'.format(' '.join(cmd)))
-        subprocess.run(cmd, check=True)
+        subprocess.check_call(cmd)

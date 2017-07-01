@@ -20,4 +20,4 @@ class FlightControllerUploader(object):
                '--workdir={}'.format(self._build_dir),
               self._image,
               'make', 'upload']
-        subprocess.run(cmd, check=True)
+        subprocess.check_call(cmd)

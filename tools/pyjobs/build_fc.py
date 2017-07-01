@@ -31,7 +31,7 @@ class FlightControllerBuilder(object):
                self._image, 'cmake', self._fc_root,
                '-DCMAKE_TOOLCHAIN_FILE={}'.format(self._toolchain),
                '-DARDUINO_1_5=ON']
-        subprocess.run(cmd, check=True)
+        subprocess.check_call(cmd)
 
     def _run_make(self):
         cmd = ['docker', 'run',
@@ -40,4 +40,4 @@ class FlightControllerBuilder(object):
                '--user={}:{}'.format(self._uid, self._gid),
                '--workdir={}'.format(self._build_dir),
               self._image, 'make']
-        subprocess.run(cmd, check=True)
+        subprocess.check_call(cmd)
