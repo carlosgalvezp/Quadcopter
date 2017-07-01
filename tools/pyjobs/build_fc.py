@@ -25,6 +25,7 @@ class FlightControllerBuilder(object):
     def _run_cmake(self):
         cmd = ['docker', 'run',
                '--rm=true',
+               '--tty=true',
                '--volume={}:{}'.format(self._root, self._root),
                '--user={}:{}'.format(self._uid, self._gid),
                '--workdir={}'.format(self._build_dir),
@@ -36,6 +37,7 @@ class FlightControllerBuilder(object):
     def _run_make(self):
         cmd = ['docker', 'run',
                '--rm=true',
+               '--tty=true',
                '--volume={}:{}'.format(self._root, self._root),
                '--user={}:{}'.format(self._uid, self._gid),
                '--workdir={}'.format(self._build_dir),

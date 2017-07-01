@@ -14,6 +14,7 @@ class FlightControllerUploader(object):
     def run(self):
         cmd = ['docker', 'run',
                '--rm=true',
+               '--tty=true',
                '--privileged=true',
                '--volume={}:{}'.format(self._root, self._root),
                '--user={}:{}'.format(self._uid, self._gid),
