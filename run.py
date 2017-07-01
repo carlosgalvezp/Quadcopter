@@ -6,6 +6,7 @@ import shutil
 
 from tools.pyjobs.build_docker import DockerBuilder
 from tools.pyjobs.build_fc import FlightControllerBuilder
+from tools.pyjobs.upload_fc import FlightControllerUploader
 
 def main(cmd):
     if cmd == 'build-docker':
@@ -17,6 +18,10 @@ def main(cmd):
     elif cmd == 'clean':
         if os.path.exists('build'):
             shutil.rmtree('build')
+
+    elif cmd == 'upload':
+        FlightControllerBuilder().run()
+        FlightControllerUploader().run()
     else:
         print('Unknown command {}'.format(cmd))
         return -1

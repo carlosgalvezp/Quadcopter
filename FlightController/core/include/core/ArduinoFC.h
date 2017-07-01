@@ -9,5 +9,4 @@
 
 #include "GlobalVariables.h"
 
-
 #endif

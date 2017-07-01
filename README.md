@@ -32,6 +32,12 @@ To upload the code or to read from serial, we need some permissions
 
 		sudo usermod -a -G dialout carlos
 
+4. Build the flight controller code.
+
+5. Upload running:
+
+        make upload
+
 Windows Instructions
 --------------------
 -Qt Creator + MinGW
