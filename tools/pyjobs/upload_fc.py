@@ -15,9 +15,10 @@ class FlightControllerUploader(object):
         cmd = ['docker', 'run',
                '--rm=true',
                '--tty=true',
-               '--privileged=true',
+               '--device=/dev/ttyUSB0',
                '--volume={}:{}'.format(self._root, self._root),
                '--user={}:{}'.format(self._uid, self._gid),
+               '--group-add=dialout',
                '--workdir={}'.format(self._build_dir),
               self._image,
               'make', 'upload']
