@@ -9,7 +9,7 @@ class FlightControllerBuilder(object):
         self._fc_root = os.path.join(self._root, 'FlightController')
         self._toolchain = os.path.join(self._fc_root, 'cmake',
                                        'ArduinoToolchain.cmake')
-        self._image = 'carlosgalvezp/quadcopter'
+        self._image = 'carlosgalvezp/arduino-dev'
 
         self._uid = os.getuid()
         self._gid = os.getgid()
