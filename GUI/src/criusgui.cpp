@@ -108,8 +108,6 @@ void CriusGUI::updateGUI()
         ui_->data_in_pitch->setText(QString::number(pitch));
         ui_->data_in_yaw->setText(QString::number(yaw));
 
-        ui_->myGLWidget->updateRotation(-roll, -pitch);
-
         gui_data_.new_attitude = false;
     }
 

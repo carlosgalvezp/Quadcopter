@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui serialport opengl
+QT       += core gui serialport
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 
@@ -17,7 +17,6 @@ SOURCES += main.cpp                 \
            qcustomplot.cpp          \
            timeplot.cpp             \
            utils.cpp                \
-           myglwidget.cpp           \
            serialcommthread.cpp     \
            serialdecoder.cpp        \
            guidata.cpp
@@ -26,7 +25,6 @@ HEADERS  += criusgui.h                          \
             qcustomplot.h                       \
             timeplot.h                          \
             utils.h                             \
-            myglwidget.h                        \
             serialcommthread.h                  \
             serialdecoder.h                     \
             guidata.h                           \
