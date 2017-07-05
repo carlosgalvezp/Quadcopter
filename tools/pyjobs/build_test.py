@@ -8,7 +8,7 @@ class FlightControllerTestBuilder(object):
         self._build_dir = os.path.join(self._root, 'build', 'test')
         self._fc_root = os.path.join(self._root, 'FlightController')
 
-        self._image = 'carlosgalvezp/arduino-dev'
+        self._image = 'carlosgalvezp/cpp-dev'
 
         self._uid = os.getuid()
         self._gid = os.getgid()

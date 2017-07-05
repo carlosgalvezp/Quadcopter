@@ -15,5 +15,5 @@ before_install:
 script:
   - ./run.py build-fc
   - ./run.py build-gui
-  - ./tools/scripts/build_utest.sh
+  - ./run.py build-test
   - ./tools/scripts/run_utest.sh

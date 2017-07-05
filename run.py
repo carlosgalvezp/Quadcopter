@@ -17,16 +17,15 @@ def main(cmd):
     elif cmd == 'build-test':
         FlightControllerTestBuilder().run()
 
-    elif cmd == 'clean':
-        if os.path.exists('build'):
-            shutil.rmtree('build')
+    elif cmd == 'build-gui':
+        GUIBuilder().run()
 
     elif cmd == 'upload':
         FlightControllerBuilder().run()
         FlightControllerUploader().run()
 
-    elif cmd == 'build-gui':
-        GUIBuilder().run()
+    elif cmd == 'runutest':
+        FlightControllerTestRunner().run()
 
     elif cmd == 'gui':
         GUIBuilder().run()
