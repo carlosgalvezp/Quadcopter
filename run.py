@@ -6,6 +6,7 @@ import shutil
 
 from tools.pyjobs.build_docker import DockerBuilder
 from tools.pyjobs.build_fc import FlightControllerBuilder
+from tools.pyjobs.build_test import FlightControllerTestBuilder
 from tools.pyjobs.upload_fc import FlightControllerUploader
 from tools.pyjobs.gui import GUIBuilder
 from tools.pyjobs.gui import GUIRunner
@@ -16,6 +17,9 @@ def main(cmd):
 
     elif cmd == 'build-fc':
         FlightControllerBuilder().run()
+
+    elif cmd == 'build-test':
+        FlightControllerTestBuilder().run()
 
     elif cmd == 'clean':
         if os.path.exists('build'):
