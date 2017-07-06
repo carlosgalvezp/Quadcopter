@@ -5,7 +5,7 @@ class FlightControllerBuilder(object):
     def __init__(self):
         self._this_path = os.path.dirname(os.path.realpath(__file__))
         self._root = os.path.abspath(os.path.join(self._this_path, '..', '..'))
-        self._build_dir = os.path.join(self._root, 'build', 'fc')
+        self._build_dir = os.path.join(self._root, 'xbuild', 'fc')
         self._fc_root = os.path.join(self._root, 'FlightController')
         self._toolchain = os.path.join(self._fc_root, 'cmake',
                                        'ArduinoToolchain.cmake')

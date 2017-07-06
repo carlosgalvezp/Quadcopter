@@ -1,12 +1,14 @@
 import os
 import subprocess
 
-class FlightControllerUploader(object):
+class FlightControllerTestRunner(object):
     def __init__(self):
         self._this_path = os.path.dirname(os.path.realpath(__file__))
         self._root = os.path.abspath(os.path.join(self._this_path, '..', '..'))
-        self._build_dir = os.path.join(self._root, 'xbuild', 'fc')
-        self._image = 'carlosgalvezp/arduino-dev'
+        self._build_dir = os.path.join(self._root, 'build', 'test')
+        self._fc_root = os.path.join(self._root, 'FlightController')
+
+        self._image = 'carlosgalvezp/cpp-dev'
 
         self._uid = os.getuid()
         self._gid = os.getgid()
@@ -15,11 +17,8 @@ class FlightControllerUploader(object):
         cmd = ['docker', 'run',
                '--rm=true',
                '--tty=true',
-               '--device=/dev/ttyUSB0',
                '--volume={}:{}'.format(self._root, self._root),
                '--user={}:{}'.format(self._uid, self._gid),
-               '--group-add=dialout',
                '--workdir={}'.format(self._build_dir),
-              self._image,
-              'make', 'upload']
+               self._image, './test/test1']
         subprocess.check_call(cmd)

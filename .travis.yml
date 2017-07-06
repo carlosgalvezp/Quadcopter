@@ -16,4 +16,4 @@ script:
   - ./run.py build-fc
   - ./run.py build-gui
   - ./run.py build-test
-  - ./tools/scripts/run_utest.sh
+  - ./run.py runutest

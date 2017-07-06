@@ -6,6 +6,7 @@ import shutil
 
 from tools.pyjobs.build_fc import FlightControllerBuilder
 from tools.pyjobs.build_test import FlightControllerTestBuilder
+from tools.pyjobs.run_test import FlightControllerTestRunner
 from tools.pyjobs.upload_fc import FlightControllerUploader
 from tools.pyjobs.gui import GUIBuilder
 from tools.pyjobs.gui import GUIRunner
@@ -25,11 +26,16 @@ def main(cmd):
         FlightControllerUploader().run()
 
     elif cmd == 'runutest':
+        FlightControllerTestBuilder().run()
         FlightControllerTestRunner().run()
 
     elif cmd == 'gui':
         GUIBuilder().run()
         GUIRunner().run()
+
+    elif cmd == 'clean':
+        if os.path.isdir('build'):
+            shutil.rmtree('build')
 
     else:
         print('Unknown command {}'.format(cmd))
