@@ -40,7 +40,7 @@ class GUIBuilder(object):
                '--user={}:{}'.format(self._uid, self._gid),
                '--workdir={}'.format(self._build_dir),
               self._image,
-              'make']
+              'make', 'VERBOSE=1']
         subprocess.check_call(cmd)
 
 

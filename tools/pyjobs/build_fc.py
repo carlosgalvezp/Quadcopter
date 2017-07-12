@@ -41,5 +41,5 @@ class FlightControllerBuilder(object):
                '--volume={}:{}'.format(self._root, self._root),
                '--user={}:{}'.format(self._uid, self._gid),
                '--workdir={}'.format(self._build_dir),
-              self._image, 'make']
+              self._image, 'make', 'VERBOSE=1']
         subprocess.check_call(cmd)
