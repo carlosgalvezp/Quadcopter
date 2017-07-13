@@ -2,7 +2,6 @@
 import argparse
 import sys
 import os
-import shutil
 
 from tools.pyjobs.build_fc import FlightControllerBuilder
 from tools.pyjobs.build_test import FlightControllerTestBuilder
@@ -10,6 +9,8 @@ from tools.pyjobs.run_test import FlightControllerTestRunner
 from tools.pyjobs.upload_fc import FlightControllerUploader
 from tools.pyjobs.gui import GUIBuilder
 from tools.pyjobs.gui import GUIRunner
+
+from tools.utils.utils import maybe_remove_path
 
 def main(cmd):
     if cmd == 'build-fc':
@@ -34,9 +35,8 @@ def main(cmd):
         GUIRunner().run()
 
     elif cmd == 'clean':
-        if os.path.isdir('build'):
-            shutil.rmtree('build')
-
+        maybe_remove_path(os.path.join('FlightController', 'build'))
+        maybe_remove_path(os.path.join('GUI', 'build'))
     else:
         print('Unknown command {}'.format(cmd))
         return -1

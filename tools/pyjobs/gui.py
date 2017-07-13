@@ -5,7 +5,7 @@ class GUIBuilder(object):
     def __init__(self):
         self._this_path = os.path.dirname(os.path.realpath(__file__))
         self._root = os.path.abspath(os.path.join(self._this_path, '..', '..'))
-        self._build_dir = os.path.join(self._root, 'build', 'GUI')
+        self._build_dir = os.path.join(self._root, 'GUI', 'build')
         self._pro_path = os.path.join(self._root, 'GUI', 'src', 'CriusGUI.pro')
 
         self._image = 'carlosgalvezp/qt-dev'
@@ -48,7 +48,7 @@ class GUIRunner(object):
     def __init__(self):
         self._this_path = os.path.dirname(os.path.realpath(__file__))
         self._root = os.path.abspath(os.path.join(self._this_path, '..', '..'))
-        self._build_dir = os.path.join(self._root, 'build', 'GUI')
+        self._build_dir = os.path.join(self._root, 'GUI', 'build')
         self._image = 'carlosgalvezp/qt-dev'
 
         self._uid = os.getuid()
@@ -62,7 +62,7 @@ class GUIRunner(object):
                '--tty=true']
 
         if os.path.exists(self._device):
-            cmd.extend('--device={}'.format(self._device))
+            cmd.append('--device={}'.format(self._device))
         else:
             print('WARNING: {} not found. ' \
                   'Please connect the Crius board'.format(self._device))
